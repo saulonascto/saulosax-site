@@ -1,0 +1,54 @@
+@import url("header.css");
+@import url("hero.css");
+@import url("servicos.css");
+@import url("sobre.css");
+@import url("galeria.css");
+@import url("videos.css");
+@import url("depoimentos.css");
+@import url("contato.css");
+@import url("footer.css");
+@import url("responsive.css");
+
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+
+    --gold:#C8A95B;
+    --black:#111111;
+    --white:#FFFFFF;
+    --gray:#F8F8F8;
+    --text:#555555;
+
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    font-family:'Montserrat',sans-serif;
+    color:var(--black);
+    background:white;
+
+}
+
+.container{
+
+    width:min(1200px,90%);
+    margin:auto;
+
+}
+
+h1,h2,h3{
+
+    font-family:'Playfair Display',serif;
+
+}

@@ -1,0 +1,57 @@
+#servicos{
+    padding:100px 0;
+    background:var(--gray);
+}
+
+.section-title{
+    text-align:center;
+    max-width:700px;
+    margin:0 auto 60px;
+}
+
+.section-title span{
+    color:var(--gold);
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-weight:600;
+}
+
+.section-title h2{
+    margin-top:15px;
+    font-size:2.5rem;
+    line-height:1.3;
+}
+
+.services-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:30px;
+}
+
+.service-card{
+    background:var(--white);
+    padding:40px 30px;
+    border-radius:20px;
+    text-align:center;
+    transition:.3s;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+.service-card:hover{
+    transform:translateY(-10px);
+}
+
+.service-icon{
+    font-size:3rem;
+    margin-bottom:20px;
+}
+
+.service-card h3{
+    margin-bottom:20px;
+    color:var(--black);
+}
+
+.service-card p{
+    color:#666;
+    line-height:1.8;
+}

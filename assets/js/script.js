@@ -118,3 +118,181 @@ elements.forEach(element=>{
     observer.observe(element);
 
 });
+
+// ===========================
+// LIGHTBOX GALERIA
+// ===========================
+
+const galleryItems = document.querySelectorAll(".gallery-item");
+
+const lightbox = document.createElement("div");
+
+lightbox.className = "lightbox";
+
+lightbox.innerHTML = `
+    <button class="lightbox-close">&times;</button>
+    <button class="lightbox-prev">&#10094;</button>
+
+    <img src="" alt="Imagem ampliada">
+
+    <button class="lightbox-next">&#10095;</button>
+`;
+
+document.body.appendChild(lightbox);
+
+
+const lightboxImage = lightbox.querySelector("img");
+
+const closeLightbox = lightbox.querySelector(".lightbox-close");
+
+const prevButton = lightbox.querySelector(".lightbox-prev");
+
+const nextButton = lightbox.querySelector(".lightbox-next");
+
+
+let currentImage = 0;
+
+const images = [];
+
+
+galleryItems.forEach((item,index)=>{
+
+    const img = item.querySelector("img");
+
+    images.push(img.src);
+
+
+    item.addEventListener("click",(e)=>{
+
+        e.preventDefault();
+
+        currentImage = index;
+
+        openLightbox();
+
+    });
+
+});
+
+
+
+function openLightbox(){
+
+    lightboxImage.src = images[currentImage];
+
+    lightbox.classList.add("active");
+
+    document.body.style.overflow="hidden";
+
+}
+
+
+
+function closeLightboxFunction(){
+
+    lightbox.classList.remove("active");
+
+    document.body.style.overflow="auto";
+
+}
+
+
+
+function showNext(){
+
+    currentImage++;
+
+    if(currentImage >= images.length){
+
+        currentImage = 0;
+
+    }
+
+    lightboxImage.src = images[currentImage];
+
+}
+
+
+
+function showPrev(){
+
+    currentImage--;
+
+    if(currentImage < 0){
+
+        currentImage = images.length - 1;
+
+    }
+
+    lightboxImage.src = images[currentImage];
+
+}
+
+
+
+closeLightbox.addEventListener(
+"click",
+closeLightboxFunction
+);
+
+
+nextButton.addEventListener(
+"click",
+showNext
+);
+
+
+prevButton.addEventListener(
+"click",
+showPrev
+);
+
+
+
+lightbox.addEventListener("click",(e)=>{
+
+    if(e.target === lightbox){
+
+        closeLightboxFunction();
+
+    }
+
+});
+
+
+
+// Fechar com ESC
+
+document.addEventListener("keydown",(e)=>{
+
+    if(e.key === "Escape"){
+
+        closeLightboxFunction();
+
+    }
+
+});
+
+
+
+// Navegação pelo teclado
+
+document.addEventListener("keydown",(e)=>{
+
+    if(!lightbox.classList.contains("active")) return;
+
+
+    if(e.key==="ArrowRight"){
+
+        showNext();
+
+    }
+
+
+    if(e.key==="ArrowLeft"){
+
+        showPrev();
+
+    }
+
+});

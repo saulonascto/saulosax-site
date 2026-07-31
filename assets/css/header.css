@@ -1,6 +1,7 @@
 /* ===========================
-   HEADER
+   HEADER PREMIUM
 =========================== */
+
 
 header{
 
@@ -11,212 +12,201 @@ header{
 
     width:100%;
 
-    z-index:1000;
+    z-index:9999;
 
-    transition:.35s;
+    background:transparent;
+
+    transition:.4s ease;
 
 }
+
+
 
 header.scrolled{
 
-    background:rgba(17,17,17,.95);
+    background:rgba(10,10,10,.94);
 
-    backdrop-filter:blur(12px);
+    backdrop-filter:blur(15px);
 
-    box-shadow:0 5px 25px rgba(0,0,0,.25);
+    box-shadow:
+    0 8px 30px rgba(0,0,0,.35);
 
 }
+
+
+
+/* ===========================
+   NAVBAR
+=========================== */
+
 
 .navbar{
-    min-height:110px;
+
+    max-width:1200px;
+
+    height:95px;
+
+    margin:auto;
+
+    padding:0 25px;
+
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
-}
-
-.logo{
-
-    text-decoration:none;
-
-    color:var(--white);
-
-    font-family:'Cinzel', serif;
-
-    font-size:1.8rem;
-
-    font-weight:700;
-
-    letter-spacing:2px;
 
 }
 
-.logo span{
 
-    color:var(--gold);
 
-}
+/* ===========================
+   LOGO
+=========================== */
 
-.logo{
-    display:flex;
-    align-items:center;
-}
 
 .logo img{
-    height:90px;
-    width:auto;
+
+    width:150px;
+
+    height:auto;
+
     display:block;
+
+    transition:.4s ease;
+
 }
+
+
+
+header.scrolled .logo img{
+
+    width:135px;
+
+}
+
+
+
+/* ===========================
+   MENU
+=========================== */
+
+
 .nav-menu{
 
     display:flex;
 
     align-items:center;
 
-    gap:35px;
+    gap:42px;
 
     list-style:none;
 
+    margin:0;
+
+    padding:0;
+
 }
+
+
 
 .nav-menu a{
 
+    color:#fff;
+
     text-decoration:none;
 
-    color:var(--white);
+    font-family:'Montserrat',sans-serif;
+
+    font-size:13px;
 
     font-weight:500;
 
-    transition:.3s;
+    text-transform:uppercase;
+
+    letter-spacing:1.5px;
+
+    transition:.3s ease;
 
 }
+
+
 
 .nav-menu a:hover{
 
-    color:var(--gold);
+    color:#c9a45b;
 
 }
 
+
+
+/* ===========================
+   BOTÃO HEADER
+=========================== */
+
+
 .header-button{
 
-    display:inline-flex;
+    display:flex;
 
     align-items:center;
 
     justify-content:center;
 
-    padding:14px 28px;
 
-    background:var(--gold);
+    padding:14px 32px;
 
-    color:var(--black);
-
-    text-decoration:none;
-
-    font-weight:600;
 
     border-radius:50px;
 
-    transition:.3s;
+
+    background:#c9a45b;
+
+
+    color:#111;
+
+
+    text-decoration:none;
+
+
+    font-family:'Montserrat',sans-serif;
+
+
+    font-size:13px;
+
+
+    font-weight:700;
+
+
+    text-transform:uppercase;
+
+
+    letter-spacing:1px;
+
+
+    transition:.35s ease;
 
 }
+
+
 
 .header-button:hover{
 
-    transform:translateY(-3px);
+    background:#fff;
 
-    box-shadow:0 12px 30px rgba(200,169,91,.30);
+    transform:translateY(-3px);
 
 }
 
-/*=========================
-MENU MOBILE
-==========================*/
+
+
+/* ===========================
+   MOBILE BUTTON
+=========================== */
+
 
 .menu-toggle{
 
     display:none;
-
-    background:none;
-
-    border:none;
-
-    cursor:pointer;
-
-    z-index:1100;
-
-}
-
-.menu-toggle span{
-
-    display:block;
-
-    width:28px;
-
-    height:3px;
-
-    margin:6px 0;
-
-    background:var(--white);
-
-    transition:.3s;
-
-}
-
-@media(max-width:992px){
-
-    .menu-toggle{
-
-        display:block;
-
-    }
-
-    .header-button{
-
-        display:none;
-
-    }
-
-    .nav{
-
-        position:fixed;
-
-        top:0;
-        right:-100%;
-
-        width:300px;
-
-        height:100vh;
-
-        background:#111;
-
-        display:flex;
-
-        justify-content:center;
-
-        align-items:center;
-
-        transition:.4s;
-
-    }
-
-    .nav.active{
-
-        right:0;
-
-    }
-
-    .nav-menu{
-
-        flex-direction:column;
-
-        gap:30px;
-
-    }
-
-    .nav-menu a{
-
-        font-size:1.2rem;
-
-    }
 
 }

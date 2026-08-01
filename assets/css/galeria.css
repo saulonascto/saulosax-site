@@ -7,130 +7,345 @@
     background:var(--gray);
 }
 
+
 .gallery-grid{
+
     display:grid;
+
     grid-template-columns:repeat(3,1fr);
+
     grid-auto-rows:260px;
+
     gap:22px;
+
 }
+
+
 
 .gallery-item{
+
     position:relative;
+
     display:block;
+
     overflow:hidden;
+
     border-radius:24px;
+
     box-shadow:0 15px 40px rgba(0,0,0,.12);
+
     cursor:pointer;
+
     background:#000;
+
 }
+
+
 
 .gallery-item img{
+
     width:100%;
+
     height:100%;
+
     object-fit:cover;
+
     transition:transform .6s ease;
+
 }
+
+
+
+/* ===========================
+   OVERLAY ESCURO
+=========================== */
+
 
 .gallery-item::before{
+
     content:"";
+
     position:absolute;
+
     inset:0;
+
     background:linear-gradient(
         to top,
-        rgba(0,0,0,.45),
+        rgba(0,0,0,.85),
         rgba(0,0,0,.05)
     );
+
     opacity:0;
-    transition:.35s;
+
+    transition:.4s;
+
     z-index:1;
+
 }
+
+
+
+/* ===========================
+   BOTÃO AMPLIAR
+=========================== */
+
 
 .gallery-item::after{
+
     content:"+";
+
     position:absolute;
+
     top:50%;
+
     left:50%;
+
     transform:translate(-50%,-50%);
+
     width:60px;
+
     height:60px;
+
     border:2px solid rgba(255,255,255,.9);
+
     border-radius:50%;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
+
     color:#fff;
+
     font-size:2rem;
+
     font-weight:300;
+
     opacity:0;
+
     transition:.35s;
+
     z-index:2;
+
 }
 
-.gallery-item:hover img{
-    transform:scale(1.08);
+
+
+/* ===========================
+   LEGENDAS
+=========================== */
+
+
+.gallery-caption{
+
+    position:absolute;
+
+    left:0;
+
+    bottom:0;
+
+    width:100%;
+
+    padding:30px 25px;
+
+    color:white;
+
+    z-index:3;
+
+    transform:translateY(20px);
+
+    opacity:0;
+
+    transition:.4s ease;
+
 }
+
+
+
+.gallery-caption h3{
+
+    font-family:"Playfair Display", serif;
+
+    font-size:24px;
+
+    font-weight:600;
+
+    margin-bottom:8px;
+
+    color:white;
+
+}
+
+
+
+.gallery-caption p{
+
+    font-family:"Montserrat", sans-serif;
+
+    font-size:14px;
+
+    line-height:1.5;
+
+    color:rgba(255,255,255,.9);
+
+}
+
+
+
+/* ===========================
+   HOVER
+=========================== */
+
+
+.gallery-item:hover img{
+
+    transform:scale(1.08);
+
+}
+
+
 
 .gallery-item:hover::before,
 .gallery-item:hover::after{
+
     opacity:1;
+
 }
 
-/* Destaques */
+
+
+.gallery-item:hover .gallery-caption{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}
+
+
+
+/* ===========================
+   DESTAQUES
+=========================== */
+
 
 .gallery-item:nth-child(1){
+
     grid-row:span 2;
+
 }
+
+
 
 .gallery-item:nth-child(4){
+
     grid-column:span 2;
+
 }
 
-/* Tablet */
+
+
+/* ===========================
+   TABLET
+=========================== */
+
 
 @media (max-width:992px){
 
+
     .gallery-grid{
+
         grid-template-columns:repeat(2,1fr);
+
         grid-auto-rows:240px;
+
     }
+
 
     .gallery-item:nth-child(1),
     .gallery-item:nth-child(4){
+
         grid-row:span 1;
+
         grid-column:span 1;
+
     }
 
 }
 
-/* Mobile */
+
+
+/* ===========================
+   MOBILE
+=========================== */
+
 
 @media (max-width:768px){
 
+
     #galeria{
+
         padding:80px 0;
+
     }
+
 
     .gallery-grid{
+
         grid-template-columns:1fr;
+
         grid-auto-rows:300px;
+
         gap:18px;
+
     }
 
+
     .gallery-item{
+
         border-radius:18px;
+
     }
+
 
     .gallery-item:nth-child(1),
     .gallery-item:nth-child(4){
+
         grid-row:span 1;
+
         grid-column:span 1;
+
     }
 
+
+    /* legenda sempre visível no celular */
+
+    .gallery-caption{
+
+        opacity:1;
+
+        transform:none;
+
+        padding:25px 20px;
+
+        background:linear-gradient(
+            to top,
+            rgba(0,0,0,.75),
+            transparent
+        );
+
+    }
+
+
 }
+
+
 
 /* ===========================
    LIGHTBOX
 =========================== */
+
 
 .lightbox{
 
@@ -157,6 +372,7 @@
 }
 
 
+
 .lightbox.active{
 
     opacity:1;
@@ -164,6 +380,7 @@
     visibility:visible;
 
 }
+
 
 
 .lightbox img{
@@ -199,6 +416,7 @@
 }
 
 
+
 .lightbox-close{
 
     top:30px;
@@ -208,6 +426,7 @@
 }
 
 
+
 .lightbox-prev{
 
     left:40px;
@@ -215,11 +434,13 @@
 }
 
 
+
 .lightbox-next{
 
     right:40px;
 
 }
+
 
 
 .lightbox button:hover{
@@ -231,6 +452,7 @@
 
 
 @media(max-width:768px){
+
 
     .lightbox img{
 

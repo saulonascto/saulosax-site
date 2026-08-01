@@ -296,3 +296,76 @@ document.addEventListener("keydown",(e)=>{
     }
 
 });
+/* ===========================
+FORMULÁRIO DE CONTATO
+=========================== */
+
+const contactForm = document.querySelector("#contact-form");
+
+if (contactForm) {
+
+```
+contactForm.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const button = contactForm.querySelector("button");
+
+    const originalText = button.textContent;
+
+    button.disabled = true;
+    button.textContent = "Enviando...";
+
+
+    try {
+
+        const formData = new FormData(contactForm);
+
+        const response = await fetch(
+            contactForm.action,
+            {
+                method: "POST",
+                body: formData
+            }
+        );
+
+
+        if (!response.ok) {
+
+            throw new Error("Erro ao enviar formulário.");
+
+        }
+
+
+        contactForm.reset();
+
+        button.textContent = "Mensagem enviada!";
+
+
+        setTimeout(() => {
+
+            button.disabled = false;
+            button.textContent = originalText;
+
+        }, 4000);
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        button.disabled = false;
+        button.textContent = "Erro. Tente novamente.";
+
+        setTimeout(() => {
+
+            button.textContent = originalText;
+
+        }, 4000);
+
+    }
+
+});
+```
+
+}

@@ -1,129 +1,158 @@
-window.addEventListener("scroll",()=>{
+/* ===========================
+HEADER / SCROLL
+=========================== */
 
-    const header=document.querySelector(".header");
-
-    if(window.scrollY>80){
-
-        header.style.background="rgba(255,255,255,.95)";
-        header.style.backdropFilter="blur(12px)";
-        header.style.boxShadow="0 10px 25px rgba(0,0,0,.08)";
-
-    }else{
-
-        header.style.background="transparent";
-        header.style.boxShadow="none";
-
-    }
-
-});
-// MENU MOBILE
-
-const menuButton = document.querySelector(".menu-mobile");
-
-const menu = document.querySelector(".nav-menu");
+window.addEventListener("scroll", () => {
 
 
-if(menuButton){
+const header = document.querySelector("header");
 
-    menuButton.addEventListener("click",()=>{
+if (!header) return;
 
-        menu.classList.toggle("active");
+if (window.scrollY > 80) {
 
-        menuButton.classList.toggle("active");
+    header.style.background = "rgba(255,255,255,.95)";
+    header.style.backdropFilter = "blur(12px)";
+    header.style.boxShadow = "0 10px 25px rgba(0,0,0,.08)";
 
-    });
+} else {
+
+    header.style.background = "transparent";
+    header.style.backdropFilter = "none";
+    header.style.boxShadow = "none";
 
 }
 
 
+});
 
-// FECHAR MENU AO CLICAR NO LINK
+/* ===========================
+MENU MOBILE
+=========================== */
+
+const menuButton = document.querySelector(".menu-toggle");
+const menu = document.querySelector(".nav-menu");
+
+if (menuButton && menu) {
+
+
+menuButton.addEventListener("click", () => {
+
+    menu.classList.toggle("active");
+    menuButton.classList.toggle("active");
+
+});
+
+
+}
+
+/* ===========================
+FECHAR MENU AO CLICAR
+=========================== */
 
 const menuLinks = document.querySelectorAll(".nav-menu a");
 
+menuLinks.forEach(link => {
 
-menuLinks.forEach(link=>{
 
-    link.addEventListener("click",()=>{
+link.addEventListener("click", () => {
 
+    if (menu) {
         menu.classList.remove("active");
+    }
 
+    if (menuButton) {
         menuButton.classList.remove("active");
-
-    });
+    }
 
 });
 
 
+});
 
-// BOTÃO VOLTAR AO TOPO
+/* ===========================
+BOTÃO VOLTAR AO TOPO
+=========================== */
 
 const backTop = document.querySelector(".back-top");
 
+window.addEventListener("scroll", () => {
 
-window.addEventListener("scroll",()=>{
 
+if (!backTop) return;
 
-    if(window.scrollY > 500){
+if (window.scrollY > 500) {
 
-        backTop.style.opacity="1";
+    backTop.style.opacity = "1";
+    backTop.style.visibility = "visible";
 
-        backTop.style.visibility="visible";
+} else {
 
-    }else{
+    backTop.style.opacity = "0";
+    backTop.style.visibility = "hidden";
 
-        backTop.style.opacity="0";
-
-        backTop.style.visibility="hidden";
-
-    }
+}
 
 
 });
 
-
-
-// ANIMAÇÃO AO ROLAR
+/* ===========================
+ANIMAÇÃO AO ROLAR
+=========================== */
 
 const elements = document.querySelectorAll(
 ".service-card, .about-content, .gallery-item, .testimonial-card, .video-card"
 );
 
-
-const observer = new IntersectionObserver((entries)=>{
-
-
-    entries.forEach(entry=>{
+if ("IntersectionObserver" in window) {
 
 
-        if(entry.isIntersecting){
+const observer = new IntersectionObserver(
+    (entries) => {
 
-            entry.target.classList.add("show");
+        entries.forEach(entry => {
 
-        }
+            if (entry.isIntersecting) {
 
+                entry.target.classList.add("show");
 
-    });
+            }
 
+        });
 
-},
-{
-    threshold:.15
-});
+    },
+    {
+        threshold: 0.15
+    }
+);
 
-
-
-elements.forEach(element=>{
+elements.forEach(element => {
 
     observer.observe(element);
 
 });
 
-// ===========================
-// LIGHTBOX GALERIA
-// ===========================
+
+} else {
+
+
+elements.forEach(element => {
+
+    element.classList.add("show");
+
+});
+
+
+}
+
+/* ===========================
+LIGHTBOX GALERIA
+=========================== */
 
 const galleryItems = document.querySelectorAll(".gallery-item");
+
+if (galleryItems.length > 0) {
+
 
 const lightbox = document.createElement("div");
 
@@ -131,6 +160,7 @@ lightbox.className = "lightbox";
 
 lightbox.innerHTML = `
     <button class="lightbox-close">&times;</button>
+
     <button class="lightbox-prev">&#10094;</button>
 
     <img src="" alt="Imagem ampliada">
@@ -141,13 +171,17 @@ lightbox.innerHTML = `
 document.body.appendChild(lightbox);
 
 
-const lightboxImage = lightbox.querySelector("img");
+const lightboxImage =
+    lightbox.querySelector("img");
 
-const closeLightbox = lightbox.querySelector(".lightbox-close");
+const closeLightbox =
+    lightbox.querySelector(".lightbox-close");
 
-const prevButton = lightbox.querySelector(".lightbox-prev");
+const prevButton =
+    lightbox.querySelector(".lightbox-prev");
 
-const nextButton = lightbox.querySelector(".lightbox-next");
+const nextButton =
+    lightbox.querySelector(".lightbox-next");
 
 
 let currentImage = 0;
@@ -155,16 +189,18 @@ let currentImage = 0;
 const images = [];
 
 
-galleryItems.forEach((item,index)=>{
+galleryItems.forEach((item, index) => {
 
     const img = item.querySelector("img");
+
+    if (!img) return;
 
     images.push(img.src);
 
 
-    item.addEventListener("click",(e)=>{
+    item.addEventListener("click", (event) => {
 
-        e.preventDefault();
+        event.preventDefault();
 
         currentImage = index;
 
@@ -175,97 +211,82 @@ galleryItems.forEach((item,index)=>{
 });
 
 
+function openLightbox() {
 
-function openLightbox(){
+    if (!images.length) return;
 
-    lightboxImage.src = images[currentImage];
+    lightboxImage.src =
+        images[currentImage];
 
     lightbox.classList.add("active");
 
-    document.body.style.overflow="hidden";
+    document.body.style.overflow = "hidden";
 
 }
 
 
-
-function closeLightboxFunction(){
+function closeLightboxFunction() {
 
     lightbox.classList.remove("active");
 
-    document.body.style.overflow="auto";
+    document.body.style.overflow = "auto";
 
 }
 
 
-
-function showNext(){
+function showNextImage() {
 
     currentImage++;
 
-    if(currentImage >= images.length){
+    if (currentImage >= images.length) {
 
         currentImage = 0;
 
     }
 
-    lightboxImage.src = images[currentImage];
+    lightboxImage.src =
+        images[currentImage];
 
 }
 
 
-
-function showPrev(){
+function showPreviousImage() {
 
     currentImage--;
 
-    if(currentImage < 0){
+    if (currentImage < 0) {
 
         currentImage = images.length - 1;
 
     }
 
-    lightboxImage.src = images[currentImage];
+    lightboxImage.src =
+        images[currentImage];
 
 }
 
 
-
 closeLightbox.addEventListener(
-"click",
-closeLightboxFunction
+    "click",
+    closeLightboxFunction
 );
 
 
 nextButton.addEventListener(
-"click",
-showNext
+    "click",
+    showNextImage
 );
 
 
 prevButton.addEventListener(
-"click",
-showPrev
+    "click",
+    showPreviousImage
 );
 
 
+lightbox.addEventListener("click", (event) => {
 
-lightbox.addEventListener("click",(e)=>{
-
-    if(e.target === lightbox){
-
-        closeLightboxFunction();
-
-    }
-
-});
-
-
-
-// Fechar com ESC
-
-document.addEventListener("keydown",(e)=>{
-
-    if(e.key === "Escape"){
+    if (event.target === lightbox) {
 
         closeLightboxFunction();
 
@@ -274,98 +295,319 @@ document.addEventListener("keydown",(e)=>{
 });
 
 
+document.addEventListener("keydown", (event) => {
 
-// Navegação pelo teclado
-
-document.addEventListener("keydown",(e)=>{
-
-    if(!lightbox.classList.contains("active")) return;
+    if (!lightbox.classList.contains("active")) {
+        return;
+    }
 
 
-    if(e.key==="ArrowRight"){
+    if (event.key === "Escape") {
 
-        showNext();
+        closeLightboxFunction();
 
     }
 
 
-    if(e.key==="ArrowLeft"){
+    if (event.key === "ArrowRight") {
 
-        showPrev();
+        showNextImage();
+
+    }
+
+
+    if (event.key === "ArrowLeft") {
+
+        showPreviousImage();
 
     }
 
 });
+
+
+}
+
+/* ===========================
+CARROSSEL DEPOIMENTOS
+=========================== */
+
+const testimonialTrack =
+document.querySelector(".testimonials-track");
+
+const testimonialCards =
+document.querySelectorAll(".testimonial-card");
+
+const testimonialNext =
+document.querySelector(".testimonial-next");
+
+const testimonialPrev =
+document.querySelector(".testimonial-prev");
+
+const testimonialDots =
+document.querySelectorAll(".testimonial-dot");
+
+if (
+testimonialTrack &&
+testimonialCards.length > 0
+) {
+
+
+let testimonialIndex = 0;
+
+let testimonialAutoplay;
+
+
+function updateTestimonials() {
+
+    testimonialTrack.style.transform =
+        "translateX(-" +
+        (testimonialIndex * 100) +
+        "%)";
+
+
+    testimonialDots.forEach(
+        (dot, index) => {
+
+            dot.classList.toggle(
+                "active",
+                index === testimonialIndex
+            );
+
+        }
+    );
+
+}
+
+
+function nextTestimonial() {
+
+    testimonialIndex++;
+
+    if (
+        testimonialIndex >=
+        testimonialCards.length
+    ) {
+
+        testimonialIndex = 0;
+
+    }
+
+    updateTestimonials();
+
+}
+
+
+function previousTestimonial() {
+
+    testimonialIndex--;
+
+    if (testimonialIndex < 0) {
+
+        testimonialIndex =
+            testimonialCards.length - 1;
+
+    }
+
+    updateTestimonials();
+
+}
+
+
+function startTestimonialAutoplay() {
+
+    clearInterval(testimonialAutoplay);
+
+    testimonialAutoplay =
+        setInterval(
+            nextTestimonial,
+            5000
+        );
+
+}
+
+
+if (testimonialNext) {
+
+    testimonialNext.addEventListener(
+        "click",
+        () => {
+
+            nextTestimonial();
+
+            startTestimonialAutoplay();
+
+        }
+    );
+
+}
+
+
+if (testimonialPrev) {
+
+    testimonialPrev.addEventListener(
+        "click",
+        () => {
+
+            previousTestimonial();
+
+            startTestimonialAutoplay();
+
+        }
+    );
+
+}
+
+
+testimonialDots.forEach(
+    (dot, index) => {
+
+        dot.addEventListener(
+            "click",
+            () => {
+
+                testimonialIndex = index;
+
+                updateTestimonials();
+
+                startTestimonialAutoplay();
+
+            }
+        );
+
+    }
+);
+
+
+const testimonialCarousel =
+    document.querySelector(
+        ".testimonials-carousel"
+    );
+
+
+if (testimonialCarousel) {
+
+    testimonialCarousel.addEventListener(
+        "mouseenter",
+        () => {
+
+            clearInterval(
+                testimonialAutoplay
+            );
+
+        }
+    );
+
+
+    testimonialCarousel.addEventListener(
+        "mouseleave",
+        () => {
+
+            startTestimonialAutoplay();
+
+        }
+    );
+
+}
+
+
+updateTestimonials();
+
+startTestimonialAutoplay();
+
+
+}
+
 /* ===========================
 FORMULÁRIO DE CONTATO
 =========================== */
 
-const contactForm = document.querySelector("#contact-form");
+const contactForm =
+document.querySelector("#contact-form");
 
 if (contactForm) {
 
-```
-contactForm.addEventListener("submit", async function(event) {
 
-    event.preventDefault();
+contactForm.addEventListener(
+    "submit",
+    async function(event) {
 
-    const button = contactForm.querySelector("button");
+        event.preventDefault();
 
-    const originalText = button.textContent;
+        const button =
+            contactForm.querySelector("button");
 
-    button.disabled = true;
-    button.textContent = "Enviando...";
+        if (!button) return;
+
+        const originalText =
+            button.textContent;
+
+        button.disabled = true;
+
+        button.textContent = "Enviando...";
 
 
-    try {
+        try {
 
-        const formData = new FormData(contactForm);
+            const formData =
+                new FormData(contactForm);
 
-        const response = await fetch(
-            contactForm.action,
-            {
-                method: "POST",
-                body: formData
+
+            const response =
+                await fetch(
+                    contactForm.action,
+                    {
+                        method: "POST",
+                        body: formData
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Erro ao enviar formulário."
+                );
+
             }
-        );
 
 
-        if (!response.ok) {
+            contactForm.reset();
 
-            throw new Error("Erro ao enviar formulário.");
+            button.textContent =
+                "Mensagem enviada!";
+
+
+            setTimeout(() => {
+
+                button.disabled = false;
+
+                button.textContent =
+                    originalText;
+
+            }, 4000);
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            button.disabled = false;
+
+            button.textContent =
+                "Erro. Tente novamente.";
+
+
+            setTimeout(() => {
+
+                button.textContent =
+                    originalText;
+
+            }, 4000);
 
         }
 
-
-        contactForm.reset();
-
-        button.textContent = "Mensagem enviada!";
-
-
-        setTimeout(() => {
-
-            button.disabled = false;
-            button.textContent = originalText;
-
-        }, 4000);
-
-
-    } catch (error) {
-
-        console.error(error);
-
-        button.disabled = false;
-        button.textContent = "Erro. Tente novamente.";
-
-        setTimeout(() => {
-
-            button.textContent = originalText;
-
-        }, 4000);
-
     }
+);
 
-});
-```
 
 }

@@ -9,28 +9,27 @@
 
     min-height:100vh;
 
-
     display:flex;
 
     align-items:center;
 
     justify-content:center;
 
+    text-align:center;
 
     overflow:hidden;
 
+    padding:120px 20px 80px;
 
     background-image:url("../images/hero/hero-bg.webp");
 
     background-size:cover;
 
-    background-position:center 35%;
+    background-position:center;
 
     background-repeat:no-repeat;
 
 }
-
-
 
 /* ===========================
    OVERLAY
@@ -43,9 +42,7 @@
 
     inset:0;
 
-
-    background:rgba(0,0,0,.48);
-
+    background:rgba(0,0,0,.55);
 
     z-index:1;
 
@@ -64,42 +61,42 @@
 
     z-index:2;
 
+    width:100%;
 
-    max-width:760px;
+    max-width:950px;
 
+    margin:0 auto;
 
-    text-align:center;
+    display:flex;
 
+    flex-direction:column;
 
-    color:var(--white);
+    align-items:center;
 
-
-    animation:heroFade 1.2s ease;
+    justify-content:center;
 
 }
 
 
+
+/* ===========================
+   SUBTÍTULO
+=========================== */
 
 
 .hero-subtitle{
 
     display:inline-block;
 
+    margin-bottom:22px;
 
-    margin-bottom:20px;
-
-
-    font-size:.9rem;
-
+    font-size:.85rem;
 
     font-weight:600;
 
-
-    letter-spacing:3px;
-
+    letter-spacing:4px;
 
     text-transform:uppercase;
-
 
     color:var(--gold);
 
@@ -107,49 +104,51 @@
 
 
 
+/* ===========================
+   TÍTULO
+=========================== */
+
 
 .hero-content h1{
 
+    width:100%;
 
-    margin-bottom:25px;
-
+    margin:0 auto 25px;
 
     font-family:'Cinzel',serif;
 
-
-    font-size:clamp(2.3rem,5vw,4rem);
-
+    font-size:clamp(2.4rem,5vw,4.2rem);
 
     font-weight:700;
 
-
     line-height:1.15;
 
+    color:var(--white);
 
 }
 
 
+
+/* ===========================
+   TEXTO
+=========================== */
 
 
 .hero-content p{
 
+    width:100%;
 
-    max-width:650px;
-
+    max-width:680px;
 
     margin:0 auto 45px;
 
-
     font-size:1.1rem;
 
-
     line-height:1.8;
-
 
     color:rgba(255,255,255,.92);
 
 }
-
 
 
 
@@ -160,15 +159,13 @@
 
 .hero-buttons{
 
-
     display:flex;
-
 
     justify-content:center;
 
+    align-items:center;
 
     gap:20px;
-
 
     flex-wrap:wrap;
 
@@ -176,36 +173,25 @@
 
 
 
-
 .btn{
-
 
     display:inline-flex;
 
-
     align-items:center;
-
 
     justify-content:center;
 
-
     min-width:220px;
-
 
     padding:16px 34px;
 
-
     border-radius:50px;
-
 
     text-decoration:none;
 
-
     font-family:'Montserrat',sans-serif;
 
-
     font-weight:600;
-
 
     transition:.35s ease;
 
@@ -213,12 +199,12 @@
 
 
 
+/* BOTÃO PRINCIPAL */
+
 
 .btn-primary{
 
-
     background:var(--gold);
-
 
     color:var(--black);
 
@@ -228,9 +214,7 @@
 
 .btn-primary:hover{
 
-
     transform:translateY(-4px);
-
 
     box-shadow:
     0 15px 35px rgba(200,169,91,.35);
@@ -239,12 +223,12 @@
 
 
 
+/* BOTÃO SECUNDÁRIO */
+
 
 .btn-secondary{
 
-
     border:2px solid var(--white);
-
 
     color:var(--white);
 
@@ -254,9 +238,7 @@
 
 .btn-secondary:hover{
 
-
     background:var(--white);
-
 
     color:var(--black);
 
@@ -271,18 +253,13 @@
 
 .scroll-down{
 
-
     position:absolute;
-
 
     left:50%;
 
-
     bottom:35px;
 
-
     transform:translateX(-50%);
-
 
     z-index:2;
 
@@ -290,24 +267,17 @@
 
 
 
-
 .scroll-down span{
-
 
     display:block;
 
-
     width:28px;
-
 
     height:48px;
 
-
     border:2px solid var(--white);
 
-
     border-radius:30px;
-
 
     position:relative;
 
@@ -317,38 +287,27 @@
 
 .scroll-down span::before{
 
-
     content:"";
-
 
     position:absolute;
 
-
     width:6px;
-
 
     height:6px;
 
-
     border-radius:50%;
-
 
     background:var(--white);
 
-
     left:50%;
-
 
     top:8px;
 
-
     transform:translateX(-50%);
-
 
     animation:scrollDown 2s infinite;
 
 }
-
 
 
 
@@ -409,5 +368,51 @@
         transform:translateY(0);
 
     }
+
+}
+
+
+
+/* ===========================
+   MOBILE
+=========================== */
+
+
+@media(max-width:768px){
+
+
+    #hero{
+
+        padding:110px 20px 80px;
+
+        min-height:100svh;
+
+    }
+
+
+    .hero-subtitle{
+
+        font-size:.75rem;
+
+        letter-spacing:3px;
+
+    }
+
+
+    .hero-content p{
+
+        font-size:1rem;
+
+    }
+
+
+    .btn{
+
+        width:100%;
+
+        max-width:320px;
+
+    }
+
 
 }

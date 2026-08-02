@@ -71,3 +71,14 @@ a{
     margin:auto;
 
 }
+/* ===========================
+   COR FINAL DO MENU
+=========================== */
+
+header.scrolled .nav-menu > li > a{
+    color:#111111 !important;
+}
+
+header.scrolled .nav-menu > li > a:hover{
+    color:#C8A95B !important;
+}

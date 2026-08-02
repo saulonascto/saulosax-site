@@ -2,7 +2,6 @@
    HEADER PREMIUM
 =========================== */
 
-
 header{
 
     position:fixed;
@@ -21,24 +20,25 @@ header{
 }
 
 
+/* ===========================
+   HEADER AO ROLAR
+=========================== */
 
 header.scrolled{
 
-    background:rgba(10,10,10,.94);
+    background:rgba(255,255,255,.96);
 
     backdrop-filter:blur(15px);
 
     box-shadow:
-    0 8px 30px rgba(0,0,0,.35);
+    0 8px 30px rgba(0,0,0,.12);
 
 }
-
 
 
 /* ===========================
    NAVBAR
 =========================== */
-
 
 .navbar{
 
@@ -59,11 +59,9 @@ header.scrolled{
 }
 
 
-
 /* ===========================
    LOGO
 =========================== */
-
 
 .logo img{
 
@@ -78,7 +76,6 @@ header.scrolled{
 }
 
 
-
 header.scrolled .logo img{
 
     width:135px;
@@ -86,11 +83,9 @@ header.scrolled .logo img{
 }
 
 
-
 /* ===========================
    MENU
 =========================== */
-
 
 .nav-menu{
 
@@ -107,7 +102,6 @@ header.scrolled .logo img{
     padding:0;
 
 }
-
 
 
 .nav-menu a{
@@ -131,7 +125,6 @@ header.scrolled .logo img{
 }
 
 
-
 .nav-menu a:hover{
 
     color:#c9a45b;
@@ -139,11 +132,27 @@ header.scrolled .logo img{
 }
 
 
+/* ===========================
+   MENU AO ROLAR
+=========================== */
+
+header.scrolled .nav-menu a{
+
+    color:#111111;
+
+}
+
+
+header.scrolled .nav-menu a:hover{
+
+    color:#c9a45b;
+
+}
+
 
 /* ===========================
    BOTÃO HEADER
 =========================== */
-
 
 .header-button{
 
@@ -153,41 +162,29 @@ header.scrolled .logo img{
 
     justify-content:center;
 
-
     padding:14px 32px;
-
 
     border-radius:50px;
 
-
     background:#c9a45b;
 
-
-    color:#111;
-
+    color:#111111;
 
     text-decoration:none;
 
-
     font-family:'Montserrat',sans-serif;
-
 
     font-size:13px;
 
-
     font-weight:700;
-
 
     text-transform:uppercase;
 
-
     letter-spacing:1px;
-
 
     transition:.35s ease;
 
 }
-
 
 
 .header-button:hover{
@@ -199,11 +196,31 @@ header.scrolled .logo img{
 }
 
 
+/* ===========================
+   BOTÃO AO ROLAR
+=========================== */
+
+header.scrolled .header-button{
+
+    background:#c9a45b;
+
+    color:#111111;
+
+}
+
+
+header.scrolled .header-button:hover{
+
+    background:#111111;
+
+    color:#fff;
+
+}
+
 
 /* ===========================
    MOBILE BUTTON
 =========================== */
-
 
 .menu-toggle{
 

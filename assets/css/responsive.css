@@ -1,210 +1,364 @@
-/* TABLETS */
+/* ===========================
+RESPONSIVE
+TABLETS E CELULARES
+=========================== */
 
-@media(max-width:992px){
+/* ===========================
+TABLETS
+=========================== */
 
-    .container{
-        padding:0 30px;
-    }
-
-
-    .hero-content h1{
-        font-size:3rem;
-    }
+@media (max-width: 992px){
 
 
-    .services-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
+.container{
+    padding:0 30px;
+}
 
 
-    .about-container{
-        grid-template-columns:1fr;
-    }
+/* HERO */
+
+.hero-content h1{
+    font-size:3rem;
+}
 
 
-    .about-image{
-        max-width:600px;
-        margin:auto;
-    }
+/* SERVIÇOS */
+
+.services-grid{
+    grid-template-columns:repeat(2,1fr);
+}
 
 
-    .gallery-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
+/* SOBRE */
+
+.about-container{
+    grid-template-columns:1fr;
+}
+
+.about-image{
+    max-width:600px;
+    margin:auto;
+}
 
 
-    .videos-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
+/* GALERIA */
+
+.gallery-grid{
+    grid-template-columns:repeat(2,1fr);
+}
 
 
-    .testimonials-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
+/* VÍDEOS */
+
+.videos-grid{
+    grid-template-columns:repeat(2,1fr);
+}
 
 
-    .contato-container{
-        grid-template-columns:1fr;
-    }
+/* DEPOIMENTOS */
+
+.testimonials-grid{
+    grid-template-columns:repeat(2,1fr);
+}
 
 
-    .footer-container{
-        grid-template-columns:1fr 1fr;
-    }
+/* CONTATO */
+
+.contato-container{
+    grid-template-columns:1fr;
+}
+
+
+/* FOOTER */
+
+.footer-container{
+    grid-template-columns:1fr 1fr;
+}
+
 
 }
-/* CELULARES */
 
-@media(max-width:768px){
+/* ===========================
+CELULARES
+=========================== */
 
-    .container{
-        padding:0 20px;
-    }
-
-
-    header{
-        position:absolute;
-    }
+@media (max-width: 768px){
 
 
-    .hero-content{
-        text-align:center;
-        margin:auto;
-    }
+/* CONTAINER */
+
+.container{
+    padding:0 20px;
+}
 
 
-    .hero-content h1{
-        font-size:2.2rem;
-    }
+/* HEADER */
+
+header{
+    position:absolute;
+    width:100%;
+}
 
 
-    .hero-description{
-        font-size:1rem;
-    }
+/* HERO */
+
+.hero-content{
+    text-align:center;
+    margin:auto;
+}
+
+.hero-content h1{
+    font-size:2.2rem;
+}
+
+.hero-description{
+    font-size:1rem;
+}
+
+.hero-buttons{
+    flex-direction:column;
+    align-items:center;
+}
+
+.btn-primary,
+.btn-secondary{
+    width:100%;
+    text-align:center;
+}
+
+.hero-info{
+    justify-content:center;
+}
 
 
-    .hero-buttons{
-        flex-direction:column;
-        align-items:center;
-    }
+/* SERVIÇOS */
+
+.services-grid{
+    grid-template-columns:1fr;
+}
 
 
-    .btn-primary,
-    .btn-secondary{
-        width:100%;
-        text-align:center;
-    }
+/* TÍTULOS */
+
+.section-title h2{
+    font-size:2rem;
+}
 
 
-    .hero-info{
-        justify-content:center;
-    }
+/* GALERIA */
+
+.gallery-grid{
+    grid-template-columns:1fr;
+}
+
+.gallery-item:nth-child(1),
+.gallery-item:nth-child(4){
+    grid-column:auto;
+    grid-row:auto;
+}
 
 
-    .services-grid{
-        grid-template-columns:1fr;
-    }
+/* VÍDEOS */
+
+.videos-grid{
+    grid-template-columns:1fr;
+}
 
 
-    .section-title h2{
-        font-size:2rem;
-    }
+/* DEPOIMENTOS */
+
+.testimonials-grid{
+    grid-template-columns:1fr;
+}
 
 
-    .gallery-grid{
-        grid-template-columns:1fr;
-    }
+/* SOBRE */
+
+.about-content h2{
+    font-size:2rem;
+}
+
+.about-numbers{
+    flex-direction:column;
+    gap:25px;
+}
 
 
-    .gallery-item:nth-child(1),
-    .gallery-item:nth-child(4){
-        grid-column:auto;
-        grid-row:auto;
-    }
+/* CONTATO */
+
+.contato-container{
+    grid-template-columns:1fr;
+}
 
 
-    .videos-grid{
-        grid-template-columns:1fr;
-    }
+/* FOOTER */
 
+.footer-container{
+    grid-template-columns:1fr;
+    text-align:center;
+}
 
-    .testimonials-grid{
-        grid-template-columns:1fr;
-    }
+.footer-social{
+    align-items:center;
+}
 
+.footer-menu ul{
+    padding:0;
+}
 
-    .about-content h2{
-        font-size:2rem;
-    }
-
-
-    .about-numbers{
-        flex-direction:column;
-        gap:25px;
-    }
-
-
-    .footer-container{
-        grid-template-columns:1fr;
-        text-align:center;
-    }
-
-
-    .footer-social{
-        align-items:center;
-    }
-
-
-    .footer-menu ul{
-        padding:0;
-    }
 
 }
-@media(max-width:768px){
+
+/* ===========================
+MENU MOBILE
+=========================== */
+
+@media (max-width: 768px){
 
 
-    .menu-mobile{
+/* BOTÃO HAMBÚRGUER */
 
-        display:block;
-
-    }
-
-
-    nav{
-
-        position:absolute;
-
-        top:80px;
-
-        left:0;
-
-        width:100%;
-
-        background:var(--black);
-
-        padding:30px;
-
-        transform:translateY(-150%);
-
-        transition:.4s;
-
-    }
+.menu-toggle{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:5px;
+    width:42px;
+    height:42px;
+    padding:8px;
+    border:none;
+    background:transparent;
+    cursor:pointer;
+    z-index:1001;
+}
 
 
-    nav.active{
+.menu-toggle span{
+    display:block;
+    width:100%;
+    height:2px;
+    background:var(--black);
+    transition:.3s ease;
+}
 
-        transform:translateY(0);
 
-    }
+/* MENU */
+
+.nav-menu{
+    position:absolute;
+    top:80px;
+    left:0;
+    width:100%;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:20px;
+
+    padding:30px 20px;
+
+    background:var(--white);
+
+    opacity:0;
+    visibility:hidden;
+
+    transform:translateY(-20px);
+
+    transition:
+        opacity .3s ease,
+        visibility .3s ease,
+        transform .3s ease;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.08);
+
+    z-index:1000;
+}
 
 
-    nav ul{
+/* MENU ABERTO */
 
-        flex-direction:column;
+.nav-menu.active{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
+}
 
-        gap:25px;
 
-    }
+/* ITENS */
+
+.nav-menu li{
+    width:100%;
+    text-align:center;
+}
+
+
+.nav-menu a{
+    display:block;
+    width:100%;
+    padding:8px 0;
+
+    color:var(--black);
+    text-decoration:none;
+}
+
+
+/* ANIMAÇÃO DO HAMBÚRGUER */
+
+.menu-toggle.active span:nth-child(1){
+    transform:translateY(7px) rotate(45deg);
+}
+
+.menu-toggle.active span:nth-child(2){
+    opacity:0;
+}
+
+.menu-toggle.active span:nth-child(3){
+    transform:translateY(-7px) rotate(-45deg);
+}
+
+
+}
+
+/* ===========================
+TELAS MUITO PEQUENAS
+=========================== */
+
+@media (max-width: 480px){
+
+
+.container{
+    padding:0 16px;
+}
+
+
+.hero-content h1{
+    font-size:1.9rem;
+}
+
+
+.section-title h2{
+    font-size:1.8rem;
+}
+
+
+.btn-primary,
+.btn-secondary{
+    width:100%;
+}
+
+
+.header-button{
+    font-size:.8rem;
+    padding:10px 14px;
+}
+
+
+.menu-toggle{
+    width:38px;
+    height:38px;
+}
 
 
 }

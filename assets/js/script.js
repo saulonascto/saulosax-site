@@ -4,25 +4,19 @@ HEADER / SCROLL
 
 window.addEventListener("scroll", () => {
 
+    const header = document.querySelector("header");
 
-const header = document.querySelector("header");
+    if (!header) return;
 
-if (!header) return;
+    if (window.scrollY > 80) {
 
-if (window.scrollY > 80) {
+        header.classList.add("scrolled");
 
-    header.style.background = "rgba(255,255,255,.95)";
-    header.style.backdropFilter = "blur(12px)";
-    header.style.boxShadow = "0 10px 25px rgba(0,0,0,.08)";
+    } else {
 
-} else {
+        header.classList.remove("scrolled");
 
-    header.style.background = "transparent";
-    header.style.backdropFilter = "none";
-    header.style.boxShadow = "none";
-
-}
-
+    }
 
 });
 

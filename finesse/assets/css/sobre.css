@@ -1,0 +1,228 @@
+/* =========================================================
+FINESSE AGÊNCIA MUSICAL
+SOBRE
+========================================================= */
+
+/* =========================================================
+SEÇÃO SOBRE
+========================================================= */
+
+#sobre {
+
+
+position: relative;
+
+overflow: hidden;
+
+background: var(--white);
+
+
+}
+
+/* =========================================================
+CONTAINER
+========================================================= */
+
+#sobre .container {
+
+
+position: relative;
+
+
+}
+
+/* =========================================================
+TÍTULO
+========================================================= */
+
+#sobre h2 {
+
+
+max-width: 850px;
+
+margin-bottom: 35px;
+
+
+}
+
+/* =========================================================
+TEXTOS
+========================================================= */
+
+#sobre p {
+
+
+max-width: 850px;
+
+margin-bottom: 22px;
+
+color: var(--text);
+
+font-size: 16px;
+
+line-height: 1.9;
+
+
+}
+
+/* =========================================================
+ÚLTIMO PARÁGRAFO / DESTAQUE
+========================================================= */
+
+#sobre p:last-child {
+
+
+position: relative;
+
+margin-top: 38px;
+
+padding-left: 28px;
+
+color: var(--black);
+
+font-size: 17px;
+
+font-weight: 500;
+
+
+}
+
+#sobre p:last-child::before {
+
+
+content: "";
+
+position: absolute;
+
+top: 5px;
+
+bottom: 5px;
+
+left: 0;
+
+width: 2px;
+
+background: var(--wine);
+
+
+}
+
+/* =========================================================
+DETALHE DECORATIVO
+========================================================= */
+
+#sobre .container::after {
+
+
+content: "";
+
+position: absolute;
+
+right: 0;
+
+bottom: -60px;
+
+width: 180px;
+
+height: 180px;
+
+border:
+    1px solid
+    rgba(
+        157,
+        56,
+        53,
+        .15
+    );
+
+border-radius: 50%;
+
+pointer-events: none;
+
+
+}
+
+/* =========================================================
+TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+
+#sobre p {
+
+    max-width: 100%;
+}
+
+
+#sobre .container::after {
+
+    right: -80px;
+
+    bottom: -80px;
+}
+
+
+}
+
+/* =========================================================
+MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+
+#sobre {
+
+    padding-top: 80px;
+
+    padding-bottom: 80px;
+}
+
+
+#sobre h2 {
+
+    font-size: 40px;
+}
+
+
+#sobre p {
+
+    font-size: 15px;
+
+    line-height: 1.8;
+}
+
+
+#sobre p:last-child {
+
+    margin-top: 30px;
+
+    padding-left: 20px;
+
+    font-size: 15px;
+}
+
+
+#sobre .container::after {
+
+    display: none;
+}
+
+
+}
+
+/* =========================================================
+MOBILE PEQUENO
+========================================================= */
+
+@media (max-width: 480px) {
+
+
+#sobre h2 {
+
+    font-size: 34px;
+}
+
+
+}

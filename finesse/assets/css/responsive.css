@@ -1,0 +1,317 @@
+/* =========================================================
+   FINESSE AGÊNCIA MUSICAL
+   RESPONSIVE
+========================================================= */
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    .menu {
+
+        gap: 20px;
+    }
+
+
+    .menu a {
+
+        font-size: 10px;
+    }
+
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+
+        min-height: 680px;
+    }
+
+
+    .hero-content {
+
+        margin-left: 5%;
+    }
+
+
+    /* =========================
+       FORMAÇÕES
+    ========================= */
+
+    .formation {
+
+        padding: 38px 30px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    .header {
+
+        padding: 20px 0;
+    }
+
+
+    .menu {
+
+        display: none;
+    }
+
+
+    .logo {
+
+        font-size: 24px;
+
+        letter-spacing: 2px;
+    }
+
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+
+        min-height: 650px;
+    }
+
+
+    .hero-content {
+
+        width: 90%;
+
+        margin-left: 5%;
+
+        padding-top: 80px;
+    }
+
+
+    .hero h1 {
+
+        font-size: 48px;
+
+        letter-spacing: -.5px;
+    }
+
+
+    .hero p {
+
+        font-size: 16px;
+
+        line-height: 1.7;
+    }
+
+
+    /* =========================
+       SEÇÕES
+    ========================= */
+
+    .section {
+
+        padding: 80px 0;
+    }
+
+
+    .section h2 {
+
+        font-size: 40px;
+    }
+
+
+    /* =========================
+       FORMAÇÕES
+    ========================= */
+
+    .formation {
+
+        margin-top: 30px;
+
+        padding: 30px 25px;
+    }
+
+
+    .formation h3 {
+
+        font-size: 30px;
+    }
+
+
+    .formation ul {
+
+        grid-template-columns: 1fr;
+
+        gap: 10px;
+    }
+
+
+    /* =========================
+       PREMIUM
+    ========================= */
+
+    .formation-premium::before {
+
+        padding: 7px 12px;
+
+        font-size: 8px;
+    }
+
+
+    .premium-formation {
+
+        padding: 22px;
+    }
+
+
+    /* =========================
+       CTA
+    ========================= */
+
+    .cta {
+
+        padding: 80px 0;
+    }
+
+
+    .cta h2 {
+
+        font-size: 42px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE PEQUENO
+========================================================= */
+
+@media (max-width: 480px) {
+
+
+    /* =========================
+       CONTAINER
+    ========================= */
+
+    .container {
+
+        width: 90%;
+    }
+
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+
+        min-height: 600px;
+    }
+
+
+    .hero h1 {
+
+        font-size: 40px;
+    }
+
+
+    .hero p {
+
+        font-size: 15px;
+    }
+
+
+    /* =========================
+       EYEBROW
+    ========================= */
+
+    .eyebrow {
+
+        font-size: 10px;
+
+        letter-spacing: 2px;
+    }
+
+
+    /* =========================
+       SEÇÕES
+    ========================= */
+
+    .section h2 {
+
+        font-size: 34px;
+    }
+
+
+    .section p {
+
+        font-size: 15px;
+    }
+
+
+    /* =========================
+       BOTÕES
+    ========================= */
+
+    .btn {
+
+        width: 100%;
+    }
+
+
+    /* =========================
+       FORMAÇÕES
+    ========================= */
+
+    .formation {
+
+        padding: 25px 20px;
+    }
+
+
+    .formation h3 {
+
+        font-size: 28px;
+    }
+
+
+    .formation-number {
+
+        font-size: 10px;
+    }
+
+
+    .premium-formation {
+
+        padding: 20px;
+    }
+
+
+    /* =========================
+       CTA
+    ========================= */
+
+    .cta h2 {
+
+        font-size: 36px;
+    }
+
+}

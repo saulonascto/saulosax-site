@@ -2,482 +2,681 @@
    GALERIA
 =========================== */
 
-#galeria{
-    padding:120px 0;
-    background:var(--gray);
-}
+#galeria {
 
+    padding: 120px 0;
 
-.gallery-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(3,1fr);
-
-    grid-auto-rows:260px;
-
-    gap:22px;
+    background: var(--gray);
 
 }
 
 
+.gallery-grid {
 
-.gallery-item{
+    display: grid;
 
-    position:relative;
+    grid-template-columns: repeat(3, 1fr);
 
-    display:block;
+    grid-auto-rows: 260px;
 
-    overflow:hidden;
+    gap: 22px;
 
-    border-radius:24px;
+}
+/* =========================================================
+ESPAÇO ENTRE SUBTÍTULO E GALERIA
+========================================================= */
 
-    box-shadow:0 15px 40px rgba(0,0,0,.12);
+#galeria .gallery-grid {
+    margin-top: 70px;
+}
 
-    cursor:pointer;
+/* ===========================
+   ITEM
+=========================== */
 
-    background:#000;
+.gallery-item {
+
+    position: relative;
+
+    display: block;
+
+    overflow: hidden;
+
+    border-radius: 24px;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.12);
+
+    cursor: pointer;
+
+    background: #000;
 
 }
 
 
+.gallery-item img {
 
-.gallery-item img{
+    width: 100%;
 
-    width:100%;
+    height: 100%;
 
-    height:100%;
+    object-fit: cover;
 
-    object-fit:cover;
-
-    transition:transform .6s ease;
+    transition:
+        transform .6s ease;
 
 }
-
 
 
 /* ===========================
-   OVERLAY ESCURO
+   OVERLAY
 =========================== */
 
+.gallery-item::before {
 
-.gallery-item::before{
+    content: "";
 
-    content:"";
+    position: absolute;
 
-    position:absolute;
+    inset: 0;
 
-    inset:0;
+    background:
+        linear-gradient(
+            to top,
+            rgba(0,0,0,.85),
+            rgba(0,0,0,.05)
+        );
 
-    background:linear-gradient(
-        to top,
-        rgba(0,0,0,.85),
-        rgba(0,0,0,.05)
-    );
+    opacity: 0;
 
-    opacity:0;
+    transition: .4s;
 
-    transition:.4s;
-
-    z-index:1;
+    z-index: 1;
 
 }
-
 
 
 /* ===========================
-   BOTÃO AMPLIAR
+   BOTÃO +
 =========================== */
 
+.gallery-item::after {
 
-.gallery-item::after{
+    content: "+";
 
-    content:"+";
+    position: absolute;
 
-    position:absolute;
+    top: 50%;
 
-    top:50%;
+    left: 50%;
 
-    left:50%;
+    transform:
+        translate(-50%, -50%);
 
-    transform:translate(-50%,-50%);
+    width: 60px;
 
-    width:60px;
+    height: 60px;
 
-    height:60px;
+    border:
+        2px solid rgba(255,255,255,.9);
 
-    border:2px solid rgba(255,255,255,.9);
+    border-radius: 50%;
 
-    border-radius:50%;
+    display: flex;
 
-    display:flex;
+    align-items: center;
 
-    align-items:center;
+    justify-content: center;
 
-    justify-content:center;
+    color: #fff;
 
-    color:#fff;
+    font-size: 2rem;
 
-    font-size:2rem;
+    font-weight: 300;
 
-    font-weight:300;
+    opacity: 0;
 
-    opacity:0;
+    transition: .35s;
 
-    transition:.35s;
-
-    z-index:2;
+    z-index: 2;
 
 }
-
 
 
 /* ===========================
-   LEGENDAS
+   LEGENDA DA GALERIA
 =========================== */
 
+.gallery-caption {
 
-.gallery-caption{
+    position: absolute;
 
-    position:absolute;
+    left: 0;
 
-    left:0;
+    bottom: 0;
 
-    bottom:0;
+    width: 100%;
 
-    width:100%;
+    padding: 30px 25px;
 
-    padding:30px 25px;
+    color: #fff;
 
-    color:white;
+    z-index: 3;
 
-    z-index:3;
+    transform:
+        translateY(20px);
 
-    transform:translateY(20px);
+    opacity: 0;
 
-    opacity:0;
-
-    transition:.4s ease;
-
-}
-
-
-
-.gallery-caption h3{
-
-    font-family:"Playfair Display", serif;
-
-    font-size:24px;
-
-    font-weight:600;
-
-    margin-bottom:8px;
-
-    color:white;
+    transition:
+        .4s ease;
 
 }
 
 
+.gallery-caption h3 {
 
-.gallery-caption p{
+    margin: 0 0 8px;
 
-    font-family:"Montserrat", sans-serif;
+    color: #fff;
 
-    font-size:14px;
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
 
-    line-height:1.5;
+    font-size: 24px;
 
-    color:rgba(255,255,255,.9);
+    font-weight: 500;
 
 }
 
+
+.gallery-caption p {
+
+    margin: 0;
+
+    color:
+        rgba(255,255,255,.75);
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 11px;
+
+    letter-spacing: .5px;
+
+    line-height: 1.6;
+
+}
 
 
 /* ===========================
    HOVER
 =========================== */
 
+.gallery-item:hover img {
 
-.gallery-item:hover img{
-
-    transform:scale(1.08);
-
-}
-
-
-
-.gallery-item:hover::before,
-.gallery-item:hover::after{
-
-    opacity:1;
+    transform:
+        scale(1.08);
 
 }
 
 
+.gallery-item:hover::before {
 
-.gallery-item:hover .gallery-caption{
-
-    opacity:1;
-
-    transform:translateY(0);
+    opacity: 1;
 
 }
 
+
+.gallery-item:hover::after {
+
+    opacity: 1;
+
+}
+
+
+.gallery-item:hover .gallery-caption {
+
+    opacity: 1;
+
+    transform:
+        translateY(0);
+
+}
 
 
 /* ===========================
    DESTAQUES
 =========================== */
 
+.gallery-item:nth-child(1) {
 
-.gallery-item:nth-child(1){
-
-    grid-row:span 2;
-
-}
-
-
-
-.gallery-item:nth-child(4){
-
-    grid-column:span 2;
+    grid-row: span 2;
 
 }
 
 
+.gallery-item:nth-child(4) {
 
-/* ===========================
-   TABLET
-=========================== */
-
-
-@media (max-width:992px){
-
-
-    .gallery-grid{
-
-        grid-template-columns:repeat(2,1fr);
-
-        grid-auto-rows:240px;
-
-    }
-
-
-    .gallery-item:nth-child(1),
-    .gallery-item:nth-child(4){
-
-        grid-row:span 1;
-
-        grid-column:span 1;
-
-    }
+    grid-column: span 2;
 
 }
-
-
-
-/* ===========================
-   MOBILE
-=========================== */
-
-
-@media (max-width:768px){
-
-
-    #galeria{
-
-        padding:80px 0;
-
-    }
-
-
-    .gallery-grid{
-
-        grid-template-columns:1fr;
-
-        grid-auto-rows:300px;
-
-        gap:18px;
-
-    }
-
-
-    .gallery-item{
-
-        border-radius:18px;
-
-    }
-
-
-    .gallery-item:nth-child(1),
-    .gallery-item:nth-child(4){
-
-        grid-row:span 1;
-
-        grid-column:span 1;
-
-    }
-
-
-    /* legenda sempre visível no celular */
-
-    .gallery-caption{
-
-        opacity:1;
-
-        transform:none;
-
-        padding:25px 20px;
-
-        background:linear-gradient(
-            to top,
-            rgba(0,0,0,.75),
-            transparent
-        );
-
-    }
-
-
-}
-
 
 
 /* ===========================
    LIGHTBOX
 =========================== */
 
+.lightbox {
 
-.lightbox{
+    position: fixed;
 
-    position:fixed;
+    inset: 0;
 
-    inset:0;
+    z-index: 9999;
 
-    background:rgba(0,0,0,.92);
+    display: flex;
 
-    display:flex;
+    align-items: center;
 
-    align-items:center;
+    justify-content: center;
 
-    justify-content:center;
+    padding: 40px;
 
-    opacity:0;
+    background:
+        rgba(0,0,0,.94);
 
-    visibility:hidden;
+    opacity: 0;
 
-    transition:.4s;
+    visibility: hidden;
 
-    z-index:9999;
+    pointer-events: none;
 
-}
-
-
-
-.lightbox.active{
-
-    opacity:1;
-
-    visibility:visible;
+    transition:
+        opacity .35s ease,
+        visibility .35s ease;
 
 }
 
 
+.lightbox.active {
 
-.lightbox img{
+    opacity: 1;
 
-    max-width:90%;
+    visibility: visible;
 
-    max-height:85vh;
-
-    border-radius:15px;
-
-    box-shadow:0 20px 60px rgba(0,0,0,.5);
+    pointer-events: auto;
 
 }
 
 
+/* ===========================
+   CONTEÚDO
+=========================== */
 
-.lightbox button{
+.lightbox-content {
 
-    position:absolute;
+    position: relative;
 
-    background:none;
+    display: flex;
 
-    border:none;
+    flex-direction: column;
 
-    color:white;
+    align-items: center;
 
-    cursor:pointer;
+    width: min(1100px, 90vw);
 
-    font-size:3rem;
-
-    z-index:2;
-
-}
-
-
-
-.lightbox-close{
-
-    top:30px;
-
-    right:40px;
+    max-height: 90vh;
 
 }
 
 
+/* ===========================
+   IMAGEM
+=========================== */
 
-.lightbox-prev{
+.lightbox-image {
 
-    left:40px;
+    display: block;
+
+    max-width: 90vw;
+
+    max-height: 78vh;
+
+    width: auto;
+
+    height: auto;
+
+    object-fit: contain;
+
+    border-radius: 8px;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.5);
 
 }
 
 
+/* ===========================
+   LEGENDA DO LIGHTBOX
+=========================== */
 
-.lightbox-next{
+.lightbox-caption {
 
-    right:40px;
+    width: 100%;
+
+    padding-top: 18px;
+
+    text-align: center;
 
 }
 
 
+.lightbox-caption h3 {
 
-.lightbox button:hover{
+    margin: 0 0 6px;
 
-    color:var(--gold);
+    color: var(--white);
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size: 22px;
+
+    font-weight: 500;
 
 }
 
 
+.lightbox-caption p {
 
-@media(max-width:768px){
+    margin: 0;
+
+    color:
+        rgba(255,255,255,.65);
+
+    font-family:
+        "Montserrat",
+        Arial,
+        sans-serif;
+
+    font-size: 10px;
+
+    letter-spacing: .6px;
+
+}
 
 
-    .lightbox img{
+/* ===========================
+   FECHAR
+=========================== */
 
-        max-width:95%;
+.lightbox-close {
+
+    position: absolute;
+
+    top: 25px;
+
+    right: 30px;
+
+    z-index: 10;
+
+    width: 45px;
+
+    height: 45px;
+
+    border: 0;
+
+    background: transparent;
+
+    color: var(--white);
+
+    font-size: 38px;
+
+    font-weight: 300;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    opacity: .8;
+
+    transition:
+        opacity .3s ease,
+        transform .3s ease;
+
+}
+
+
+.lightbox-close:hover {
+
+    opacity: 1;
+
+    transform:
+        rotate(90deg);
+
+}
+
+
+/* ===========================
+   NAVEGAÇÃO
+=========================== */
+
+.lightbox-prev,
+.lightbox-next {
+
+    position: absolute;
+
+    top: 50%;
+
+    z-index: 10;
+
+    width: 50px;
+
+    height: 50px;
+
+    border: 0;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.08);
+
+    color: var(--white);
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    transform:
+        translateY(-50%);
+
+    transition:
+        background .3s ease,
+        transform .3s ease;
+
+}
+
+
+.lightbox-prev {
+
+    left: 30px;
+
+}
+
+
+.lightbox-next {
+
+    right: 30px;
+
+}
+
+
+.lightbox-prev:hover {
+
+    background:
+        rgba(255,255,255,.18);
+
+    transform:
+        translateY(-50%)
+        translateX(-3px);
+
+}
+
+
+.lightbox-next:hover {
+
+    background:
+        rgba(255,255,255,.18);
+
+    transform:
+        translateY(-50%)
+        translateX(3px);
+
+}
+
+
+/* ===========================
+   TABLET
+=========================== */
+
+@media (max-width: 992px) {
+
+    .gallery-grid {
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+        grid-auto-rows: 240px;
+
+    }
+
+    .gallery-item:nth-child(1),
+    .gallery-item:nth-child(4) {
+
+        grid-row: span 1;
+
+        grid-column: span 1;
+
+    }
+
+}
+
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media (max-width: 768px) {
+
+    #galeria {
+
+        padding: 80px 0;
 
     }
 
 
-    .lightbox-prev{
+    .gallery-grid {
 
-        left:15px;
+        grid-template-columns: 1fr;
 
-    }
+        grid-auto-rows: 300px;
 
-
-    .lightbox-next{
-
-        right:15px;
+        gap: 18px;
 
     }
 
 
-    .lightbox-close{
+    .gallery-item {
 
-        right:20px;
+        border-radius: 18px;
+
+    }
+
+
+    .gallery-item:nth-child(1),
+    .gallery-item:nth-child(4) {
+
+        grid-row: span 1;
+
+        grid-column: span 1;
+
+    }
+
+
+    .gallery-caption {
+
+        opacity: 1;
+
+        transform: none;
+
+        padding: 25px 20px;
+
+        background:
+            linear-gradient(
+                to top,
+                rgba(0,0,0,.75),
+                transparent
+            );
+
+    }
+
+
+    .lightbox {
+
+        padding: 20px;
+
+    }
+
+
+    .lightbox-image {
+
+        max-width: 92vw;
+
+        max-height: 70vh;
+
+    }
+
+
+    .lightbox-prev {
+
+        left: 10px;
+
+    }
+
+
+    .lightbox-next {
+
+        right: 10px;
+
+    }
+
+
+    .lightbox-close {
+
+        top: 15px;
+
+        right: 15px;
+
+    }
+
+
+    .lightbox-caption h3 {
+
+        font-size: 19px;
+
+    }
+
+
+    .lightbox-caption p {
+
+        font-size: 9px;
 
     }
 

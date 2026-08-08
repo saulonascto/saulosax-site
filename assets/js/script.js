@@ -1,113 +1,155 @@
 
 /* =========================================================
    SAULO NASCIMENTO | SAXOFONISTA
-   JAVASCRIPT PRINCIPAL
+   SCRIPT PRINCIPAL
 ========================================================= */
 
 
 /* =========================================================
-   HEADER / SCROLL
+   HEADER
 ========================================================= */
 
-window.addEventListener("scroll", () => {
+const header =
+    document.querySelector("header");
 
-    const header = document.querySelector("header");
+const menuToggle =
+    document.querySelector(".menu-toggle");
 
-    if (!header) return;
-
-    if (window.scrollY > 80) {
-
-        header.classList.add("scrolled");
-
-    } else {
-
-        header.classList.remove("scrolled");
-
-    }
-
-});
+const nav =
+    document.querySelector(".nav");
 
 
 /* =========================================================
    MENU MOBILE
 ========================================================= */
 
-const menuButton =
-    document.querySelector(".menu-toggle");
+if (menuToggle && nav) {
 
-const menu =
-    document.querySelector(".nav-menu");
+    menuToggle.addEventListener(
+        "click",
+        () => {
+
+            nav.classList.toggle("active");
+
+            menuToggle.classList.toggle("active");
+
+        }
+    );
 
 
-if (menuButton && menu) {
+    const navLinks =
+        nav.querySelectorAll("a");
 
-    menuButton.addEventListener("click", () => {
 
-        menu.classList.toggle("active");
+    navLinks.forEach(
+        (link) => {
 
-        menuButton.classList.toggle("active");
+            link.addEventListener(
+                "click",
+                () => {
 
-    });
+                    nav.classList.remove(
+                        "active"
+                    );
+
+                    menuToggle.classList.remove(
+                        "active"
+                    );
+
+                }
+            );
+
+        }
+    );
 
 }
 
 
 /* =========================================================
-   FECHAR MENU AO CLICAR
+   HEADER AO ROLAR
 ========================================================= */
 
-const menuLinks =
-    document.querySelectorAll(".nav-menu a");
+function updateHeader() {
+
+    if (!header) return;
 
 
-menuLinks.forEach(link => {
+    if (window.scrollY > 50) {
 
-    link.addEventListener("click", () => {
-
-        if (menu) {
-
-            menu.classList.remove("active");
-
-        }
-
-        if (menuButton) {
-
-            menuButton.classList.remove("active");
-
-        }
-
-    });
-
-});
-
-
-/* =========================================================
-   BOTÃO VOLTAR AO TOPO
-========================================================= */
-
-const backTop =
-    document.querySelector(".back-top");
-
-
-window.addEventListener("scroll", () => {
-
-    if (!backTop) return;
-
-    if (window.scrollY > 500) {
-
-        backTop.style.opacity = "1";
-
-        backTop.style.visibility = "visible";
+        header.classList.add(
+            "scrolled"
+        );
 
     } else {
 
-        backTop.style.opacity = "0";
-
-        backTop.style.visibility = "hidden";
+        header.classList.remove(
+            "scrolled"
+        );
 
     }
 
-});
+}
+
+
+window.addEventListener(
+    "scroll",
+    updateHeader,
+    {
+        passive: true
+    }
+);
+
+
+updateHeader();
+
+
+/* =========================================================
+   VOLTAR AO TOPO
+========================================================= */
+
+const backTop =
+    document.querySelector(
+        ".back-top"
+    );
+
+
+if (backTop) {
+
+    function updateBackTop() {
+
+        if (window.scrollY > 500) {
+
+            backTop.style.opacity =
+                "1";
+
+            backTop.style.visibility =
+                "visible";
+
+        } else {
+
+            backTop.style.opacity =
+                "0";
+
+            backTop.style.visibility =
+                "hidden";
+
+        }
+
+    }
+
+
+    window.addEventListener(
+        "scroll",
+        updateBackTop,
+        {
+            passive: true
+        }
+    );
+
+
+    updateBackTop();
+
+}
 
 
 /* =========================================================
@@ -120,21 +162,29 @@ const elements =
     );
 
 
-if ("IntersectionObserver" in window) {
+if (
+    "IntersectionObserver" in window
+) {
 
     const observer =
         new IntersectionObserver(
             (entries) => {
 
-                entries.forEach(entry => {
+                entries.forEach(
+                    (entry) => {
 
-                    if (entry.isIntersecting) {
+                        if (
+                            entry.isIntersecting
+                        ) {
 
-                        entry.target.classList.add("show");
+                            entry.target.classList.add(
+                                "show"
+                            );
+
+                        }
 
                     }
-
-                });
+                );
 
             },
             {
@@ -143,26 +193,34 @@ if ("IntersectionObserver" in window) {
         );
 
 
-    elements.forEach(element => {
+    elements.forEach(
+        (element) => {
 
-        observer.observe(element);
+            observer.observe(
+                element
+            );
 
-    });
+        }
+    );
 
 } else {
 
-    elements.forEach(element => {
+    elements.forEach(
+        (element) => {
 
-        element.classList.add("show");
+            element.classList.add(
+                "show"
+            );
 
-    });
+        }
+    );
 
 }
 
 
 /* =========================================================
    HERO VIDEO
-   UM ÚNICO <video>
+   UM ÚNICO VIDEO
    DESKTOP / MOBILE
 ========================================================= */
 
@@ -171,34 +229,16 @@ document.addEventListener(
     () => {
 
         const heroVideo =
-            document.querySelector("#hero-video");
+            document.querySelector(
+                "#hero-video"
+            );
 
 
         if (!heroVideo) return;
 
 
         /* -------------------------------------------------
-           DETECTAR DISPOSITIVO / LARGURA
-        ------------------------------------------------- */
-
-        const isMobile =
-            window.matchMedia(
-                "(max-width: 768px)"
-            ).matches;
-
-
-        /* -------------------------------------------------
-           DEFINIR VÍDEO
-        ------------------------------------------------- */
-
-        const videoSource =
-            isMobile
-                ? "assets/videos/hero-video-mobile.mp4"
-                : "assets/videos/hero-video.mp4";
-
-
-        /* -------------------------------------------------
-           CONFIGURAÇÕES
+           CONFIGURAÇÕES DO VÍDEO
         ------------------------------------------------- */
 
         heroVideo.muted = true;
@@ -210,6 +250,7 @@ document.addEventListener(
         heroVideo.loop = true;
 
         heroVideo.playsInline = true;
+
 
         heroVideo.setAttribute(
             "muted",
@@ -238,53 +279,167 @@ document.addEventListener(
 
 
         /* -------------------------------------------------
-           DEFINIR SRC
+           DETECTAR VÍDEO CORRETO
         ------------------------------------------------- */
 
-        heroVideo.src =
-            videoSource;
+        const getVideoSource =
+            () => {
+
+                const isMobile =
+                    window.matchMedia(
+                        "(max-width: 768px)"
+                    ).matches;
+
+
+                return isMobile
+                    ? "assets/videos/hero-video-mobile.mp4"
+                    : "assets/videos/hero-video.mp4";
+
+            };
+
+
+        let currentSource =
+            getVideoSource();
 
 
         /* -------------------------------------------------
-           FORÇAR NOVO CARREGAMENTO
+           CARREGAR VÍDEO
         ------------------------------------------------- */
 
-        heroVideo.load();
+        function loadHeroVideo() {
+
+            const newSource =
+                getVideoSource();
 
 
-        /* -------------------------------------------------
-           FUNÇÃO DE PLAY
-        ------------------------------------------------- */
+            /* Evita recarregar o mesmo vídeo */
 
-        const playHeroVideo = () => {
+            if (
+                heroVideo.src &&
+                heroVideo.src.endsWith(
+                    newSource
+                )
+            ) {
 
-            heroVideo.muted = true;
-
-            heroVideo.defaultMuted = true;
-
-
-            const promise =
-                heroVideo.play();
-
-
-            if (promise !== undefined) {
-
-                promise.catch(error => {
-
-                    console.log(
-                        "Autoplay bloqueado pelo navegador:",
-                        error
-                    );
-
-                });
+                return;
 
             }
 
-        };
+
+            currentSource =
+                newSource;
+
+
+            /* Pausar antes de trocar */
+
+            try {
+
+                heroVideo.pause();
+
+            } catch (error) {
+
+                console.log(
+                    "Erro ao pausar vídeo:",
+                    error
+                );
+
+            }
+
+
+            /* Limpar source */
+
+            heroVideo.removeAttribute(
+                "src"
+            );
+
+
+            /* Definir source */
+
+            heroVideo.src =
+                currentSource;
+
+
+            /* Garantir configurações */
+
+            heroVideo.muted =
+                true;
+
+            heroVideo.defaultMuted =
+                true;
+
+            heroVideo.autoplay =
+                true;
+
+            heroVideo.loop =
+                true;
+
+            heroVideo.playsInline =
+                true;
+
+
+            /* Forçar carregamento */
+
+            heroVideo.load();
+
+        }
 
 
         /* -------------------------------------------------
-           QUANDO O VÍDEO ESTIVER PRONTO
+           INICIAR VÍDEO
+        ------------------------------------------------- */
+
+        function playHeroVideo() {
+
+            if (!heroVideo) return;
+
+
+            heroVideo.muted =
+                true;
+
+            heroVideo.defaultMuted =
+                true;
+
+
+            heroVideo.setAttribute(
+                "muted",
+                ""
+            );
+
+
+            heroVideo.setAttribute(
+                "playsinline",
+                ""
+            );
+
+
+            const playPromise =
+                heroVideo.play();
+
+
+            if (
+                playPromise &&
+                typeof playPromise.catch ===
+                    "function"
+            ) {
+
+                playPromise.catch(
+                    (error) => {
+
+                        console.log(
+                            "Vídeo aguardando interação:",
+                            error
+                        );
+
+                    }
+                );
+
+            }
+
+        }
+
+
+        /* -------------------------------------------------
+           QUANDO ESTIVER PRONTO
         ------------------------------------------------- */
 
         heroVideo.addEventListener(
@@ -293,16 +448,9 @@ document.addEventListener(
 
                 playHeroVideo();
 
-            },
-            {
-                once: true
             }
         );
 
-
-        /* -------------------------------------------------
-           CANPLAY
-        ------------------------------------------------- */
 
         heroVideo.addEventListener(
             "canplay",
@@ -310,15 +458,22 @@ document.addEventListener(
 
                 playHeroVideo();
 
-            },
-            {
-                once: true
+            }
+        );
+
+
+        heroVideo.addEventListener(
+            "canplaythrough",
+            () => {
+
+                playHeroVideo();
+
             }
         );
 
 
         /* -------------------------------------------------
-           LOAD DA PÁGINA
+           PÁGINA TOTALMENTE CARREGADA
         ------------------------------------------------- */
 
         window.addEventListener(
@@ -327,49 +482,12 @@ document.addEventListener(
 
                 playHeroVideo();
 
-            },
-            {
-                once: true
             }
         );
 
 
         /* -------------------------------------------------
-           PRIMEIRO TOQUE NO CELULAR
-        ------------------------------------------------- */
-
-        const resumeVideo = () => {
-
-            if (heroVideo.paused) {
-
-                playHeroVideo();
-
-            }
-
-        };
-
-
-        document.addEventListener(
-            "touchstart",
-            resumeVideo,
-            {
-                once: true,
-                passive: true
-            }
-        );
-
-
-        document.addEventListener(
-            "click",
-            resumeVideo,
-            {
-                once: true
-            }
-        );
-
-
-        /* -------------------------------------------------
-           SE A PÁGINA VOLTAR PARA O FOCO
+           PÁGINA VISÍVEL
         ------------------------------------------------- */
 
         document.addEventListener(
@@ -381,16 +499,93 @@ document.addEventListener(
                     "visible"
                 ) {
 
-                    if (heroVideo.paused) {
-
-                        playHeroVideo();
-
-                    }
+                    playHeroVideo();
 
                 }
 
             }
         );
+
+
+        /* -------------------------------------------------
+           INTERAÇÃO DO USUÁRIO
+        ------------------------------------------------- */
+
+        const resumeVideo =
+            () => {
+
+                if (
+                    heroVideo.paused
+                ) {
+
+                    playHeroVideo();
+
+                }
+
+            };
+
+
+        document.addEventListener(
+            "touchstart",
+            resumeVideo,
+            {
+                passive: true
+            }
+        );
+
+
+        document.addEventListener(
+            "click",
+            resumeVideo
+        );
+
+
+        /* -------------------------------------------------
+           MUDANÇA DE ORIENTAÇÃO / TAMANHO
+        ------------------------------------------------- */
+
+        let resizeTimer;
+
+
+        window.addEventListener(
+            "resize",
+            () => {
+
+                clearTimeout(
+                    resizeTimer
+                );
+
+
+                resizeTimer =
+                    setTimeout(
+                        () => {
+
+                            const newSource =
+                                getVideoSource();
+
+
+                            if (
+                                newSource !==
+                                currentSource
+                            ) {
+
+                                loadHeroVideo();
+
+                            }
+
+                        },
+                        250
+                    );
+
+            }
+        );
+
+
+        /* -------------------------------------------------
+           INICIAR
+        ------------------------------------------------- */
+
+        loadHeroVideo();
 
     }
 );
@@ -409,7 +604,9 @@ const galleryItems =
 if (galleryItems.length > 0) {
 
     const lightbox =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
     lightbox.className =
@@ -511,7 +708,9 @@ if (galleryItems.length > 0) {
         (item, index) => {
 
             const img =
-                item.querySelector("img");
+                item.querySelector(
+                    "img"
+                );
 
 
             if (!img) return;
@@ -554,7 +753,8 @@ if (galleryItems.length > 0) {
 
                     event.preventDefault();
 
-                    currentImage = index;
+                    currentImage =
+                        index;
 
                     openLightbox();
 
@@ -669,7 +869,9 @@ if (galleryItems.length > 0) {
         currentImage--;
 
 
-        if (currentImage < 0) {
+        if (
+            currentImage < 0
+        ) {
 
             currentImage =
                 images.length - 1;
@@ -793,24 +995,20 @@ const testimonialTrack =
         ".testimonials-track"
     );
 
-
 const testimonialCards =
     document.querySelectorAll(
         ".testimonial-card"
     );
-
 
 const testimonialNext =
     document.querySelector(
         ".testimonial-next"
     );
 
-
 const testimonialPrev =
     document.querySelector(
         ".testimonial-prev"
     );
-
 
 const testimonialDots =
     document.querySelectorAll(
@@ -832,7 +1030,9 @@ if (
 
         testimonialTrack.style.transform =
             "translateX(-" +
-            (testimonialIndex * 100) +
+            (
+                testimonialIndex * 100
+            ) +
             "%)";
 
 
@@ -841,7 +1041,8 @@ if (
 
                 dot.classList.toggle(
                     "active",
-                    index === testimonialIndex
+                    index ===
+                        testimonialIndex
                 );
 
             }
@@ -1070,20 +1271,25 @@ if (contactForm) {
                     "Mensagem enviada!";
 
 
-                setTimeout(() => {
+                setTimeout(
+                    () => {
 
-                    button.disabled =
-                        false;
+                        button.disabled =
+                            false;
 
-                    button.textContent =
-                        originalText;
+                        button.textContent =
+                            originalText;
 
-                }, 4000);
+                    },
+                    4000
+                );
 
 
             } catch (error) {
 
-                console.error(error);
+                console.error(
+                    error
+                );
 
 
                 button.disabled =
@@ -1094,12 +1300,15 @@ if (contactForm) {
                     "Erro. Tente novamente.";
 
 
-                setTimeout(() => {
+                setTimeout(
+                    () => {
 
-                    button.textContent =
-                        originalText;
+                        button.textContent =
+                            originalText;
 
-                }, 4000);
+                    },
+                    4000
+                );
 
             }
 

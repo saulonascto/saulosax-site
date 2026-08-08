@@ -1,27 +1,18 @@
-
 /* =========================================================
-   SAULO NASCIMENTO | SAXOFONISTA
-   SCRIPT PRINCIPAL
+   FINESSE / SAULO SAX
+   JAVASCRIPT PRINCIPAL
 ========================================================= */
 
 
 /* =========================================================
-   HEADER
+   MENU MOBILE
 ========================================================= */
-
-const header =
-    document.querySelector("header");
 
 const menuToggle =
     document.querySelector(".menu-toggle");
 
 const nav =
     document.querySelector(".nav");
-
-
-/* =========================================================
-   MENU MOBILE
-========================================================= */
 
 if (menuToggle && nav) {
 
@@ -37,30 +28,29 @@ if (menuToggle && nav) {
     );
 
 
+    /* Fechar menu ao clicar em um link */
+
     const navLinks =
         nav.querySelectorAll("a");
 
+    navLinks.forEach(link => {
 
-    navLinks.forEach(
-        (link) => {
+        link.addEventListener(
+            "click",
+            () => {
 
-            link.addEventListener(
-                "click",
-                () => {
+                nav.classList.remove(
+                    "active"
+                );
 
-                    nav.classList.remove(
-                        "active"
-                    );
+                menuToggle.classList.remove(
+                    "active"
+                );
 
-                    menuToggle.classList.remove(
-                        "active"
-                    );
+            }
+        );
 
-                }
-            );
-
-        }
-    );
+    });
 
 }
 
@@ -69,73 +59,76 @@ if (menuToggle && nav) {
    HEADER AO ROLAR
 ========================================================= */
 
-function updateHeader() {
+const header =
+    document.querySelector("header");
 
-    if (!header) return;
+if (header) {
+
+    const updateHeader =
+        () => {
+
+            if (window.scrollY > 50) {
+
+                header.classList.add(
+                    "scrolled"
+                );
+
+            } else {
+
+                header.classList.remove(
+                    "scrolled"
+                );
+
+            }
+
+        };
 
 
-    if (window.scrollY > 50) {
+    window.addEventListener(
+        "scroll",
+        updateHeader,
+        {
+            passive: true
+        }
+    );
 
-        header.classList.add(
-            "scrolled"
-        );
 
-    } else {
-
-        header.classList.remove(
-            "scrolled"
-        );
-
-    }
+    updateHeader();
 
 }
 
 
-window.addEventListener(
-    "scroll",
-    updateHeader,
-    {
-        passive: true
-    }
-);
-
-
-updateHeader();
-
-
 /* =========================================================
-   VOLTAR AO TOPO
+   BOTÃO VOLTAR AO TOPO
 ========================================================= */
 
 const backTop =
-    document.querySelector(
-        ".back-top"
-    );
-
+    document.querySelector(".back-top");
 
 if (backTop) {
 
-    function updateBackTop() {
+    const updateBackTop =
+        () => {
 
-        if (window.scrollY > 500) {
+            if (window.scrollY > 500) {
 
-            backTop.style.opacity =
-                "1";
+                backTop.style.opacity =
+                    "1";
 
-            backTop.style.visibility =
-                "visible";
+                backTop.style.visibility =
+                    "visible";
 
-        } else {
+            } else {
 
-            backTop.style.opacity =
-                "0";
+                backTop.style.opacity =
+                    "0";
 
-            backTop.style.visibility =
-                "hidden";
+                backTop.style.visibility =
+                    "hidden";
 
-        }
+            }
 
-    }
+        };
 
 
     window.addEventListener(
@@ -161,17 +154,14 @@ const elements =
         ".service-card, .about-content, .gallery-item, .testimonial-card, .video-card"
     );
 
-
-if (
-    "IntersectionObserver" in window
-) {
+if ("IntersectionObserver" in window) {
 
     const observer =
         new IntersectionObserver(
             (entries) => {
 
                 entries.forEach(
-                    (entry) => {
+                    entry => {
 
                         if (
                             entry.isIntersecting
@@ -179,6 +169,10 @@ if (
 
                             entry.target.classList.add(
                                 "show"
+                            );
+
+                            observer.unobserve(
+                                entry.target
                             );
 
                         }
@@ -194,7 +188,7 @@ if (
 
 
     elements.forEach(
-        (element) => {
+        element => {
 
             observer.observe(
                 element
@@ -206,7 +200,7 @@ if (
 } else {
 
     elements.forEach(
-        (element) => {
+        element => {
 
             element.classList.add(
                 "show"
@@ -220,8 +214,8 @@ if (
 
 /* =========================================================
    HERO VIDEO
-   UM ÚNICO VIDEO
    DESKTOP / MOBILE
+   COMPATÍVEL COM SAFARI
 ========================================================= */
 
 document.addEventListener(
@@ -238,7 +232,27 @@ document.addEventListener(
 
 
         /* -------------------------------------------------
-           CONFIGURAÇÕES DO VÍDEO
+           DETECTAR MOBILE
+        ------------------------------------------------- */
+
+        const isMobile =
+            window.matchMedia(
+                "(max-width: 768px)"
+            ).matches;
+
+
+        /* -------------------------------------------------
+           DEFINIR ARQUIVO
+        ------------------------------------------------- */
+
+        const videoSource =
+            isMobile
+                ? "assets/videos/hero-video-mobile.mp4"
+                : "assets/videos/hero-video.mp4";
+
+
+        /* -------------------------------------------------
+           CONFIGURAÇÕES
         ------------------------------------------------- */
 
         heroVideo.muted = true;
@@ -251,6 +265,8 @@ document.addEventListener(
 
         heroVideo.playsInline = true;
 
+
+        /* Atributos necessários para Safari */
 
         heroVideo.setAttribute(
             "muted",
@@ -279,163 +295,57 @@ document.addEventListener(
 
 
         /* -------------------------------------------------
-           DETECTAR VÍDEO CORRETO
+           DEFINIR VÍDEO
         ------------------------------------------------- */
 
-        const getVideoSource =
+        heroVideo.src =
+            videoSource;
+
+
+        /* -------------------------------------------------
+           CARREGAR
+        ------------------------------------------------- */
+
+        heroVideo.load();
+
+
+        /* -------------------------------------------------
+           PLAY
+        ------------------------------------------------- */
+
+        const playHeroVideo =
             () => {
 
-                const isMobile =
-                    window.matchMedia(
-                        "(max-width: 768px)"
-                    ).matches;
+                heroVideo.muted =
+                    true;
+
+                heroVideo.defaultMuted =
+                    true;
 
 
-                return isMobile
-                    ? "assets/videos/hero-video-mobile.mp4"
-                    : "assets/videos/hero-video.mp4";
+                const playPromise =
+                    heroVideo.play();
+
+
+                if (
+                    playPromise !==
+                    undefined
+                ) {
+
+                    playPromise.catch(
+                        error => {
+
+                            console.log(
+                                "Autoplay aguardando interação:",
+                                error
+                            );
+
+                        }
+                    );
+
+                }
 
             };
-
-
-        let currentSource =
-            getVideoSource();
-
-
-        /* -------------------------------------------------
-           CARREGAR VÍDEO
-        ------------------------------------------------- */
-
-        function loadHeroVideo() {
-
-            const newSource =
-                getVideoSource();
-
-
-            /* Evita recarregar o mesmo vídeo */
-
-            if (
-                heroVideo.src &&
-                heroVideo.src.endsWith(
-                    newSource
-                )
-            ) {
-
-                return;
-
-            }
-
-
-            currentSource =
-                newSource;
-
-
-            /* Pausar antes de trocar */
-
-            try {
-
-                heroVideo.pause();
-
-            } catch (error) {
-
-                console.log(
-                    "Erro ao pausar vídeo:",
-                    error
-                );
-
-            }
-
-
-            /* Limpar source */
-
-            heroVideo.removeAttribute(
-                "src"
-            );
-
-
-            /* Definir source */
-
-            heroVideo.src =
-                currentSource;
-
-
-            /* Garantir configurações */
-
-            heroVideo.muted =
-                true;
-
-            heroVideo.defaultMuted =
-                true;
-
-            heroVideo.autoplay =
-                true;
-
-            heroVideo.loop =
-                true;
-
-            heroVideo.playsInline =
-                true;
-
-
-            /* Forçar carregamento */
-
-            heroVideo.load();
-
-        }
-
-
-        /* -------------------------------------------------
-           INICIAR VÍDEO
-        ------------------------------------------------- */
-
-        function playHeroVideo() {
-
-            if (!heroVideo) return;
-
-
-            heroVideo.muted =
-                true;
-
-            heroVideo.defaultMuted =
-                true;
-
-
-            heroVideo.setAttribute(
-                "muted",
-                ""
-            );
-
-
-            heroVideo.setAttribute(
-                "playsinline",
-                ""
-            );
-
-
-            const playPromise =
-                heroVideo.play();
-
-
-            if (
-                playPromise &&
-                typeof playPromise.catch ===
-                    "function"
-            ) {
-
-                playPromise.catch(
-                    (error) => {
-
-                        console.log(
-                            "Vídeo aguardando interação:",
-                            error
-                        );
-
-                    }
-                );
-
-            }
-
-        }
 
 
         /* -------------------------------------------------
@@ -448,6 +358,9 @@ document.addEventListener(
 
                 playHeroVideo();
 
+            },
+            {
+                once: true
             }
         );
 
@@ -458,22 +371,15 @@ document.addEventListener(
 
                 playHeroVideo();
 
-            }
-        );
-
-
-        heroVideo.addEventListener(
-            "canplaythrough",
-            () => {
-
-                playHeroVideo();
-
+            },
+            {
+                once: true
             }
         );
 
 
         /* -------------------------------------------------
-           PÁGINA TOTALMENTE CARREGADA
+           LOAD DA PÁGINA
         ------------------------------------------------- */
 
         window.addEventListener(
@@ -482,27 +388,9 @@ document.addEventListener(
 
                 playHeroVideo();
 
-            }
-        );
-
-
-        /* -------------------------------------------------
-           PÁGINA VISÍVEL
-        ------------------------------------------------- */
-
-        document.addEventListener(
-            "visibilitychange",
-            () => {
-
-                if (
-                    document.visibilityState ===
-                    "visible"
-                ) {
-
-                    playHeroVideo();
-
-                }
-
+            },
+            {
+                once: true
             }
         );
 
@@ -529,6 +417,7 @@ document.addEventListener(
             "touchstart",
             resumeVideo,
             {
+                once: true,
                 passive: true
             }
         );
@@ -536,56 +425,38 @@ document.addEventListener(
 
         document.addEventListener(
             "click",
-            resumeVideo
-        );
-
-
-        /* -------------------------------------------------
-           MUDANÇA DE ORIENTAÇÃO / TAMANHO
-        ------------------------------------------------- */
-
-        let resizeTimer;
-
-
-        window.addEventListener(
-            "resize",
-            () => {
-
-                clearTimeout(
-                    resizeTimer
-                );
-
-
-                resizeTimer =
-                    setTimeout(
-                        () => {
-
-                            const newSource =
-                                getVideoSource();
-
-
-                            if (
-                                newSource !==
-                                currentSource
-                            ) {
-
-                                loadHeroVideo();
-
-                            }
-
-                        },
-                        250
-                    );
-
+            resumeVideo,
+            {
+                once: true
             }
         );
 
 
         /* -------------------------------------------------
-           INICIAR
+           VOLTAR PARA A PÁGINA
         ------------------------------------------------- */
 
-        loadHeroVideo();
+        document.addEventListener(
+            "visibilitychange",
+            () => {
+
+                if (
+                    document.visibilityState ===
+                    "visible"
+                ) {
+
+                    if (
+                        heroVideo.paused
+                    ) {
+
+                        playHeroVideo();
+
+                    }
+
+                }
+
+            }
+        );
 
     }
 );
@@ -599,7 +470,6 @@ const galleryItems =
     document.querySelectorAll(
         ".gallery-item"
     );
-
 
 if (galleryItems.length > 0) {
 
@@ -696,12 +566,11 @@ if (galleryItems.length > 0) {
 
     let currentImage = 0;
 
-
     const images = [];
 
 
     /* -----------------------------------------------------
-       CAPTURA DAS FOTOS
+       CAPTURAR FOTOS
     ----------------------------------------------------- */
 
     galleryItems.forEach(
@@ -730,9 +599,11 @@ if (galleryItems.length > 0) {
 
             images.push({
 
-                src: img.src,
+                src:
+                    img.src,
 
-                alt: img.alt,
+                alt:
+                    img.alt,
 
                 title:
                     title
@@ -749,7 +620,7 @@ if (galleryItems.length > 0) {
 
             item.addEventListener(
                 "click",
-                (event) => {
+                event => {
 
                     event.preventDefault();
 
@@ -766,7 +637,7 @@ if (galleryItems.length > 0) {
 
 
     /* -----------------------------------------------------
-       ATUALIZAR LIGHTBOX
+       ATUALIZAR
     ----------------------------------------------------- */
 
     function updateLightbox() {
@@ -885,7 +756,7 @@ if (galleryItems.length > 0) {
 
 
     /* -----------------------------------------------------
-       BOTÃO FECHAR
+       BOTÕES
     ----------------------------------------------------- */
 
     closeLightbox.addEventListener(
@@ -894,19 +765,11 @@ if (galleryItems.length > 0) {
     );
 
 
-    /* -----------------------------------------------------
-       PRÓXIMA
-    ----------------------------------------------------- */
-
     nextButton.addEventListener(
         "click",
         showNextImage
     );
 
-
-    /* -----------------------------------------------------
-       ANTERIOR
-    ----------------------------------------------------- */
 
     prevButton.addEventListener(
         "click",
@@ -920,7 +783,7 @@ if (galleryItems.length > 0) {
 
     lightbox.addEventListener(
         "click",
-        (event) => {
+        event => {
 
             if (
                 event.target ===
@@ -941,7 +804,7 @@ if (galleryItems.length > 0) {
 
     document.addEventListener(
         "keydown",
-        (event) => {
+        event => {
 
             if (
                 !lightbox.classList.contains(
@@ -955,7 +818,8 @@ if (galleryItems.length > 0) {
 
 
             if (
-                event.key === "Escape"
+                event.key ===
+                "Escape"
             ) {
 
                 closeLightboxFunction();
@@ -964,7 +828,8 @@ if (galleryItems.length > 0) {
 
 
             if (
-                event.key === "ArrowRight"
+                event.key ===
+                "ArrowRight"
             ) {
 
                 showNextImage();
@@ -973,7 +838,8 @@ if (galleryItems.length > 0) {
 
 
             if (
-                event.key === "ArrowLeft"
+                event.key ===
+                "ArrowLeft"
             ) {
 
                 showPreviousImage();
@@ -995,20 +861,24 @@ const testimonialTrack =
         ".testimonials-track"
     );
 
+
 const testimonialCards =
     document.querySelectorAll(
         ".testimonial-card"
     );
+
 
 const testimonialNext =
     document.querySelector(
         ".testimonial-next"
     );
 
+
 const testimonialPrev =
     document.querySelector(
         ".testimonial-prev"
     );
+
 
 const testimonialDots =
     document.querySelectorAll(
@@ -1031,7 +901,8 @@ if (
         testimonialTrack.style.transform =
             "translateX(-" +
             (
-                testimonialIndex * 100
+                testimonialIndex *
+                100
             ) +
             "%)";
 
@@ -1042,7 +913,7 @@ if (
                 dot.classList.toggle(
                     "active",
                     index ===
-                        testimonialIndex
+                    testimonialIndex
                 );
 
             }

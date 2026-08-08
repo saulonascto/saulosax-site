@@ -97,13 +97,15 @@ window.addEventListener("scroll", () => {
 
         backTop.style.opacity = "1";
 
-        backTop.style.visibility = "visible";
+        backTop.style.visibility =
+            "visible";
 
     } else {
 
         backTop.style.opacity = "0";
 
-        backTop.style.visibility = "hidden";
+        backTop.style.visibility =
+            "hidden";
 
     }
 
@@ -162,147 +164,272 @@ if ("IntersectionObserver" in window) {
 
 /* =========================================================
    HERO VIDEO
-   AUTOPLAY / MOBILE / SAFARI
+   UM ÚNICO VIDEO NO HTML
+
+   DESKTOP:
+   assets/videos/hero-video.mp4
+
+   MOBILE:
+   assets/videos/hero-video-mobile.mp4
+
+   O JavaScript escolhe automaticamente o arquivo.
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    const heroVideo =
+        document.querySelector(".hero-video");
+
+
+    if (!heroVideo) return;
+
+
+    /* -----------------------------------------------------
+       ARQUIVOS
+    ----------------------------------------------------- */
+
     const desktopVideo =
-        document.querySelector(".hero-video-desktop");
+        "assets/videos/hero-video.mp4";
+
 
     const mobileVideo =
-        document.querySelector(".hero-video-mobile");
+        "assets/videos/hero-video-mobile.mp4";
 
 
-    if (!desktopVideo && !mobileVideo) return;
+    /* -----------------------------------------------------
+       CONFIGURAÇÕES DO VIDEO
+    ----------------------------------------------------- */
 
+    heroVideo.muted = true;
 
-    /* =====================================================
-       IDENTIFICAR VÍDEO CORRETO
-    ===================================================== */
+    heroVideo.defaultMuted = true;
 
-    const isMobile =
-        window.matchMedia("(max-width: 768px)").matches;
-
-
-    const activeVideo =
-        isMobile
-            ? mobileVideo
-            : desktopVideo;
-
-
-    if (!activeVideo) return;
-
-
-    /* =====================================================
-       CONFIGURAÇÕES PARA AUTOPLAY
-    ===================================================== */
-
-    activeVideo.muted = true;
-
-    activeVideo.defaultMuted = true;
-
-    activeVideo.setAttribute(
+    heroVideo.setAttribute(
         "muted",
         ""
     );
 
-    activeVideo.setAttribute(
+    heroVideo.setAttribute(
         "autoplay",
         ""
     );
 
-    activeVideo.setAttribute(
+    heroVideo.setAttribute(
         "playsinline",
         ""
     );
 
-    activeVideo.setAttribute(
+    heroVideo.setAttribute(
         "webkit-playsinline",
         ""
     );
 
 
-    /* =====================================================
-       FUNÇÃO DE REPRODUÇÃO
-    ===================================================== */
+    /* -----------------------------------------------------
+       ESCOLHER VIDEO DE ACORDO COM A TELA
+    ----------------------------------------------------- */
 
-    const playHeroVideo = () => {
-
-        activeVideo.muted = true;
-
-        const playPromise =
-            activeVideo.play();
-
+    const getVideoSource = () => {
 
         if (
-            playPromise !== undefined
+            window.matchMedia(
+                "(max-width: 768px)"
+            ).matches
         ) {
 
-            playPromise.catch(() => {
+            return mobileVideo;
 
-                /*
-                 Alguns navegadores móveis
-                 podem bloquear o autoplay.
+        }
 
-                 A reprodução será tentada
-                 novamente após interação.
-                */
+        return desktopVideo;
 
-            });
+    };
+
+
+    /* -----------------------------------------------------
+       DEFINIR VIDEO
+    ----------------------------------------------------- */
+
+    const setHeroVideoSource = () => {
+
+        const source =
+            getVideoSource();
+
+
+        /*
+         Evita recarregar o mesmo vídeo
+         desnecessariamente.
+        */
+
+        if (
+            heroVideo.dataset.currentSource ===
+            source
+        ) {
+
+            return;
+
+        }
+
+
+        heroVideo.dataset.currentSource =
+            source;
+
+
+        /*
+         Remove sources anteriores.
+        */
+
+        while (heroVideo.firstChild) {
+
+            heroVideo.removeChild(
+                heroVideo.firstChild
+            );
+
+        }
+
+
+        /*
+         Cria novo source.
+        */
+
+        const sourceElement =
+            document.createElement("source");
+
+
+        sourceElement.src =
+            source;
+
+
+        sourceElement.type =
+            "video/mp4";
+
+
+        heroVideo.appendChild(
+            sourceElement
+        );
+
+
+        /*
+         Recarrega o elemento.
+        */
+
+        heroVideo.load();
+
+
+        /*
+         Tenta iniciar depois
+         que o navegador processar
+         o novo source.
+        */
+
+        const playVideo = () => {
+
+            heroVideo.muted = true;
+
+            const playPromise =
+                heroVideo.play();
+
+
+            if (
+                playPromise !== undefined
+            ) {
+
+                playPromise.catch(() => {
+
+                    /*
+                     Alguns navegadores,
+                     especialmente Safari,
+                     podem bloquear o autoplay.
+                    */
+
+                });
+
+            }
+
+        };
+
+
+        heroVideo.addEventListener(
+            "loadeddata",
+            playVideo,
+            {
+                once: true
+            }
+        );
+
+
+        /*
+         Caso o vídeo já esteja pronto.
+        */
+
+        if (
+            heroVideo.readyState >= 2
+        ) {
+
+            playVideo();
 
         }
 
     };
 
 
-    /* =====================================================
-       VÍDEO PRONTO
-    ===================================================== */
+    /* -----------------------------------------------------
+       DEFINIR VIDEO INICIAL
+    ----------------------------------------------------- */
 
-    if (
-        activeVideo.readyState >= 2
-    ) {
-
-        playHeroVideo();
-
-    } else {
-
-        activeVideo.addEventListener(
-            "loadeddata",
-            playHeroVideo,
-            {
-                once: true
-            }
-        );
-
-    }
+    setHeroVideoSource();
 
 
-    /* =====================================================
-       PÁGINA TOTALMENTE CARREGADA
-    ===================================================== */
+    /* -----------------------------------------------------
+       TENTAR NOVAMENTE APÓS LOAD
+    ----------------------------------------------------- */
 
     window.addEventListener(
         "load",
-        playHeroVideo,
+        () => {
+
+            heroVideo.muted = true;
+
+            const playPromise =
+                heroVideo.play();
+
+
+            if (
+                playPromise !== undefined
+            ) {
+
+                playPromise.catch(() => {});
+
+            }
+
+        },
         {
             once: true
         }
     );
 
 
-    /* =====================================================
-       PRIMEIRA INTERAÇÃO
-    ===================================================== */
+    /* -----------------------------------------------------
+       RETOMAR APÓS INTERAÇÃO DO USUÁRIO
+    ----------------------------------------------------- */
 
-    const resumeHeroVideo = () => {
+    const resumeVideo = () => {
 
-        if (
-            activeVideo.paused
-        ) {
+        if (heroVideo.paused) {
 
-            playHeroVideo();
+            heroVideo.muted = true;
+
+            const playPromise =
+                heroVideo.play();
+
+
+            if (
+                playPromise !== undefined
+            ) {
+
+                playPromise.catch(() => {});
+
+            }
 
         }
 
@@ -311,9 +438,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.addEventListener(
         "touchstart",
-        resumeHeroVideo,
+        resumeVideo,
         {
-            once: true,
             passive: true
         }
     );
@@ -321,33 +447,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.addEventListener(
         "click",
-        resumeHeroVideo,
-        {
-            once: true
-        }
+        resumeVideo
     );
 
 
-    /* =====================================================
-       VOLTAR A REPRODUZIR SE O NAVEGADOR PAUSAR
-    ===================================================== */
+    /* -----------------------------------------------------
+       SE A TELA MUDAR DE TAMANHO
+       TROCA O VIDEO
+    ----------------------------------------------------- */
 
-    activeVideo.addEventListener(
-        "pause",
+    let lastMobileState =
+        window.matchMedia(
+            "(max-width: 768px)"
+        ).matches;
+
+
+    window.addEventListener(
+        "resize",
         () => {
 
-            /*
-             Não força reprodução
-             enquanto a página estiver
-             em segundo plano.
-            */
+            const currentMobileState =
+                window.matchMedia(
+                    "(max-width: 768px)"
+                ).matches;
+
 
             if (
-                document.visibilityState ===
-                "visible"
+                currentMobileState !==
+                lastMobileState
             ) {
 
-                playHeroVideo();
+                lastMobileState =
+                    currentMobileState;
+
+
+                setHeroVideoSource();
 
             }
 
@@ -362,7 +496,9 @@ document.addEventListener("DOMContentLoaded", () => {
 ========================================================= */
 
 const galleryItems =
-    document.querySelectorAll(".gallery-item");
+    document.querySelectorAll(
+        ".gallery-item"
+    );
 
 
 if (galleryItems.length > 0) {
@@ -415,7 +551,9 @@ if (galleryItems.length > 0) {
     `;
 
 
-    document.body.appendChild(lightbox);
+    document.body.appendChild(
+        lightbox
+    );
 
 
     const lightboxImage =
@@ -465,7 +603,7 @@ if (galleryItems.length > 0) {
     ===================================================== */
 
     galleryItems.forEach(
-        (item, index) => {
+        (item) => {
 
             const img =
                 item.querySelector("img");
@@ -494,12 +632,12 @@ if (galleryItems.length > 0) {
 
                 title:
                     title
-                        ? title.textContent
+                        ? title.textContent.trim()
                         : "",
 
                 description:
                     description
-                        ? description.textContent
+                        ? description.textContent.trim()
                         : ""
 
             });
@@ -511,7 +649,25 @@ if (galleryItems.length > 0) {
 
                     event.preventDefault();
 
-                    currentImage = index;
+
+                    currentImage =
+                        images.indexOf(
+                            images.find(
+                                image =>
+                                    image.src ===
+                                    img.src
+                            )
+                        );
+
+
+                    if (
+                        currentImage < 0
+                    ) {
+
+                        currentImage = 0;
+
+                    }
+
 
                     openLightbox();
 
@@ -533,6 +689,9 @@ if (galleryItems.length > 0) {
 
         const image =
             images[currentImage];
+
+
+        if (!image) return;
 
 
         lightboxImage.src =
@@ -645,30 +804,42 @@ if (galleryItems.length > 0) {
        BOTÃO FECHAR
     ===================================================== */
 
-    closeLightbox.addEventListener(
-        "click",
-        closeLightboxFunction
-    );
+    if (closeLightbox) {
+
+        closeLightbox.addEventListener(
+            "click",
+            closeLightboxFunction
+        );
+
+    }
 
 
     /* =====================================================
        PRÓXIMA
     ===================================================== */
 
-    nextButton.addEventListener(
-        "click",
-        showNextImage
-    );
+    if (nextButton) {
+
+        nextButton.addEventListener(
+            "click",
+            showNextImage
+        );
+
+    }
 
 
     /* =====================================================
        ANTERIOR
     ===================================================== */
 
-    prevButton.addEventListener(
-        "click",
-        showPreviousImage
-    );
+    if (prevButton) {
+
+        prevButton.addEventListener(
+            "click",
+            showPreviousImage
+        );
+
+    }
 
 
     /* =====================================================

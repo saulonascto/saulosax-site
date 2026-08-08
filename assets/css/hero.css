@@ -45,33 +45,11 @@
 
     object-fit: cover;
 
-    object-position: center;
+    object-position: center center;
 
     z-index: 0;
 
     pointer-events: none;
-
-}
-
-
-/* =========================================================
-   VÍDEO DESKTOP
-========================================================= */
-
-.hero-video-desktop {
-
-    display: block;
-
-}
-
-
-/* =========================================================
-   VÍDEO MOBILE
-========================================================= */
-
-.hero-video-mobile {
-
-    display: none;
 
 }
 
@@ -89,9 +67,9 @@
     background:
         linear-gradient(
             180deg,
-            rgba(0,0,0,.45) 0%,
-            rgba(0,0,0,.55) 50%,
-            rgba(0,0,0,.65) 100%
+            rgba(0, 0, 0, .45) 0%,
+            rgba(0, 0, 0, .55) 50%,
+            rgba(0, 0, 0, .65) 100%
         );
 
     z-index: 1;
@@ -132,7 +110,8 @@
 
     margin: auto;
 
-    animation: heroFade 1.2s ease forwards;
+    animation:
+        heroFade 1.2s ease forwards;
 
 }
 
@@ -170,9 +149,16 @@
 
     margin: 0 auto 25px;
 
-    font-family: 'Cinzel', serif;
+    font-family:
+        'Cinzel',
+        serif;
 
-    font-size: clamp(2.4rem, 5vw, 4.2rem);
+    font-size:
+        clamp(
+            2.4rem,
+            5vw,
+            4.2rem
+        );
 
     font-weight: 700;
 
@@ -199,7 +185,13 @@
 
     line-height: 1.8;
 
-    color: rgba(255,255,255,.92);
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .92
+        );
 
 }
 
@@ -242,7 +234,9 @@
 
     text-decoration: none;
 
-    font-family: 'Montserrat', sans-serif;
+    font-family:
+        'Montserrat',
+        sans-serif;
 
     font-weight: 600;
 
@@ -274,10 +268,17 @@
 
 .btn-primary:hover {
 
-    transform: translateY(-4px);
+    transform:
+        translateY(-4px);
 
     box-shadow:
-        0 15px 35px rgba(200,169,91,.35);
+        0 15px 35px
+        rgba(
+            200,
+            169,
+            91,
+            .35
+        );
 
 }
 
@@ -288,7 +289,9 @@
 
 .btn-secondary {
 
-    border: 2px solid var(--white);
+    border:
+        2px solid
+        var(--white);
 
     color: var(--white);
 
@@ -301,9 +304,11 @@
 
 .btn-secondary:hover {
 
-    background: var(--white);
+    background:
+        var(--white);
 
-    color: var(--black);
+    color:
+        var(--black);
 
 }
 
@@ -320,7 +325,8 @@
 
     bottom: 35px;
 
-    transform: translateX(-50%);
+    transform:
+        translateX(-50%);
 
     z-index: 2;
 
@@ -339,7 +345,9 @@
 
     height: 48px;
 
-    border: 2px solid var(--white);
+    border:
+        2px solid
+        var(--white);
 
     border-radius: 30px;
 
@@ -364,15 +372,18 @@
 
     border-radius: 50%;
 
-    background: var(--white);
+    background:
+        var(--white);
 
     left: 50%;
 
     top: 8px;
 
-    transform: translateX(-50%);
+    transform:
+        translateX(-50%);
 
-    animation: scrollDown 2s infinite;
+    animation:
+        scrollDown 2s infinite;
 
 }
 
@@ -387,23 +398,37 @@
 
         opacity: 1;
 
-        transform: translate(-50%, 0);
+        transform:
+            translate(
+                -50%,
+                0
+            );
 
     }
+
 
     70% {
 
         opacity: 0;
 
-        transform: translate(-50%, 18px);
+        transform:
+            translate(
+                -50%,
+                18px
+            );
 
     }
+
 
     100% {
 
         opacity: 0;
 
-        transform: translate(-50%, 18px);
+        transform:
+            translate(
+                -50%,
+                18px
+            );
 
     }
 
@@ -420,15 +445,18 @@
 
         opacity: 0;
 
-        transform: translateY(35px);
+        transform:
+            translateY(35px);
 
     }
+
 
     to {
 
         opacity: 1;
 
-        transform: translateY(0);
+        transform:
+            translateY(0);
 
     }
 
@@ -447,13 +475,15 @@
 
     }
 
+
     .hero-content h1 {
 
-        font-size: clamp(
-            2.3rem,
-            5.5vw,
-            3.8rem
-        );
+        font-size:
+            clamp(
+                2.3rem,
+                5.5vw,
+                3.8rem
+            );
 
     }
 
@@ -468,56 +498,46 @@
 
     #hero {
 
-        padding: 110px 20px 80px;
+        padding:
+            110px 20px 80px;
 
         min-height: 100svh;
 
     }
 
 
-    /* VÍDEO DESKTOP DESATIVADO */
+    /* -----------------------------------------
+       VÍDEO MOBILE
+    ----------------------------------------- */
 
-    .hero-video-desktop {
+    .hero-video {
 
-        display: none;
-
-    }
-
-
-    /* VÍDEO MOBILE ATIVADO */
-
-    .hero-video-mobile {
-
-        display: block;
+        object-position:
+            center center;
 
     }
 
 
-    /* POSIÇÃO DO VÍDEO MOBILE */
-
-    .hero-video-mobile {
-
-        object-position: center center;
-
-    }
-
-
-    /* OVERLAY MOBILE */
+    /* -----------------------------------------
+       OVERLAY MOBILE
+    ----------------------------------------- */
 
     .hero-overlay {
 
         background:
             linear-gradient(
                 180deg,
-                rgba(0,0,0,.50) 0%,
-                rgba(0,0,0,.60) 50%,
-                rgba(0,0,0,.70) 100%
+                rgba(0, 0, 0, .50) 0%,
+                rgba(0, 0, 0, .60) 50%,
+                rgba(0, 0, 0, .70) 100%
             );
 
     }
 
 
-    /* CONTEÚDO */
+    /* -----------------------------------------
+       CONTEÚDO
+    ----------------------------------------- */
 
     .hero-content {
 
@@ -528,7 +548,9 @@
     }
 
 
-    /* SUBTÍTULO */
+    /* -----------------------------------------
+       SUBTÍTULO
+    ----------------------------------------- */
 
     .hero-subtitle {
 
@@ -541,15 +563,18 @@
     }
 
 
-    /* TÍTULO */
+    /* -----------------------------------------
+       TÍTULO
+    ----------------------------------------- */
 
     .hero-content h1 {
 
-        font-size: clamp(
-            2rem,
-            9vw,
-            3rem
-        );
+        font-size:
+            clamp(
+                2rem,
+                9vw,
+                3rem
+            );
 
         line-height: 1.18;
 
@@ -558,7 +583,9 @@
     }
 
 
-    /* TEXTO */
+    /* -----------------------------------------
+       TEXTO
+    ----------------------------------------- */
 
     .hero-content p {
 
@@ -571,7 +598,9 @@
     }
 
 
-    /* BOTÕES */
+    /* -----------------------------------------
+       BOTÕES
+    ----------------------------------------- */
 
     .hero-buttons {
 
@@ -588,12 +617,15 @@
 
         max-width: 320px;
 
-        padding: 15px 28px;
+        padding:
+            15px 28px;
 
     }
 
 
-    /* SCROLL */
+    /* -----------------------------------------
+       SCROLL
+    ----------------------------------------- */
 
     .scroll-down {
 
@@ -669,6 +701,7 @@
         animation: none;
 
     }
+
 
     .scroll-down span::before {
 

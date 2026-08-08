@@ -1,5 +1,6 @@
+
 /* =========================================================
-   FINESSE / SAULO SAX
+   SAULO SAX
    JAVASCRIPT PRINCIPAL
 ========================================================= */
 
@@ -13,6 +14,7 @@ const menuToggle =
 
 const nav =
     document.querySelector(".nav");
+
 
 if (menuToggle && nav) {
 
@@ -28,29 +30,26 @@ if (menuToggle && nav) {
     );
 
 
-    /* Fechar menu ao clicar em um link */
-
     const navLinks =
         nav.querySelectorAll("a");
 
-    navLinks.forEach(link => {
 
-        link.addEventListener(
-            "click",
-            () => {
+    navLinks.forEach(
+        link => {
 
-                nav.classList.remove(
-                    "active"
-                );
+            link.addEventListener(
+                "click",
+                () => {
 
-                menuToggle.classList.remove(
-                    "active"
-                );
+                    nav.classList.remove("active");
 
-            }
-        );
+                    menuToggle.classList.remove("active");
 
-    });
+                }
+            );
+
+        }
+    );
 
 }
 
@@ -62,6 +61,7 @@ if (menuToggle && nav) {
 const header =
     document.querySelector("header");
 
+
 if (header) {
 
     const updateHeader =
@@ -69,15 +69,11 @@ if (header) {
 
             if (window.scrollY > 50) {
 
-                header.classList.add(
-                    "scrolled"
-                );
+                header.classList.add("scrolled");
 
             } else {
 
-                header.classList.remove(
-                    "scrolled"
-                );
+                header.classList.remove("scrolled");
 
             }
 
@@ -105,6 +101,7 @@ if (header) {
 const backTop =
     document.querySelector(".back-top");
 
+
 if (backTop) {
 
     const updateBackTop =
@@ -112,19 +109,15 @@ if (backTop) {
 
             if (window.scrollY > 500) {
 
-                backTop.style.opacity =
-                    "1";
+                backTop.style.opacity = "1";
 
-                backTop.style.visibility =
-                    "visible";
+                backTop.style.visibility = "visible";
 
             } else {
 
-                backTop.style.opacity =
-                    "0";
+                backTop.style.opacity = "0";
 
-                backTop.style.visibility =
-                    "hidden";
+                backTop.style.visibility = "hidden";
 
             }
 
@@ -154,22 +147,19 @@ const elements =
         ".service-card, .about-content, .gallery-item, .testimonial-card, .video-card"
     );
 
+
 if ("IntersectionObserver" in window) {
 
     const observer =
         new IntersectionObserver(
-            (entries) => {
+            entries => {
 
                 entries.forEach(
                     entry => {
 
-                        if (
-                            entry.isIntersecting
-                        ) {
+                        if (entry.isIntersecting) {
 
-                            entry.target.classList.add(
-                                "show"
-                            );
+                            entry.target.classList.add("show");
 
                             observer.unobserve(
                                 entry.target
@@ -190,9 +180,7 @@ if ("IntersectionObserver" in window) {
     elements.forEach(
         element => {
 
-            observer.observe(
-                element
-            );
+            observer.observe(element);
 
         }
     );
@@ -202,9 +190,7 @@ if ("IntersectionObserver" in window) {
     elements.forEach(
         element => {
 
-            element.classList.add(
-                "show"
-            );
+            element.classList.add("show");
 
         }
     );
@@ -214,8 +200,8 @@ if ("IntersectionObserver" in window) {
 
 /* =========================================================
    HERO VIDEO
-   DESKTOP / MOBILE
-   COMPATÍVEL COM SAFARI
+   DESKTOP + MOBILE
+   SAFARI / CHROME / EDGE
 ========================================================= */
 
 document.addEventListener(
@@ -223,36 +209,14 @@ document.addEventListener(
     () => {
 
         const heroVideo =
-            document.querySelector(
-                "#hero-video"
-            );
+            document.querySelector("#hero-video");
 
 
         if (!heroVideo) return;
 
 
         /* -------------------------------------------------
-           DETECTAR MOBILE
-        ------------------------------------------------- */
-
-        const isMobile =
-            window.matchMedia(
-                "(max-width: 768px)"
-            ).matches;
-
-
-        /* -------------------------------------------------
-           DEFINIR ARQUIVO
-        ------------------------------------------------- */
-
-        const videoSource =
-            isMobile
-                ? "assets/videos/hero-video-mobile.mp4"
-                : "assets/videos/hero-video.mp4";
-
-
-        /* -------------------------------------------------
-           CONFIGURAÇÕES
+           CONFIGURAÇÕES NATIVAS DO VIDEO
         ------------------------------------------------- */
 
         heroVideo.muted = true;
@@ -265,8 +229,6 @@ document.addEventListener(
 
         heroVideo.playsInline = true;
 
-
-        /* Atributos necessários para Safari */
 
         heroVideo.setAttribute(
             "muted",
@@ -295,48 +257,94 @@ document.addEventListener(
 
 
         /* -------------------------------------------------
-           DEFINIR VÍDEO
+           DEFINIR VIDEO CONFORME A TELA
         ------------------------------------------------- */
 
-        heroVideo.src =
-            videoSource;
+        const getVideoSource =
+            () => {
+
+                const isMobile =
+                    window.matchMedia(
+                        "(max-width: 768px)"
+                    ).matches;
+
+
+                if (isMobile) {
+
+                    return "assets/videos/hero-video-mobile.mp4";
+
+                }
+
+
+                return "assets/videos/hero-video.mp4";
+
+            };
 
 
         /* -------------------------------------------------
-           CARREGAR
+           CARREGAR VIDEO
         ------------------------------------------------- */
 
-        heroVideo.load();
+        const loadHeroVideo =
+            () => {
+
+                const newSource =
+                    getVideoSource();
+
+
+                /*
+                 Evita recarregar o mesmo vídeo
+                */
+
+                if (
+                    heroVideo.dataset.source ===
+                    newSource
+                ) {
+
+                    return;
+
+                }
+
+
+                heroVideo.dataset.source =
+                    newSource;
+
+
+                heroVideo.src =
+                    newSource;
+
+
+                heroVideo.load();
+
+            };
 
 
         /* -------------------------------------------------
-           PLAY
+           TENTAR REPRODUZIR
         ------------------------------------------------- */
 
         const playHeroVideo =
             () => {
 
-                heroVideo.muted =
-                    true;
+                heroVideo.muted = true;
 
-                heroVideo.defaultMuted =
-                    true;
+                heroVideo.defaultMuted = true;
 
 
-                const playPromise =
+                const promise =
                     heroVideo.play();
 
 
                 if (
-                    playPromise !==
-                    undefined
+                    promise &&
+                    typeof promise.catch === "function"
                 ) {
 
-                    playPromise.catch(
+                    promise.catch(
                         error => {
 
                             console.log(
-                                "Autoplay aguardando interação:",
+                                "Autoplay do Hero aguardando interação:",
                                 error
                             );
 
@@ -349,7 +357,7 @@ document.addEventListener(
 
 
         /* -------------------------------------------------
-           QUANDO ESTIVER PRONTO
+           QUANDO O VIDEO ESTIVER PRONTO
         ------------------------------------------------- */
 
         heroVideo.addEventListener(
@@ -358,9 +366,6 @@ document.addEventListener(
 
                 playHeroVideo();
 
-            },
-            {
-                once: true
             }
         );
 
@@ -371,15 +376,22 @@ document.addEventListener(
 
                 playHeroVideo();
 
-            },
-            {
-                once: true
+            }
+        );
+
+
+        heroVideo.addEventListener(
+            "loadedmetadata",
+            () => {
+
+                playHeroVideo();
+
             }
         );
 
 
         /* -------------------------------------------------
-           LOAD DA PÁGINA
+           QUANDO A PÁGINA TERMINAR DE CARREGAR
         ------------------------------------------------- */
 
         window.addEventListener(
@@ -388,9 +400,6 @@ document.addEventListener(
 
                 playHeroVideo();
 
-            },
-            {
-                once: true
             }
         );
 
@@ -402,9 +411,7 @@ document.addEventListener(
         const resumeVideo =
             () => {
 
-                if (
-                    heroVideo.paused
-                ) {
+                if (heroVideo.paused) {
 
                     playHeroVideo();
 
@@ -417,7 +424,6 @@ document.addEventListener(
             "touchstart",
             resumeVideo,
             {
-                once: true,
                 passive: true
             }
         );
@@ -425,15 +431,12 @@ document.addEventListener(
 
         document.addEventListener(
             "click",
-            resumeVideo,
-            {
-                once: true
-            }
+            resumeVideo
         );
 
 
         /* -------------------------------------------------
-           VOLTAR PARA A PÁGINA
+           VOLTAR PARA A ABA
         ------------------------------------------------- */
 
         document.addEventListener(
@@ -445,18 +448,57 @@ document.addEventListener(
                     "visible"
                 ) {
 
-                    if (
-                        heroVideo.paused
-                    ) {
-
-                        playHeroVideo();
-
-                    }
+                    playHeroVideo();
 
                 }
 
             }
         );
+
+
+        /* -------------------------------------------------
+           TROCAR VIDEO SE A TELA MUDAR
+           DESKTOP <-> MOBILE
+        ------------------------------------------------- */
+
+        const mediaQuery =
+            window.matchMedia(
+                "(max-width: 768px)"
+            );
+
+
+        const handleScreenChange =
+            () => {
+
+                loadHeroVideo();
+
+            };
+
+
+        if (
+            typeof mediaQuery.addEventListener ===
+            "function"
+        ) {
+
+            mediaQuery.addEventListener(
+                "change",
+                handleScreenChange
+            );
+
+        } else {
+
+            mediaQuery.addListener(
+                handleScreenChange
+            );
+
+        }
+
+
+        /* -------------------------------------------------
+           INICIALIZAR
+        ------------------------------------------------- */
+
+        loadHeroVideo();
 
     }
 );
@@ -471,12 +513,11 @@ const galleryItems =
         ".gallery-item"
     );
 
+
 if (galleryItems.length > 0) {
 
     const lightbox =
-        document.createElement(
-            "div"
-        );
+        document.createElement("div");
 
 
     lightbox.className =
@@ -569,17 +610,11 @@ if (galleryItems.length > 0) {
     const images = [];
 
 
-    /* -----------------------------------------------------
-       CAPTURAR FOTOS
-    ----------------------------------------------------- */
-
     galleryItems.forEach(
         (item, index) => {
 
             const img =
-                item.querySelector(
-                    "img"
-                );
+                item.querySelector("img");
 
 
             if (!img) return;
@@ -599,11 +634,9 @@ if (galleryItems.length > 0) {
 
             images.push({
 
-                src:
-                    img.src,
+                src: img.src,
 
-                alt:
-                    img.alt,
+                alt: img.alt,
 
                 title:
                     title
@@ -636,10 +669,6 @@ if (galleryItems.length > 0) {
     );
 
 
-    /* -----------------------------------------------------
-       ATUALIZAR
-    ----------------------------------------------------- */
-
     function updateLightbox() {
 
         if (!images.length) return;
@@ -667,10 +696,6 @@ if (galleryItems.length > 0) {
     }
 
 
-    /* -----------------------------------------------------
-       ABRIR
-    ----------------------------------------------------- */
-
     function openLightbox() {
 
         if (!images.length) return;
@@ -690,10 +715,6 @@ if (galleryItems.length > 0) {
     }
 
 
-    /* -----------------------------------------------------
-       FECHAR
-    ----------------------------------------------------- */
-
     function closeLightboxFunction() {
 
         lightbox.classList.remove(
@@ -706,10 +727,6 @@ if (galleryItems.length > 0) {
 
     }
 
-
-    /* -----------------------------------------------------
-       PRÓXIMA
-    ----------------------------------------------------- */
 
     function showNextImage() {
 
@@ -731,18 +748,12 @@ if (galleryItems.length > 0) {
     }
 
 
-    /* -----------------------------------------------------
-       ANTERIOR
-    ----------------------------------------------------- */
-
     function showPreviousImage() {
 
         currentImage--;
 
 
-        if (
-            currentImage < 0
-        ) {
+        if (currentImage < 0) {
 
             currentImage =
                 images.length - 1;
@@ -754,10 +765,6 @@ if (galleryItems.length > 0) {
 
     }
 
-
-    /* -----------------------------------------------------
-       BOTÕES
-    ----------------------------------------------------- */
 
     closeLightbox.addEventListener(
         "click",
@@ -777,10 +784,6 @@ if (galleryItems.length > 0) {
     );
 
 
-    /* -----------------------------------------------------
-       CLICAR NO FUNDO
-    ----------------------------------------------------- */
-
     lightbox.addEventListener(
         "click",
         event => {
@@ -798,10 +801,6 @@ if (galleryItems.length > 0) {
     );
 
 
-    /* -----------------------------------------------------
-       TECLADO
-    ----------------------------------------------------- */
-
     document.addEventListener(
         "keydown",
         event => {
@@ -817,30 +816,21 @@ if (galleryItems.length > 0) {
             }
 
 
-            if (
-                event.key ===
-                "Escape"
-            ) {
+            if (event.key === "Escape") {
 
                 closeLightboxFunction();
 
             }
 
 
-            if (
-                event.key ===
-                "ArrowRight"
-            ) {
+            if (event.key === "ArrowRight") {
 
                 showNextImage();
 
             }
 
 
-            if (
-                event.key ===
-                "ArrowLeft"
-            ) {
+            if (event.key === "ArrowLeft") {
 
                 showPreviousImage();
 
@@ -901,8 +891,7 @@ if (
         testimonialTrack.style.transform =
             "translateX(-" +
             (
-                testimonialIndex *
-                100
+                testimonialIndex * 100
             ) +
             "%)";
 
@@ -947,9 +936,7 @@ if (
         testimonialIndex--;
 
 
-        if (
-            testimonialIndex < 0
-        ) {
+        if (testimonialIndex < 0) {
 
             testimonialIndex =
                 testimonialCards.length - 1;
@@ -1158,9 +1145,7 @@ if (contactForm) {
 
             } catch (error) {
 
-                console.error(
-                    error
-                );
+                console.error(error);
 
 
                 button.disabled =

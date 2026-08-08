@@ -1,6 +1,13 @@
-/* ===========================
-HEADER / SCROLL
-=========================== */
+
+/* =========================================================
+   SAULO NASCIMENTO | SAXOFONISTA
+   JAVASCRIPT PRINCIPAL
+========================================================= */
+
+
+/* =========================================================
+   HEADER / SCROLL
+========================================================= */
 
 window.addEventListener("scroll", () => {
 
@@ -20,134 +27,271 @@ window.addEventListener("scroll", () => {
 
 });
 
-/* ===========================
-MENU MOBILE
-=========================== */
+
+/* =========================================================
+   MENU MOBILE
+========================================================= */
 
 const menuButton = document.querySelector(".menu-toggle");
 const menu = document.querySelector(".nav-menu");
 
 if (menuButton && menu) {
 
+    menuButton.addEventListener("click", () => {
 
-menuButton.addEventListener("click", () => {
+        menu.classList.toggle("active");
+        menuButton.classList.toggle("active");
 
-    menu.classList.toggle("active");
-    menuButton.classList.toggle("active");
-
-});
-
+    });
 
 }
 
-/* ===========================
-FECHAR MENU AO CLICAR
-=========================== */
+
+/* =========================================================
+   FECHAR MENU AO CLICAR
+========================================================= */
 
 const menuLinks = document.querySelectorAll(".nav-menu a");
 
 menuLinks.forEach(link => {
 
+    link.addEventListener("click", () => {
 
-link.addEventListener("click", () => {
+        if (menu) {
 
-    if (menu) {
-        menu.classList.remove("active");
-    }
+            menu.classList.remove("active");
 
-    if (menuButton) {
-        menuButton.classList.remove("active");
-    }
+        }
+
+        if (menuButton) {
+
+            menuButton.classList.remove("active");
+
+        }
+
+    });
 
 });
 
 
-});
-
-/* ===========================
-BOTÃO VOLTAR AO TOPO
-=========================== */
+/* =========================================================
+   BOTÃO VOLTAR AO TOPO
+========================================================= */
 
 const backTop = document.querySelector(".back-top");
 
 window.addEventListener("scroll", () => {
 
+    if (!backTop) return;
 
-if (!backTop) return;
+    if (window.scrollY > 500) {
 
-if (window.scrollY > 500) {
+        backTop.style.opacity = "1";
+        backTop.style.visibility = "visible";
 
-    backTop.style.opacity = "1";
-    backTop.style.visibility = "visible";
+    } else {
 
-} else {
+        backTop.style.opacity = "0";
+        backTop.style.visibility = "hidden";
 
-    backTop.style.opacity = "0";
-    backTop.style.visibility = "hidden";
-
-}
-
+    }
 
 });
 
-/* ===========================
-ANIMAÇÃO AO ROLAR
-=========================== */
+
+/* =========================================================
+   ANIMAÇÃO AO ROLAR
+========================================================= */
 
 const elements = document.querySelectorAll(
-".service-card, .about-content, .gallery-item, .testimonial-card, .video-card"
+    ".service-card, .about-content, .gallery-item, .testimonial-card, .video-card"
 );
 
 if ("IntersectionObserver" in window) {
 
+    const observer = new IntersectionObserver(
+        (entries) => {
 
-const observer = new IntersectionObserver(
-    (entries) => {
+            entries.forEach(entry => {
 
-        entries.forEach(entry => {
+                if (entry.isIntersecting) {
 
-            if (entry.isIntersecting) {
+                    entry.target.classList.add("show");
 
-                entry.target.classList.add("show");
+                }
 
-            }
+            });
 
-        });
+        },
+        {
+            threshold: 0.15
+        }
+    );
 
-    },
-    {
-        threshold: 0.15
-    }
-);
+    elements.forEach(element => {
 
-elements.forEach(element => {
+        observer.observe(element);
 
-    observer.observe(element);
-
-});
-
+    });
 
 } else {
 
+    elements.forEach(element => {
 
-elements.forEach(element => {
+        element.classList.add("show");
 
-    element.classList.add("show");
+    });
+
+}
+
+
+/* =========================================================
+   HERO VIDEO
+   AUTOPLAY / MOBILE / SAFARI
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const heroVideos =
+        document.querySelectorAll(".hero-video");
+
+    if (!heroVideos.length) return;
+
+
+    heroVideos.forEach(video => {
+
+        /* -----------------------------------------
+           GARANTIR CONFIGURAÇÕES DE AUTOPLAY
+        ----------------------------------------- */
+
+        video.muted = true;
+
+        video.defaultMuted = true;
+
+        video.setAttribute("muted", "");
+
+        video.setAttribute("autoplay", "");
+
+        video.setAttribute("playsinline", "");
+
+        video.setAttribute("webkit-playsinline", "");
+
+
+        /* -----------------------------------------
+           TENTAR REPRODUZIR
+        ----------------------------------------- */
+
+        const playVideo = () => {
+
+            video.muted = true;
+
+            const playPromise =
+                video.play();
+
+            if (
+                playPromise !== undefined
+            ) {
+
+                playPromise.catch(() => {
+
+                    /*
+                     O navegador pode bloquear
+                     o autoplay até existir uma
+                     interação do usuário.
+                    */
+
+                });
+
+            }
+
+        };
+
+
+        /* -----------------------------------------
+           QUANDO O VÍDEO ESTIVER PRONTO
+        ----------------------------------------- */
+
+        if (
+            video.readyState >= 2
+        ) {
+
+            playVideo();
+
+        } else {
+
+            video.addEventListener(
+                "loadeddata",
+                playVideo,
+                {
+                    once: true
+                }
+            );
+
+        }
+
+
+        /* -----------------------------------------
+           TENTAR NOVAMENTE QUANDO A PÁGINA
+           TERMINAR DE CARREGAR
+        ----------------------------------------- */
+
+        window.addEventListener(
+            "load",
+            playVideo,
+            {
+                once: true
+            }
+        );
+
+
+        /* -----------------------------------------
+           TENTAR NOVAMENTE APÓS PRIMEIRA
+           INTERAÇÃO DO USUÁRIO
+        ----------------------------------------- */
+
+        const resumeVideo = () => {
+
+            if (video.paused) {
+
+                playVideo();
+
+            }
+
+        };
+
+
+        document.addEventListener(
+            "touchstart",
+            resumeVideo,
+            {
+                once: true,
+                passive: true
+            }
+        );
+
+
+        document.addEventListener(
+            "click",
+            resumeVideo,
+            {
+                once: true
+            }
+        );
+
+
+    });
 
 });
 
 
-}
-
-/* ===========================
-LIGHTBOX GALERIA
-=========================== */
+/* =========================================================
+   LIGHTBOX GALERIA
+========================================================= */
 
 const galleryItems =
     document.querySelectorAll(".gallery-item");
 
 if (galleryItems.length > 0) {
-
 
     const lightbox =
         document.createElement("div");
@@ -163,13 +307,11 @@ if (galleryItems.length > 0) {
             &times;
         </button>
 
-
         <button
             class="lightbox-prev"
             aria-label="Imagem anterior">
             &#10094;
         </button>
-
 
         <div class="lightbox-content">
 
@@ -177,7 +319,6 @@ if (galleryItems.length > 0) {
                 class="lightbox-image"
                 src=""
                 alt="Imagem ampliada">
-
 
             <div class="lightbox-caption">
 
@@ -188,7 +329,6 @@ if (galleryItems.length > 0) {
             </div>
 
         </div>
-
 
         <button
             class="lightbox-next"
@@ -244,9 +384,9 @@ if (galleryItems.length > 0) {
     const images = [];
 
 
-    /* ===========================
+    /* =====================================================
        CAPTURA DAS FOTOS
-    =========================== */
+    ===================================================== */
 
     galleryItems.forEach(
         (item, index) => {
@@ -306,9 +446,9 @@ if (galleryItems.length > 0) {
     );
 
 
-    /* ===========================
+    /* =====================================================
        ATUALIZAR LIGHTBOX
-    =========================== */
+    ===================================================== */
 
     function updateLightbox() {
 
@@ -337,9 +477,9 @@ if (galleryItems.length > 0) {
     }
 
 
-    /* ===========================
+    /* =====================================================
        ABRIR
-    =========================== */
+    ===================================================== */
 
     function openLightbox() {
 
@@ -360,9 +500,9 @@ if (galleryItems.length > 0) {
     }
 
 
-    /* ===========================
+    /* =====================================================
        FECHAR
-    =========================== */
+    ===================================================== */
 
     function closeLightboxFunction() {
 
@@ -377,9 +517,9 @@ if (galleryItems.length > 0) {
     }
 
 
-    /* ===========================
+    /* =====================================================
        PRÓXIMA
-    =========================== */
+    ===================================================== */
 
     function showNextImage() {
 
@@ -401,9 +541,9 @@ if (galleryItems.length > 0) {
     }
 
 
-    /* ===========================
+    /* =====================================================
        ANTERIOR
-    =========================== */
+    ===================================================== */
 
     function showPreviousImage() {
 
@@ -423,9 +563,9 @@ if (galleryItems.length > 0) {
     }
 
 
-    /* ===========================
+    /* =====================================================
        BOTÃO FECHAR
-    =========================== */
+    ===================================================== */
 
     closeLightbox.addEventListener(
         "click",
@@ -433,9 +573,9 @@ if (galleryItems.length > 0) {
     );
 
 
-    /* ===========================
+    /* =====================================================
        PRÓXIMA
-    =========================== */
+    ===================================================== */
 
     nextButton.addEventListener(
         "click",
@@ -443,9 +583,9 @@ if (galleryItems.length > 0) {
     );
 
 
-    /* ===========================
+    /* =====================================================
        ANTERIOR
-    =========================== */
+    ===================================================== */
 
     prevButton.addEventListener(
         "click",
@@ -453,9 +593,9 @@ if (galleryItems.length > 0) {
     );
 
 
-    /* ===========================
+    /* =====================================================
        CLICAR NO FUNDO
-    =========================== */
+    ===================================================== */
 
     lightbox.addEventListener(
         "click",
@@ -474,9 +614,9 @@ if (galleryItems.length > 0) {
     );
 
 
-    /* ===========================
+    /* =====================================================
        TECLADO
-    =========================== */
+    ===================================================== */
 
     document.addEventListener(
         "keydown",
@@ -525,147 +665,136 @@ if (galleryItems.length > 0) {
 
 }
 
-/* ===========================
-CARROSSEL DEPOIMENTOS
-=========================== */
+
+/* =========================================================
+   CARROSSEL DEPOIMENTOS
+========================================================= */
 
 const testimonialTrack =
-document.querySelector(".testimonials-track");
+    document.querySelector(
+        ".testimonials-track"
+    );
+
 
 const testimonialCards =
-document.querySelectorAll(".testimonial-card");
+    document.querySelectorAll(
+        ".testimonial-card"
+    );
+
 
 const testimonialNext =
-document.querySelector(".testimonial-next");
+    document.querySelector(
+        ".testimonial-next"
+    );
+
 
 const testimonialPrev =
-document.querySelector(".testimonial-prev");
+    document.querySelector(
+        ".testimonial-prev"
+    );
+
 
 const testimonialDots =
-document.querySelectorAll(".testimonial-dot");
+    document.querySelectorAll(
+        ".testimonial-dot"
+    );
+
 
 if (
-testimonialTrack &&
-testimonialCards.length > 0
+    testimonialTrack &&
+    testimonialCards.length > 0
 ) {
 
+    let testimonialIndex = 0;
 
-let testimonialIndex = 0;
-
-let testimonialAutoplay;
-
-
-function updateTestimonials() {
-
-    testimonialTrack.style.transform =
-        "translateX(-" +
-        (testimonialIndex * 100) +
-        "%)";
+    let testimonialAutoplay;
 
 
-    testimonialDots.forEach(
-        (dot, index) => {
+    function updateTestimonials() {
 
-            dot.classList.toggle(
-                "active",
-                index === testimonialIndex
-            );
-
-        }
-    );
-
-}
+        testimonialTrack.style.transform =
+            "translateX(-" +
+            (testimonialIndex * 100) +
+            "%)";
 
 
-function nextTestimonial() {
+        testimonialDots.forEach(
+            (dot, index) => {
 
-    testimonialIndex++;
+                dot.classList.toggle(
+                    "active",
+                    index === testimonialIndex
+                );
 
-    if (
-        testimonialIndex >=
-        testimonialCards.length
-    ) {
-
-        testimonialIndex = 0;
-
-    }
-
-    updateTestimonials();
-
-}
-
-
-function previousTestimonial() {
-
-    testimonialIndex--;
-
-    if (testimonialIndex < 0) {
-
-        testimonialIndex =
-            testimonialCards.length - 1;
-
-    }
-
-    updateTestimonials();
-
-}
-
-
-function startTestimonialAutoplay() {
-
-    clearInterval(testimonialAutoplay);
-
-    testimonialAutoplay =
-        setInterval(
-            nextTestimonial,
-            5000
+            }
         );
 
-}
+    }
 
 
-if (testimonialNext) {
+    function nextTestimonial() {
 
-    testimonialNext.addEventListener(
-        "click",
-        () => {
-
-            nextTestimonial();
-
-            startTestimonialAutoplay();
-
-        }
-    );
-
-}
+        testimonialIndex++;
 
 
-if (testimonialPrev) {
+        if (
+            testimonialIndex >=
+            testimonialCards.length
+        ) {
 
-    testimonialPrev.addEventListener(
-        "click",
-        () => {
-
-            previousTestimonial();
-
-            startTestimonialAutoplay();
+            testimonialIndex = 0;
 
         }
-    );
-
-}
 
 
-testimonialDots.forEach(
-    (dot, index) => {
+        updateTestimonials();
 
-        dot.addEventListener(
+    }
+
+
+    function previousTestimonial() {
+
+        testimonialIndex--;
+
+
+        if (
+            testimonialIndex < 0
+        ) {
+
+            testimonialIndex =
+                testimonialCards.length - 1;
+
+        }
+
+
+        updateTestimonials();
+
+    }
+
+
+    function startTestimonialAutoplay() {
+
+        clearInterval(
+            testimonialAutoplay
+        );
+
+
+        testimonialAutoplay =
+            setInterval(
+                nextTestimonial,
+                5000
+            );
+
+    }
+
+
+    if (testimonialNext) {
+
+        testimonialNext.addEventListener(
             "click",
             () => {
 
-                testimonialIndex = index;
-
-                updateTestimonials();
+                nextTestimonial();
 
                 startTestimonialAutoplay();
 
@@ -673,139 +802,190 @@ testimonialDots.forEach(
         );
 
     }
-);
 
 
-const testimonialCarousel =
-    document.querySelector(
-        ".testimonials-carousel"
-    );
+    if (testimonialPrev) {
+
+        testimonialPrev.addEventListener(
+            "click",
+            () => {
+
+                previousTestimonial();
+
+                startTestimonialAutoplay();
+
+            }
+        );
+
+    }
 
 
-if (testimonialCarousel) {
+    testimonialDots.forEach(
+        (dot, index) => {
 
-    testimonialCarousel.addEventListener(
-        "mouseenter",
-        () => {
+            dot.addEventListener(
+                "click",
+                () => {
 
-            clearInterval(
-                testimonialAutoplay
+                    testimonialIndex =
+                        index;
+
+                    updateTestimonials();
+
+                    startTestimonialAutoplay();
+
+                }
             );
 
         }
     );
 
 
-    testimonialCarousel.addEventListener(
-        "mouseleave",
-        () => {
-
-            startTestimonialAutoplay();
-
-        }
-    );
-
-}
+    const testimonialCarousel =
+        document.querySelector(
+            ".testimonials-carousel"
+        );
 
 
-updateTestimonials();
+    if (testimonialCarousel) {
 
-startTestimonialAutoplay();
+        testimonialCarousel.addEventListener(
+            "mouseenter",
+            () => {
 
-
-}
-
-/* ===========================
-FORMULÁRIO DE CONTATO
-=========================== */
-
-const contactForm =
-document.querySelector("#contact-form");
-
-if (contactForm) {
-
-
-contactForm.addEventListener(
-    "submit",
-    async function(event) {
-
-        event.preventDefault();
-
-        const button =
-            contactForm.querySelector("button");
-
-        if (!button) return;
-
-        const originalText =
-            button.textContent;
-
-        button.disabled = true;
-
-        button.textContent = "Enviando...";
-
-
-        try {
-
-            const formData =
-                new FormData(contactForm);
-
-
-            const response =
-                await fetch(
-                    contactForm.action,
-                    {
-                        method: "POST",
-                        body: formData
-                    }
-                );
-
-
-            if (!response.ok) {
-
-                throw new Error(
-                    "Erro ao enviar formulário."
+                clearInterval(
+                    testimonialAutoplay
                 );
 
             }
+        );
 
 
-            contactForm.reset();
+        testimonialCarousel.addEventListener(
+            "mouseleave",
+            () => {
 
-            button.textContent =
-                "Mensagem enviada!";
+                startTestimonialAutoplay();
 
-
-            setTimeout(() => {
-
-                button.disabled = false;
-
-                button.textContent =
-                    originalText;
-
-            }, 4000);
-
-
-        } catch (error) {
-
-            console.error(error);
-
-            button.disabled = false;
-
-            button.textContent =
-                "Erro. Tente novamente.";
-
-
-            setTimeout(() => {
-
-                button.textContent =
-                    originalText;
-
-            }, 4000);
-
-        }
+            }
+        );
 
     }
-);
 
+
+    updateTestimonials();
+
+    startTestimonialAutoplay();
+
+}
+
+
+/* =========================================================
+   FORMULÁRIO DE CONTATO
+========================================================= */
+
+const contactForm =
+    document.querySelector(
+        "#contact-form"
+    );
+
+
+if (contactForm) {
+
+    contactForm.addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const button =
+                contactForm.querySelector(
+                    "button"
+                );
+
+
+            if (!button) return;
+
+
+            const originalText =
+                button.textContent;
+
+
+            button.disabled = true;
+
+            button.textContent =
+                "Enviando...";
+
+
+            try {
+
+                const formData =
+                    new FormData(
+                        contactForm
+                    );
+
+
+                const response =
+                    await fetch(
+                        contactForm.action,
+                        {
+                            method: "POST",
+                            body: formData
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Erro ao enviar formulário."
+                    );
+
+                }
+
+
+                contactForm.reset();
+
+
+                button.textContent =
+                    "Mensagem enviada!";
+
+
+                setTimeout(() => {
+
+                    button.disabled =
+                        false;
+
+                    button.textContent =
+                        originalText;
+
+                }, 4000);
+
+
+            } catch (error) {
+
+                console.error(error);
+
+
+                button.disabled =
+                    false;
+
+
+                button.textContent =
+                    "Erro. Tente novamente.";
+
+
+                setTimeout(() => {
+
+                    button.textContent =
+                        originalText;
+
+                }, 4000);
+
+            }
+
+        }
+    );
 
 }

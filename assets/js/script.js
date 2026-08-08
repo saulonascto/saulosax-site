@@ -32,14 +32,19 @@ window.addEventListener("scroll", () => {
    MENU MOBILE
 ========================================================= */
 
-const menuButton = document.querySelector(".menu-toggle");
-const menu = document.querySelector(".nav-menu");
+const menuButton =
+    document.querySelector(".menu-toggle");
+
+const menu =
+    document.querySelector(".nav-menu");
+
 
 if (menuButton && menu) {
 
     menuButton.addEventListener("click", () => {
 
         menu.classList.toggle("active");
+
         menuButton.classList.toggle("active");
 
     });
@@ -51,7 +56,9 @@ if (menuButton && menu) {
    FECHAR MENU AO CLICAR
 ========================================================= */
 
-const menuLinks = document.querySelectorAll(".nav-menu a");
+const menuLinks =
+    document.querySelectorAll(".nav-menu a");
+
 
 menuLinks.forEach(link => {
 
@@ -78,7 +85,9 @@ menuLinks.forEach(link => {
    BOTÃO VOLTAR AO TOPO
 ========================================================= */
 
-const backTop = document.querySelector(".back-top");
+const backTop =
+    document.querySelector(".back-top");
+
 
 window.addEventListener("scroll", () => {
 
@@ -87,11 +96,13 @@ window.addEventListener("scroll", () => {
     if (window.scrollY > 500) {
 
         backTop.style.opacity = "1";
+
         backTop.style.visibility = "visible";
 
     } else {
 
         backTop.style.opacity = "0";
+
         backTop.style.visibility = "hidden";
 
     }
@@ -103,30 +114,34 @@ window.addEventListener("scroll", () => {
    ANIMAÇÃO AO ROLAR
 ========================================================= */
 
-const elements = document.querySelectorAll(
-    ".service-card, .about-content, .gallery-item, .testimonial-card, .video-card"
-);
+const elements =
+    document.querySelectorAll(
+        ".service-card, .about-content, .gallery-item, .testimonial-card, .video-card"
+    );
+
 
 if ("IntersectionObserver" in window) {
 
-    const observer = new IntersectionObserver(
-        (entries) => {
+    const observer =
+        new IntersectionObserver(
+            (entries) => {
 
-            entries.forEach(entry => {
+                entries.forEach(entry => {
 
-                if (entry.isIntersecting) {
+                    if (entry.isIntersecting) {
 
-                    entry.target.classList.add("show");
+                        entry.target.classList.add("show");
 
-                }
+                    }
 
-            });
+                });
 
-        },
-        {
-            threshold: 0.15
-        }
-    );
+            },
+            {
+                threshold: 0.15
+            }
+        );
+
 
     elements.forEach(element => {
 
@@ -152,134 +167,192 @@ if ("IntersectionObserver" in window) {
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    const heroVideos =
-        document.querySelectorAll(".hero-video");
+    const desktopVideo =
+        document.querySelector(".hero-video-desktop");
 
-    if (!heroVideos.length) return;
-
-
-    heroVideos.forEach(video => {
-
-        /* -----------------------------------------
-           GARANTIR CONFIGURAÇÕES DE AUTOPLAY
-        ----------------------------------------- */
-
-        video.muted = true;
-
-        video.defaultMuted = true;
-
-        video.setAttribute("muted", "");
-
-        video.setAttribute("autoplay", "");
-
-        video.setAttribute("playsinline", "");
-
-        video.setAttribute("webkit-playsinline", "");
+    const mobileVideo =
+        document.querySelector(".hero-video-mobile");
 
 
-        /* -----------------------------------------
-           TENTAR REPRODUZIR
-        ----------------------------------------- */
-
-        const playVideo = () => {
-
-            video.muted = true;
-
-            const playPromise =
-                video.play();
-
-            if (
-                playPromise !== undefined
-            ) {
-
-                playPromise.catch(() => {
-
-                    /*
-                     O navegador pode bloquear
-                     o autoplay até existir uma
-                     interação do usuário.
-                    */
-
-                });
-
-            }
-
-        };
+    if (!desktopVideo && !mobileVideo) return;
 
 
-        /* -----------------------------------------
-           QUANDO O VÍDEO ESTIVER PRONTO
-        ----------------------------------------- */
+    /* =====================================================
+       IDENTIFICAR VÍDEO CORRETO
+    ===================================================== */
+
+    const isMobile =
+        window.matchMedia("(max-width: 768px)").matches;
+
+
+    const activeVideo =
+        isMobile
+            ? mobileVideo
+            : desktopVideo;
+
+
+    if (!activeVideo) return;
+
+
+    /* =====================================================
+       CONFIGURAÇÕES PARA AUTOPLAY
+    ===================================================== */
+
+    activeVideo.muted = true;
+
+    activeVideo.defaultMuted = true;
+
+    activeVideo.setAttribute(
+        "muted",
+        ""
+    );
+
+    activeVideo.setAttribute(
+        "autoplay",
+        ""
+    );
+
+    activeVideo.setAttribute(
+        "playsinline",
+        ""
+    );
+
+    activeVideo.setAttribute(
+        "webkit-playsinline",
+        ""
+    );
+
+
+    /* =====================================================
+       FUNÇÃO DE REPRODUÇÃO
+    ===================================================== */
+
+    const playHeroVideo = () => {
+
+        activeVideo.muted = true;
+
+        const playPromise =
+            activeVideo.play();
+
 
         if (
-            video.readyState >= 2
+            playPromise !== undefined
         ) {
 
-            playVideo();
+            playPromise.catch(() => {
 
-        } else {
+                /*
+                 Alguns navegadores móveis
+                 podem bloquear o autoplay.
 
-            video.addEventListener(
-                "loadeddata",
-                playVideo,
-                {
-                    once: true
-                }
-            );
+                 A reprodução será tentada
+                 novamente após interação.
+                */
+
+            });
 
         }
 
+    };
 
-        /* -----------------------------------------
-           TENTAR NOVAMENTE QUANDO A PÁGINA
-           TERMINAR DE CARREGAR
-        ----------------------------------------- */
 
-        window.addEventListener(
-            "load",
-            playVideo,
+    /* =====================================================
+       VÍDEO PRONTO
+    ===================================================== */
+
+    if (
+        activeVideo.readyState >= 2
+    ) {
+
+        playHeroVideo();
+
+    } else {
+
+        activeVideo.addEventListener(
+            "loadeddata",
+            playHeroVideo,
             {
                 once: true
             }
         );
 
+    }
 
-        /* -----------------------------------------
-           TENTAR NOVAMENTE APÓS PRIMEIRA
-           INTERAÇÃO DO USUÁRIO
-        ----------------------------------------- */
 
-        const resumeVideo = () => {
+    /* =====================================================
+       PÁGINA TOTALMENTE CARREGADA
+    ===================================================== */
 
-            if (video.paused) {
+    window.addEventListener(
+        "load",
+        playHeroVideo,
+        {
+            once: true
+        }
+    );
 
-                playVideo();
+
+    /* =====================================================
+       PRIMEIRA INTERAÇÃO
+    ===================================================== */
+
+    const resumeHeroVideo = () => {
+
+        if (
+            activeVideo.paused
+        ) {
+
+            playHeroVideo();
+
+        }
+
+    };
+
+
+    document.addEventListener(
+        "touchstart",
+        resumeHeroVideo,
+        {
+            once: true,
+            passive: true
+        }
+    );
+
+
+    document.addEventListener(
+        "click",
+        resumeHeroVideo,
+        {
+            once: true
+        }
+    );
+
+
+    /* =====================================================
+       VOLTAR A REPRODUZIR SE O NAVEGADOR PAUSAR
+    ===================================================== */
+
+    activeVideo.addEventListener(
+        "pause",
+        () => {
+
+            /*
+             Não força reprodução
+             enquanto a página estiver
+             em segundo plano.
+            */
+
+            if (
+                document.visibilityState ===
+                "visible"
+            ) {
+
+                playHeroVideo();
 
             }
 
-        };
-
-
-        document.addEventListener(
-            "touchstart",
-            resumeVideo,
-            {
-                once: true,
-                passive: true
-            }
-        );
-
-
-        document.addEventListener(
-            "click",
-            resumeVideo,
-            {
-                once: true
-            }
-        );
-
-
-    });
+        }
+    );
 
 });
 
@@ -291,12 +364,15 @@ document.addEventListener("DOMContentLoaded", () => {
 const galleryItems =
     document.querySelectorAll(".gallery-item");
 
+
 if (galleryItems.length > 0) {
 
     const lightbox =
         document.createElement("div");
 
-    lightbox.className = "lightbox";
+
+    lightbox.className =
+        "lightbox";
 
 
     lightbox.innerHTML = `
@@ -550,7 +626,9 @@ if (galleryItems.length > 0) {
         currentImage--;
 
 
-        if (currentImage < 0) {
+        if (
+            currentImage < 0
+        ) {
 
             currentImage =
                 images.length - 1;
@@ -661,7 +739,6 @@ if (galleryItems.length > 0) {
 
         }
     );
-
 
 }
 

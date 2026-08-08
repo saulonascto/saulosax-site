@@ -97,15 +97,13 @@ window.addEventListener("scroll", () => {
 
         backTop.style.opacity = "1";
 
-        backTop.style.visibility =
-            "visible";
+        backTop.style.visibility = "visible";
 
     } else {
 
         backTop.style.opacity = "0";
 
-        backTop.style.visibility =
-            "hidden";
+        backTop.style.visibility = "hidden";
 
     }
 
@@ -164,183 +162,119 @@ if ("IntersectionObserver" in window) {
 
 /* =========================================================
    HERO VIDEO
-   UM ÚNICO VIDEO NO HTML
-
-   DESKTOP:
-   assets/videos/hero-video.mp4
-
-   MOBILE:
-   assets/videos/hero-video-mobile.mp4
-
-   O JavaScript escolhe automaticamente o arquivo.
+   UM ÚNICO <video>
+   DESKTOP / MOBILE
 ========================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-    const heroVideo =
-        document.querySelector(".hero-video");
-
-
-    if (!heroVideo) return;
-
-
-    /* -----------------------------------------------------
-       ARQUIVOS
-    ----------------------------------------------------- */
-
-    const desktopVideo =
-        "assets/videos/hero-video.mp4";
+        const heroVideo =
+            document.querySelector("#hero-video");
 
 
-    const mobileVideo =
-        "assets/videos/hero-video-mobile.mp4";
+        if (!heroVideo) return;
 
 
-    /* -----------------------------------------------------
-       CONFIGURAÇÕES DO VIDEO
-    ----------------------------------------------------- */
+        /* -------------------------------------------------
+           DETECTAR DISPOSITIVO / LARGURA
+        ------------------------------------------------- */
 
-    heroVideo.muted = true;
-
-    heroVideo.defaultMuted = true;
-
-    heroVideo.setAttribute(
-        "muted",
-        ""
-    );
-
-    heroVideo.setAttribute(
-        "autoplay",
-        ""
-    );
-
-    heroVideo.setAttribute(
-        "playsinline",
-        ""
-    );
-
-    heroVideo.setAttribute(
-        "webkit-playsinline",
-        ""
-    );
-
-
-    /* -----------------------------------------------------
-       ESCOLHER VIDEO DE ACORDO COM A TELA
-    ----------------------------------------------------- */
-
-    const getVideoSource = () => {
-
-        if (
+        const isMobile =
             window.matchMedia(
                 "(max-width: 768px)"
-            ).matches
-        ) {
-
-            return mobileVideo;
-
-        }
-
-        return desktopVideo;
-
-    };
+            ).matches;
 
 
-    /* -----------------------------------------------------
-       DEFINIR VIDEO
-    ----------------------------------------------------- */
+        /* -------------------------------------------------
+           DEFINIR VÍDEO
+        ------------------------------------------------- */
 
-    const setHeroVideoSource = () => {
-
-        const source =
-            getVideoSource();
-
-
-        /*
-         Evita recarregar o mesmo vídeo
-         desnecessariamente.
-        */
-
-        if (
-            heroVideo.dataset.currentSource ===
-            source
-        ) {
-
-            return;
-
-        }
+        const videoSource =
+            isMobile
+                ? "assets/videos/hero-video-mobile.mp4"
+                : "assets/videos/hero-video.mp4";
 
 
-        heroVideo.dataset.currentSource =
-            source;
+        /* -------------------------------------------------
+           CONFIGURAÇÕES
+        ------------------------------------------------- */
 
+        heroVideo.muted = true;
 
-        /*
-         Remove sources anteriores.
-        */
+        heroVideo.defaultMuted = true;
 
-        while (heroVideo.firstChild) {
+        heroVideo.autoplay = true;
 
-            heroVideo.removeChild(
-                heroVideo.firstChild
-            );
+        heroVideo.loop = true;
 
-        }
+        heroVideo.playsInline = true;
 
+        heroVideo.setAttribute(
+            "muted",
+            ""
+        );
 
-        /*
-         Cria novo source.
-        */
+        heroVideo.setAttribute(
+            "autoplay",
+            ""
+        );
 
-        const sourceElement =
-            document.createElement("source");
+        heroVideo.setAttribute(
+            "loop",
+            ""
+        );
 
+        heroVideo.setAttribute(
+            "playsinline",
+            ""
+        );
 
-        sourceElement.src =
-            source;
-
-
-        sourceElement.type =
-            "video/mp4";
-
-
-        heroVideo.appendChild(
-            sourceElement
+        heroVideo.setAttribute(
+            "webkit-playsinline",
+            ""
         );
 
 
-        /*
-         Recarrega o elemento.
-        */
+        /* -------------------------------------------------
+           DEFINIR SRC
+        ------------------------------------------------- */
+
+        heroVideo.src =
+            videoSource;
+
+
+        /* -------------------------------------------------
+           FORÇAR NOVO CARREGAMENTO
+        ------------------------------------------------- */
 
         heroVideo.load();
 
 
-        /*
-         Tenta iniciar depois
-         que o navegador processar
-         o novo source.
-        */
+        /* -------------------------------------------------
+           FUNÇÃO DE PLAY
+        ------------------------------------------------- */
 
-        const playVideo = () => {
+        const playHeroVideo = () => {
 
             heroVideo.muted = true;
 
-            const playPromise =
+            heroVideo.defaultMuted = true;
+
+
+            const promise =
                 heroVideo.play();
 
 
-            if (
-                playPromise !== undefined
-            ) {
+            if (promise !== undefined) {
 
-                playPromise.catch(() => {
+                promise.catch(error => {
 
-                    /*
-                     Alguns navegadores,
-                     especialmente Safari,
-                     podem bloquear o autoplay.
-                    */
+                    console.log(
+                        "Autoplay bloqueado pelo navegador:",
+                        error
+                    );
 
                 });
 
@@ -349,146 +283,117 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
 
+        /* -------------------------------------------------
+           QUANDO O VÍDEO ESTIVER PRONTO
+        ------------------------------------------------- */
+
         heroVideo.addEventListener(
             "loadeddata",
-            playVideo,
+            () => {
+
+                playHeroVideo();
+
+            },
             {
                 once: true
             }
         );
 
 
-        /*
-         Caso o vídeo já esteja pronto.
-        */
+        /* -------------------------------------------------
+           CANPLAY
+        ------------------------------------------------- */
 
-        if (
-            heroVideo.readyState >= 2
-        ) {
+        heroVideo.addEventListener(
+            "canplay",
+            () => {
 
-            playVideo();
+                playHeroVideo();
 
-        }
-
-    };
-
-
-    /* -----------------------------------------------------
-       DEFINIR VIDEO INICIAL
-    ----------------------------------------------------- */
-
-    setHeroVideoSource();
+            },
+            {
+                once: true
+            }
+        );
 
 
-    /* -----------------------------------------------------
-       TENTAR NOVAMENTE APÓS LOAD
-    ----------------------------------------------------- */
+        /* -------------------------------------------------
+           LOAD DA PÁGINA
+        ------------------------------------------------- */
 
-    window.addEventListener(
-        "load",
-        () => {
+        window.addEventListener(
+            "load",
+            () => {
 
-            heroVideo.muted = true;
+                playHeroVideo();
 
-            const playPromise =
-                heroVideo.play();
+            },
+            {
+                once: true
+            }
+        );
 
 
-            if (
-                playPromise !== undefined
-            ) {
+        /* -------------------------------------------------
+           PRIMEIRO TOQUE NO CELULAR
+        ------------------------------------------------- */
 
-                playPromise.catch(() => {});
+        const resumeVideo = () => {
+
+            if (heroVideo.paused) {
+
+                playHeroVideo();
 
             }
 
-        },
-        {
-            once: true
-        }
-    );
+        };
 
 
-    /* -----------------------------------------------------
-       RETOMAR APÓS INTERAÇÃO DO USUÁRIO
-    ----------------------------------------------------- */
-
-    const resumeVideo = () => {
-
-        if (heroVideo.paused) {
-
-            heroVideo.muted = true;
-
-            const playPromise =
-                heroVideo.play();
+        document.addEventListener(
+            "touchstart",
+            resumeVideo,
+            {
+                once: true,
+                passive: true
+            }
+        );
 
 
-            if (
-                playPromise !== undefined
-            ) {
+        document.addEventListener(
+            "click",
+            resumeVideo,
+            {
+                once: true
+            }
+        );
 
-                playPromise.catch(() => {});
+
+        /* -------------------------------------------------
+           SE A PÁGINA VOLTAR PARA O FOCO
+        ------------------------------------------------- */
+
+        document.addEventListener(
+            "visibilitychange",
+            () => {
+
+                if (
+                    document.visibilityState ===
+                    "visible"
+                ) {
+
+                    if (heroVideo.paused) {
+
+                        playHeroVideo();
+
+                    }
+
+                }
 
             }
+        );
 
-        }
-
-    };
-
-
-    document.addEventListener(
-        "touchstart",
-        resumeVideo,
-        {
-            passive: true
-        }
-    );
-
-
-    document.addEventListener(
-        "click",
-        resumeVideo
-    );
-
-
-    /* -----------------------------------------------------
-       SE A TELA MUDAR DE TAMANHO
-       TROCA O VIDEO
-    ----------------------------------------------------- */
-
-    let lastMobileState =
-        window.matchMedia(
-            "(max-width: 768px)"
-        ).matches;
-
-
-    window.addEventListener(
-        "resize",
-        () => {
-
-            const currentMobileState =
-                window.matchMedia(
-                    "(max-width: 768px)"
-                ).matches;
-
-
-            if (
-                currentMobileState !==
-                lastMobileState
-            ) {
-
-                lastMobileState =
-                    currentMobileState;
-
-
-                setHeroVideoSource();
-
-            }
-
-        }
-    );
-
-});
+    }
+);
 
 
 /* =========================================================
@@ -598,12 +503,12 @@ if (galleryItems.length > 0) {
     const images = [];
 
 
-    /* =====================================================
+    /* -----------------------------------------------------
        CAPTURA DAS FOTOS
-    ===================================================== */
+    ----------------------------------------------------- */
 
     galleryItems.forEach(
-        (item) => {
+        (item, index) => {
 
             const img =
                 item.querySelector("img");
@@ -632,12 +537,12 @@ if (galleryItems.length > 0) {
 
                 title:
                     title
-                        ? title.textContent.trim()
+                        ? title.textContent
                         : "",
 
                 description:
                     description
-                        ? description.textContent.trim()
+                        ? description.textContent
                         : ""
 
             });
@@ -649,25 +554,7 @@ if (galleryItems.length > 0) {
 
                     event.preventDefault();
 
-
-                    currentImage =
-                        images.indexOf(
-                            images.find(
-                                image =>
-                                    image.src ===
-                                    img.src
-                            )
-                        );
-
-
-                    if (
-                        currentImage < 0
-                    ) {
-
-                        currentImage = 0;
-
-                    }
-
+                    currentImage = index;
 
                     openLightbox();
 
@@ -678,9 +565,9 @@ if (galleryItems.length > 0) {
     );
 
 
-    /* =====================================================
+    /* -----------------------------------------------------
        ATUALIZAR LIGHTBOX
-    ===================================================== */
+    ----------------------------------------------------- */
 
     function updateLightbox() {
 
@@ -689,9 +576,6 @@ if (galleryItems.length > 0) {
 
         const image =
             images[currentImage];
-
-
-        if (!image) return;
 
 
         lightboxImage.src =
@@ -712,9 +596,9 @@ if (galleryItems.length > 0) {
     }
 
 
-    /* =====================================================
+    /* -----------------------------------------------------
        ABRIR
-    ===================================================== */
+    ----------------------------------------------------- */
 
     function openLightbox() {
 
@@ -735,9 +619,9 @@ if (galleryItems.length > 0) {
     }
 
 
-    /* =====================================================
+    /* -----------------------------------------------------
        FECHAR
-    ===================================================== */
+    ----------------------------------------------------- */
 
     function closeLightboxFunction() {
 
@@ -752,9 +636,9 @@ if (galleryItems.length > 0) {
     }
 
 
-    /* =====================================================
+    /* -----------------------------------------------------
        PRÓXIMA
-    ===================================================== */
+    ----------------------------------------------------- */
 
     function showNextImage() {
 
@@ -776,18 +660,16 @@ if (galleryItems.length > 0) {
     }
 
 
-    /* =====================================================
+    /* -----------------------------------------------------
        ANTERIOR
-    ===================================================== */
+    ----------------------------------------------------- */
 
     function showPreviousImage() {
 
         currentImage--;
 
 
-        if (
-            currentImage < 0
-        ) {
+        if (currentImage < 0) {
 
             currentImage =
                 images.length - 1;
@@ -800,51 +682,39 @@ if (galleryItems.length > 0) {
     }
 
 
-    /* =====================================================
+    /* -----------------------------------------------------
        BOTÃO FECHAR
-    ===================================================== */
+    ----------------------------------------------------- */
 
-    if (closeLightbox) {
-
-        closeLightbox.addEventListener(
-            "click",
-            closeLightboxFunction
-        );
-
-    }
+    closeLightbox.addEventListener(
+        "click",
+        closeLightboxFunction
+    );
 
 
-    /* =====================================================
+    /* -----------------------------------------------------
        PRÓXIMA
-    ===================================================== */
+    ----------------------------------------------------- */
 
-    if (nextButton) {
-
-        nextButton.addEventListener(
-            "click",
-            showNextImage
-        );
-
-    }
+    nextButton.addEventListener(
+        "click",
+        showNextImage
+    );
 
 
-    /* =====================================================
+    /* -----------------------------------------------------
        ANTERIOR
-    ===================================================== */
+    ----------------------------------------------------- */
 
-    if (prevButton) {
-
-        prevButton.addEventListener(
-            "click",
-            showPreviousImage
-        );
-
-    }
+    prevButton.addEventListener(
+        "click",
+        showPreviousImage
+    );
 
 
-    /* =====================================================
+    /* -----------------------------------------------------
        CLICAR NO FUNDO
-    ===================================================== */
+    ----------------------------------------------------- */
 
     lightbox.addEventListener(
         "click",
@@ -863,9 +733,9 @@ if (galleryItems.length > 0) {
     );
 
 
-    /* =====================================================
+    /* -----------------------------------------------------
        TECLADO
-    ===================================================== */
+    ----------------------------------------------------- */
 
     document.addEventListener(
         "keydown",

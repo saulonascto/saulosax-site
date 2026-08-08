@@ -1,17 +1,18 @@
+
 /* =========================================================
-FINESSE AGÊNCIA MUSICAL
-HEADER + LIGHTBOX
+   FINESSE AGÊNCIA MUSICAL
+   HEADER + MENU MOBILE + LIGHTBOX
 ========================================================= */
 
 
 /* =========================================================
-HEADER / SCROLL
+   HEADER / SCROLL
 ========================================================= */
 
 window.addEventListener("scroll", () => {
 
     const header =
-        document.querySelector("header");
+        document.querySelector(".header");
 
 
     if (!header) return;
@@ -31,15 +32,153 @@ window.addEventListener("scroll", () => {
 
 
 /* =========================================================
-LIGHTBOX GALERIA
+   MENU HAMBURGER — MOBILE
+========================================================= */
+
+const menuToggle =
+    document.querySelector(".menu-toggle");
+
+const menu =
+    document.querySelector(".menu");
+
+
+if (menuToggle && menu) {
+
+
+    /* =====================================================
+       ABRIR / FECHAR MENU
+    ===================================================== */
+
+    menuToggle.addEventListener(
+        "click",
+        () => {
+
+            const isOpen =
+                menu.classList.toggle("active");
+
+
+            menuToggle.classList.toggle(
+                "active",
+                isOpen
+            );
+
+
+            menuToggle.setAttribute(
+                "aria-expanded",
+                isOpen
+                    ? "true"
+                    : "false"
+            );
+
+
+            menuToggle.setAttribute(
+                "aria-label",
+                isOpen
+                    ? "Fechar menu"
+                    : "Abrir menu"
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       FECHAR AO CLICAR EM UM LINK
+    ===================================================== */
+
+    menu.querySelectorAll("a").forEach(
+        (link) => {
+
+            link.addEventListener(
+                "click",
+                () => {
+
+                    menu.classList.remove(
+                        "active"
+                    );
+
+
+                    menuToggle.classList.remove(
+                        "active"
+                    );
+
+
+                    menuToggle.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+
+
+                    menuToggle.setAttribute(
+                        "aria-label",
+                        "Abrir menu"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       FECHAR COM ESC
+    ===================================================== */
+
+    document.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (
+                event.key === "Escape" &&
+                menu.classList.contains("active")
+            ) {
+
+                menu.classList.remove(
+                    "active"
+                );
+
+
+                menuToggle.classList.remove(
+                    "active"
+                );
+
+
+                menuToggle.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+
+                menuToggle.setAttribute(
+                    "aria-label",
+                    "Abrir menu"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   LIGHTBOX GALERIA
 ========================================================= */
 
 const galleryItems =
-    document.querySelectorAll(".gallery-item");
+    document.querySelectorAll(
+        ".gallery-item"
+    );
 
 
 if (galleryItems.length > 0) {
 
+
+    /* =====================================================
+       CRIAR LIGHTBOX
+    ===================================================== */
 
     const lightbox =
         document.createElement("div");
@@ -53,6 +192,7 @@ if (galleryItems.length > 0) {
 
         <button
             class="lightbox-close"
+            type="button"
             aria-label="Fechar galeria">
 
             &times;
@@ -62,6 +202,7 @@ if (galleryItems.length > 0) {
 
         <button
             class="lightbox-prev"
+            type="button"
             aria-label="Imagem anterior">
 
             &#10094;
@@ -90,6 +231,7 @@ if (galleryItems.length > 0) {
 
         <button
             class="lightbox-next"
+            type="button"
             aria-label="Próxima imagem">
 
             &#10095;
@@ -103,6 +245,10 @@ if (galleryItems.length > 0) {
         lightbox
     );
 
+
+    /* =====================================================
+       ELEMENTOS
+    ===================================================== */
 
     const lightboxImage =
         lightbox.querySelector(
@@ -140,6 +286,10 @@ if (galleryItems.length > 0) {
         );
 
 
+    /* =====================================================
+       VARIÁVEIS
+    ===================================================== */
+
     let currentImage = 0;
 
 
@@ -152,7 +302,6 @@ if (galleryItems.length > 0) {
 
     galleryItems.forEach(
         (item, index) => {
-
 
             const img =
                 item.querySelector("img");
@@ -175,9 +324,11 @@ if (galleryItems.length > 0) {
 
             galleryData.push({
 
-                src: img.src,
+                src:
+                    img.src,
 
-                alt: img.alt,
+                alt:
+                    img.alt,
 
                 title:
                     title
@@ -213,13 +364,12 @@ if (galleryItems.length > 0) {
 
 
     /* =====================================================
-       ABRIR
+       ABRIR LIGHTBOX
     ===================================================== */
 
     function openLightbox() {
 
-        if (!galleryData.length)
-            return;
+        if (!galleryData.length) return;
 
 
         updateLightbox();
@@ -230,6 +380,12 @@ if (galleryItems.length > 0) {
         );
 
 
+        lightbox.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+
         document.body.style.overflow =
             "hidden";
 
@@ -237,7 +393,7 @@ if (galleryItems.length > 0) {
 
 
     /* =====================================================
-       ATUALIZAR
+       ATUALIZAR LIGHTBOX
     ===================================================== */
 
     function updateLightbox() {
@@ -268,13 +424,19 @@ if (galleryItems.length > 0) {
 
 
     /* =====================================================
-       FECHAR
+       FECHAR LIGHTBOX
     ===================================================== */
 
     function closeLightboxFunction() {
 
         lightbox.classList.remove(
             "active"
+        );
+
+
+        lightbox.setAttribute(
+            "aria-hidden",
+            "true"
         );
 
 
@@ -285,7 +447,7 @@ if (galleryItems.length > 0) {
 
 
     /* =====================================================
-       PRÓXIMA
+       PRÓXIMA IMAGEM
     ===================================================== */
 
     function showNextImage() {
@@ -309,7 +471,7 @@ if (galleryItems.length > 0) {
 
 
     /* =====================================================
-       ANTERIOR
+       IMAGEM ANTERIOR
     ===================================================== */
 
     function showPreviousImage() {
@@ -331,7 +493,7 @@ if (galleryItems.length > 0) {
 
 
     /* =====================================================
-       BOTÕES
+       BOTÃO FECHAR
     ===================================================== */
 
     closeButton.addEventListener(
@@ -340,11 +502,19 @@ if (galleryItems.length > 0) {
     );
 
 
+    /* =====================================================
+       BOTÃO PRÓXIMO
+    ===================================================== */
+
     nextButton.addEventListener(
         "click",
         showNextImage
     );
 
+
+    /* =====================================================
+       BOTÃO ANTERIOR
+    ===================================================== */
 
     prevButton.addEventListener(
         "click",

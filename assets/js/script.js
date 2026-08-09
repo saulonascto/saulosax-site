@@ -1,4 +1,3 @@
-
 /* =========================================================
    SAULO SAX
    JAVASCRIPT PRINCIPAL
@@ -9,43 +8,29 @@
    MENU MOBILE
 ========================================================= */
 
-const menuToggle =
-    document.querySelector(".menu-toggle");
-
-const nav =
-    document.querySelector(".nav");
+const menuToggle = document.querySelector(".menu-toggle");
+const nav = document.querySelector(".nav");
 
 if (menuToggle && nav) {
 
-    menuToggle.addEventListener(
-        "click",
-        () => {
+    menuToggle.addEventListener("click", () => {
 
-            nav.classList.toggle("active");
+        nav.classList.toggle("active");
+        menuToggle.classList.toggle("active");
 
-            menuToggle.classList.toggle("active");
-
-        }
-    );
+    });
 
 
-    /* Fechar menu ao clicar em um link */
-
-    const navLinks =
-        nav.querySelectorAll("a");
+    const navLinks = nav.querySelectorAll("a");
 
     navLinks.forEach(link => {
 
-        link.addEventListener(
-            "click",
-            () => {
+        link.addEventListener("click", () => {
 
-                nav.classList.remove("active");
+            nav.classList.remove("active");
+            menuToggle.classList.remove("active");
 
-                menuToggle.classList.remove("active");
-
-            }
-        );
+        });
 
     });
 
@@ -56,35 +41,29 @@ if (menuToggle && nav) {
    HEADER AO ROLAR
 ========================================================= */
 
-const header =
-    document.querySelector("header");
+const header = document.querySelector("header");
 
 if (header) {
 
-    const updateHeader =
-        () => {
+    function updateHeader() {
 
-            if (window.scrollY > 50) {
+        if (window.scrollY > 50) {
 
-                header.classList.add("scrolled");
+            header.classList.add("scrolled");
 
-            } else {
+        } else {
 
-                header.classList.remove("scrolled");
+            header.classList.remove("scrolled");
 
-            }
+        }
 
-        };
-
+    }
 
     window.addEventListener(
         "scroll",
         updateHeader,
-        {
-            passive: true
-        }
+        { passive: true }
     );
-
 
     updateHeader();
 
@@ -95,39 +74,31 @@ if (header) {
    BOTÃO VOLTAR AO TOPO
 ========================================================= */
 
-const backTop =
-    document.querySelector(".back-top");
+const backTop = document.querySelector(".back-top");
 
 if (backTop) {
 
-    const updateBackTop =
-        () => {
+    function updateBackTop() {
 
-            if (window.scrollY > 500) {
+        if (window.scrollY > 500) {
 
-                backTop.style.opacity = "1";
+            backTop.style.opacity = "1";
+            backTop.style.visibility = "visible";
 
-                backTop.style.visibility = "visible";
+        } else {
 
-            } else {
+            backTop.style.opacity = "0";
+            backTop.style.visibility = "hidden";
 
-                backTop.style.opacity = "0";
+        }
 
-                backTop.style.visibility = "hidden";
-
-            }
-
-        };
-
+    }
 
     window.addEventListener(
         "scroll",
         updateBackTop,
-        {
-            passive: true
-        }
+        { passive: true }
     );
-
 
     updateBackTop();
 
@@ -138,58 +109,298 @@ if (backTop) {
    ANIMAÇÃO AO ROLAR
 ========================================================= */
 
-const elements =
-    document.querySelectorAll(
-        ".service-card, .about-content, .gallery-item, .testimonial-card, .video-card"
-    );
-
+const animatedElements = document.querySelectorAll(
+    ".service-card, .about-content, .gallery-item, .testimonial-card, .video-card"
+);
 
 if ("IntersectionObserver" in window) {
 
-    const observer =
-        new IntersectionObserver(
-            (entries) => {
+    const observer = new IntersectionObserver(
+        entries => {
 
-                entries.forEach(
-                    entry => {
+            entries.forEach(entry => {
 
-                        if (
-                            entry.isIntersecting
-                        ) {
+                if (entry.isIntersecting) {
 
-                            entry.target.classList.add("show");
+                    entry.target.classList.add("show");
 
-                            observer.unobserve(
-                                entry.target
-                            );
+                    observer.unobserve(entry.target);
 
-                        }
+                }
 
-                    }
-                );
+            });
 
-            },
-            {
-                threshold: 0.15
-            }
-        );
+        },
+        {
+            threshold: 0.15
+        }
+    );
 
 
-    elements.forEach(
-        element => {
+    animatedElements.forEach(element => {
 
-            observer.observe(element);
+        observer.observe(element);
+
+    });
+
+} else {
+
+    animatedElements.forEach(element => {
+
+        element.classList.add("show");
+
+    });
+
+}
+
+
+/* =========================================================
+   HERO VIDEO
+   VERSÃO ROBUSTA
+========================================================= */
+
+function initHeroVideo() {
+
+    const heroVideo = document.querySelector("#hero-video");
+
+    if (!heroVideo) {
+
+        console.warn("Hero video não encontrado.");
+
+        return;
+
+    }
+
+
+    /*
+     * IMPORTANTE:
+     * O caminho começa com "/" para funcionar
+     * corretamente no site publicado.
+     */
+
+    const desktopVideo =
+        "/assets/videos/hero-video.mp4";
+
+    const mobileVideo =
+        "/assets/videos/hero-video-mobile.mp4";
+
+
+    const isMobile =
+        window.matchMedia("(max-width: 768px)").matches;
+
+
+    const videoSource =
+        isMobile
+            ? mobileVideo
+            : desktopVideo;
+
+
+    console.log(
+        "Hero Video:",
+        videoSource
+    );
+
+
+    /* -----------------------------------------------------
+       CONFIGURAÇÕES
+    ----------------------------------------------------- */
+
+    heroVideo.muted = true;
+
+    heroVideo.defaultMuted = true;
+
+    heroVideo.autoplay = true;
+
+    heroVideo.loop = true;
+
+    heroVideo.playsInline = true;
+
+
+    heroVideo.setAttribute(
+        "muted",
+        ""
+    );
+
+    heroVideo.setAttribute(
+        "autoplay",
+        ""
+    );
+
+    heroVideo.setAttribute(
+        "loop",
+        ""
+    );
+
+    heroVideo.setAttribute(
+        "playsinline",
+        ""
+    );
+
+
+    /* -----------------------------------------------------
+       DEFINIR SRC
+    ----------------------------------------------------- */
+
+    heroVideo.src = videoSource;
+
+
+    /* -----------------------------------------------------
+       CARREGAR VÍDEO
+    ----------------------------------------------------- */
+
+    heroVideo.load();
+
+
+    /* -----------------------------------------------------
+       TENTAR REPRODUZIR
+    ----------------------------------------------------- */
+
+    function playHeroVideo() {
+
+        if (!heroVideo) return;
+
+        heroVideo.muted = true;
+
+        const promise = heroVideo.play();
+
+        if (promise !== undefined) {
+
+            promise.catch(error => {
+
+                /*
+                 * AbortError pode acontecer quando
+                 * load() é chamado novamente.
+                 * Não é necessário interromper o site.
+                 */
+
+                if (
+                    error.name !== "AbortError"
+                ) {
+
+                    console.warn(
+                        "Hero video não iniciou automaticamente:",
+                        error
+                    );
+
+                }
+
+            });
+
+        }
+
+    }
+
+
+    /* -----------------------------------------------------
+       EVENTOS DO VÍDEO
+    ----------------------------------------------------- */
+
+    heroVideo.addEventListener(
+        "loadeddata",
+        playHeroVideo,
+        { once: true }
+    );
+
+
+    heroVideo.addEventListener(
+        "canplay",
+        playHeroVideo,
+        { once: true }
+    );
+
+
+    heroVideo.addEventListener(
+        "loadedmetadata",
+        () => {
+
+            console.log(
+                "Hero video carregado:",
+                heroVideo.currentSrc
+            );
+
+        },
+        { once: true }
+    );
+
+
+    heroVideo.addEventListener(
+        "error",
+        () => {
+
+            console.error(
+                "Erro ao carregar Hero Video:",
+                heroVideo.error
+            );
 
         }
     );
 
 
-} else {
+    /* -----------------------------------------------------
+       QUANDO A PÁGINA TERMINAR DE CARREGAR
+    ----------------------------------------------------- */
 
-    elements.forEach(
-        element => {
+    window.addEventListener(
+        "load",
+        () => {
 
-            element.classList.add("show");
+            playHeroVideo();
+
+        },
+        { once: true }
+    );
+
+
+    /* -----------------------------------------------------
+       INTERAÇÃO DO USUÁRIO
+    ----------------------------------------------------- */
+
+    function resumeHeroVideo() {
+
+        if (heroVideo.paused) {
+
+            playHeroVideo();
+
+        }
+
+    }
+
+
+    document.addEventListener(
+        "touchstart",
+        resumeHeroVideo,
+        {
+            once: true,
+            passive: true
+        }
+    );
+
+
+    document.addEventListener(
+        "click",
+        resumeHeroVideo,
+        {
+            once: true
+        }
+    );
+
+
+    /* -----------------------------------------------------
+       VOLTAR PARA A ABA
+    ----------------------------------------------------- */
+
+    document.addEventListener(
+        "visibilitychange",
+        () => {
+
+            if (
+                document.visibilityState === "visible" &&
+                heroVideo.paused
+            ) {
+
+                playHeroVideo();
+
+            }
 
         }
     );
@@ -198,210 +409,24 @@ if ("IntersectionObserver" in window) {
 
 
 /* =========================================================
-   HERO VIDEO
-   DESKTOP / MOBILE
-   SAFARI / CHROME / EDGE
+   INICIAR HERO VIDEO
 ========================================================= */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
+if (
+    document.readyState === "loading"
+) {
 
-        const heroVideo =
-            document.querySelector("#hero-video");
+    document.addEventListener(
+        "DOMContentLoaded",
+        initHeroVideo,
+        { once: true }
+    );
 
+} else {
 
-        if (!heroVideo) return;
+    initHeroVideo();
 
-
-        /* -------------------------------------------------
-           DETECTAR MOBILE
-        ------------------------------------------------- */
-
-        const isMobile =
-            window.matchMedia(
-                "(max-width: 768px)"
-            ).matches;
-
-
-        /* -------------------------------------------------
-           DEFINIR ARQUIVO
-        ------------------------------------------------- */
-
-        const videoSource =
-            isMobile
-                ? "assets/videos/hero-video-mobile.mp4"
-                : "assets/videos/hero-video.mp4";
-
-
-        /* -------------------------------------------------
-           CONFIGURAÇÕES
-        ------------------------------------------------- */
-
-        heroVideo.muted = true;
-
-        heroVideo.defaultMuted = true;
-
-        heroVideo.autoplay = true;
-
-        heroVideo.loop = true;
-
-        heroVideo.playsInline = true;
-
-
-        /* Compatibilidade Safari */
-
-        heroVideo.setAttribute(
-            "muted",
-            ""
-        );
-
-        heroVideo.setAttribute(
-            "autoplay",
-            ""
-        );
-
-        heroVideo.setAttribute(
-            "loop",
-            ""
-        );
-
-        heroVideo.setAttribute(
-            "playsinline",
-            ""
-        );
-
-        heroVideo.setAttribute(
-            "webkit-playsinline",
-            ""
-        );
-
-
-        /* -------------------------------------------------
-           DEFINIR VÍDEO
-        ------------------------------------------------- */
-
-        heroVideo.src =
-            videoSource;
-
-
-        /* -------------------------------------------------
-           CONTROLE DE REPRODUÇÃO
-        ------------------------------------------------- */
-
-        let isPlaying = false;
-
-
-        const playHeroVideo =
-            async () => {
-
-                if (isPlaying) return;
-
-
-                try {
-
-                    heroVideo.muted = true;
-
-                    await heroVideo.play();
-
-                    isPlaying = true;
-
-
-                } catch (error) {
-
-                    isPlaying = false;
-
-                    console.log(
-                        "Hero video aguardando reprodução:",
-                        error
-                    );
-
-                }
-
-            };
-
-
-        /* -------------------------------------------------
-           QUANDO ESTIVER PRONTO
-        ------------------------------------------------- */
-
-        heroVideo.addEventListener(
-            "canplay",
-            playHeroVideo,
-            {
-                once: true
-            }
-        );
-
-
-        /* -------------------------------------------------
-           FALLBACK
-           INTERAÇÃO DO USUÁRIO
-        ------------------------------------------------- */
-
-        const resumeHeroVideo =
-            () => {
-
-                if (
-                    heroVideo.paused
-                ) {
-
-                    playHeroVideo();
-
-                }
-
-            };
-
-
-        document.addEventListener(
-            "click",
-            resumeHeroVideo,
-            {
-                once: true
-            }
-        );
-
-
-        document.addEventListener(
-            "touchstart",
-            resumeHeroVideo,
-            {
-                once: true,
-                passive: true
-            }
-        );
-
-
-        /* -------------------------------------------------
-           QUANDO VOLTAR PARA A ABA
-        ------------------------------------------------- */
-
-        document.addEventListener(
-            "visibilitychange",
-            () => {
-
-                if (
-                    document.visibilityState ===
-                    "visible"
-                ) {
-
-                    if (
-                        heroVideo.paused
-                    ) {
-
-                        isPlaying = false;
-
-                        playHeroVideo();
-
-                    }
-
-                }
-
-            }
-        );
-
-    }
-);
+}
 
 
 /* =========================================================
@@ -409,9 +434,7 @@ document.addEventListener(
 ========================================================= */
 
 const galleryItems =
-    document.querySelectorAll(
-        ".gallery-item"
-    );
+    document.querySelectorAll(".gallery-item");
 
 
 if (galleryItems.length > 0) {
@@ -420,8 +443,7 @@ if (galleryItems.length > 0) {
         document.createElement("div");
 
 
-    lightbox.className =
-        "lightbox";
+    lightbox.className = "lightbox";
 
 
     lightbox.innerHTML = `
@@ -464,45 +486,26 @@ if (galleryItems.length > 0) {
     `;
 
 
-    document.body.appendChild(
-        lightbox
-    );
+    document.body.appendChild(lightbox);
 
 
     const lightboxImage =
-        lightbox.querySelector(
-            ".lightbox-image"
-        );
-
+        lightbox.querySelector(".lightbox-image");
 
     const lightboxTitle =
-        lightbox.querySelector(
-            ".lightbox-caption h3"
-        );
-
+        lightbox.querySelector(".lightbox-caption h3");
 
     const lightboxDescription =
-        lightbox.querySelector(
-            ".lightbox-caption p"
-        );
-
+        lightbox.querySelector(".lightbox-caption p");
 
     const closeLightbox =
-        lightbox.querySelector(
-            ".lightbox-close"
-        );
-
+        lightbox.querySelector(".lightbox-close");
 
     const prevButton =
-        lightbox.querySelector(
-            ".lightbox-prev"
-        );
-
+        lightbox.querySelector(".lightbox-prev");
 
     const nextButton =
-        lightbox.querySelector(
-            ".lightbox-next"
-        );
+        lightbox.querySelector(".lightbox-next");
 
 
     let currentImage = 0;
@@ -510,71 +513,57 @@ if (galleryItems.length > 0) {
     const images = [];
 
 
-    /* -----------------------------------------------------
-       CAPTURAR FOTOS
-    ----------------------------------------------------- */
+    galleryItems.forEach((item, index) => {
 
-    galleryItems.forEach(
-        (item, index) => {
+        const img =
+            item.querySelector("img");
 
-            const img =
-                item.querySelector("img");
+        if (!img) return;
 
 
-            if (!img) return;
-
-
-            const title =
-                item.querySelector(
-                    ".gallery-caption h3"
-                );
-
-
-            const description =
-                item.querySelector(
-                    ".gallery-caption p"
-                );
-
-
-            images.push({
-
-                src: img.src,
-
-                alt: img.alt,
-
-                title:
-                    title
-                        ? title.textContent.trim()
-                        : "",
-
-                description:
-                    description
-                        ? description.textContent.trim()
-                        : ""
-
-            });
-
-
-            item.addEventListener(
-                "click",
-                event => {
-
-                    event.preventDefault();
-
-                    currentImage = index;
-
-                    openLightbox();
-
-                }
+        const title =
+            item.querySelector(
+                ".gallery-caption h3"
             );
 
-        }
-    );
+        const description =
+            item.querySelector(
+                ".gallery-caption p"
+            );
 
 
-    /* -----------------------------------------------------
-       ATUALIZAR LIGHTBOX
-    ----------------------------------------------------- */
+        images.push({
+
+            src: img.src,
+
+            alt: img.alt,
+
+            title: title
+                ? title.textContent.trim()
+                : "",
+
+            description: description
+                ? description.textContent.trim()
+                : ""
+
+        });
+
+
+        item.addEventListener(
+            "click",
+            event => {
+
+                event.preventDefault();
+
+                currentImage = index;
+
+                openLightbox();
+
+            }
+        );
+
+    });
+
 
     function updateLightbox() {
 
@@ -588,24 +577,17 @@ if (galleryItems.length > 0) {
         lightboxImage.src =
             image.src;
 
-
         lightboxImage.alt =
             image.alt;
 
-
         lightboxTitle.textContent =
             image.title;
-
 
         lightboxDescription.textContent =
             image.description;
 
     }
 
-
-    /* -----------------------------------------------------
-       ABRIR LIGHTBOX
-    ----------------------------------------------------- */
 
     function openLightbox() {
 
@@ -614,9 +596,7 @@ if (galleryItems.length > 0) {
 
         updateLightbox();
 
-
         lightbox.classList.add("active");
-
 
         document.body.style.overflow =
             "hidden";
@@ -624,14 +604,9 @@ if (galleryItems.length > 0) {
     }
 
 
-    /* -----------------------------------------------------
-       FECHAR LIGHTBOX
-    ----------------------------------------------------- */
-
     function closeLightboxFunction() {
 
         lightbox.classList.remove("active");
-
 
         document.body.style.overflow =
             "";
@@ -639,14 +614,9 @@ if (galleryItems.length > 0) {
     }
 
 
-    /* -----------------------------------------------------
-       PRÓXIMA IMAGEM
-    ----------------------------------------------------- */
-
     function showNextImage() {
 
         currentImage++;
-
 
         if (
             currentImage >=
@@ -657,39 +627,26 @@ if (galleryItems.length > 0) {
 
         }
 
-
         updateLightbox();
 
     }
 
 
-    /* -----------------------------------------------------
-       IMAGEM ANTERIOR
-    ----------------------------------------------------- */
-
     function showPreviousImage() {
 
         currentImage--;
 
-
-        if (
-            currentImage < 0
-        ) {
+        if (currentImage < 0) {
 
             currentImage =
                 images.length - 1;
 
         }
 
-
         updateLightbox();
 
     }
 
-
-    /* -----------------------------------------------------
-       BOTÕES
-    ----------------------------------------------------- */
 
     closeLightbox.addEventListener(
         "click",
@@ -709,10 +666,6 @@ if (galleryItems.length > 0) {
     );
 
 
-    /* -----------------------------------------------------
-       CLICAR NO FUNDO
-    ----------------------------------------------------- */
-
     lightbox.addEventListener(
         "click",
         event => {
@@ -729,10 +682,6 @@ if (galleryItems.length > 0) {
     );
 
 
-    /* -----------------------------------------------------
-       TECLADO
-    ----------------------------------------------------- */
-
     document.addEventListener(
         "keydown",
         event => {
@@ -748,27 +697,21 @@ if (galleryItems.length > 0) {
             }
 
 
-            if (
-                event.key === "Escape"
-            ) {
+            if (event.key === "Escape") {
 
                 closeLightboxFunction();
 
             }
 
 
-            if (
-                event.key === "ArrowRight"
-            ) {
+            if (event.key === "ArrowRight") {
 
                 showNextImage();
 
             }
 
 
-            if (
-                event.key === "ArrowLeft"
-            ) {
+            if (event.key === "ArrowLeft") {
 
                 showPreviousImage();
 
@@ -785,33 +728,19 @@ if (galleryItems.length > 0) {
 ========================================================= */
 
 const testimonialTrack =
-    document.querySelector(
-        ".testimonials-track"
-    );
-
+    document.querySelector(".testimonials-track");
 
 const testimonialCards =
-    document.querySelectorAll(
-        ".testimonial-card"
-    );
-
+    document.querySelectorAll(".testimonial-card");
 
 const testimonialNext =
-    document.querySelector(
-        ".testimonial-next"
-    );
-
+    document.querySelector(".testimonial-next");
 
 const testimonialPrev =
-    document.querySelector(
-        ".testimonial-prev"
-    );
-
+    document.querySelector(".testimonial-prev");
 
 const testimonialDots =
-    document.querySelectorAll(
-        ".testimonial-dot"
-    );
+    document.querySelectorAll(".testimonial-dot");
 
 
 if (
@@ -827,11 +756,7 @@ if (
     function updateTestimonials() {
 
         testimonialTrack.style.transform =
-            "translateX(-" +
-            (
-                testimonialIndex * 100
-            ) +
-            "%)";
+            `translateX(-${testimonialIndex * 100}%)`;
 
 
         testimonialDots.forEach(
@@ -852,7 +777,6 @@ if (
 
         testimonialIndex++;
 
-
         if (
             testimonialIndex >=
             testimonialCards.length
@@ -861,7 +785,6 @@ if (
             testimonialIndex = 0;
 
         }
-
 
         updateTestimonials();
 
@@ -872,16 +795,12 @@ if (
 
         testimonialIndex--;
 
-
-        if (
-            testimonialIndex < 0
-        ) {
+        if (testimonialIndex < 0) {
 
             testimonialIndex =
                 testimonialCards.length - 1;
 
         }
-
 
         updateTestimonials();
 
@@ -1001,24 +920,20 @@ if (
 ========================================================= */
 
 const contactForm =
-    document.querySelector(
-        "#contact-form"
-    );
+    document.querySelector("#contact-form");
 
 
 if (contactForm) {
 
     contactForm.addEventListener(
         "submit",
-        async function(event) {
+        async event => {
 
             event.preventDefault();
 
 
             const button =
-                contactForm.querySelector(
-                    "button"
-                );
+                contactForm.querySelector("button");
 
 
             if (!button) return;
@@ -1037,9 +952,7 @@ if (contactForm) {
             try {
 
                 const formData =
-                    new FormData(
-                        contactForm
-                    );
+                    new FormData(contactForm);
 
 
                 const response =
@@ -1063,7 +976,6 @@ if (contactForm) {
 
                 contactForm.reset();
 
-
                 button.textContent =
                     "Mensagem enviada!";
 
@@ -1086,10 +998,8 @@ if (contactForm) {
 
                 console.error(error);
 
-
                 button.disabled =
                     false;
-
 
                 button.textContent =
                     "Erro. Tente novamente.";

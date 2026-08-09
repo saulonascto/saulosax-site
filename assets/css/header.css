@@ -412,7 +412,7 @@ header.scrolled .header-button:hover {
 
         order: 3;
 
-        padding: 10px 14px;
+        padding: 8px 10px;
 
         font-size: 9px;
 
@@ -477,26 +477,28 @@ header.scrolled .header-button:hover {
 
     .nav {
 
-    pointer-events: none;
+        pointer-events: none;
 
-}
+    }
 
     .nav.active {
 
-    pointer-events: auto;
+        pointer-events: auto;
 
-}
+    }
 
     .nav.active .nav-menu {
 
-    opacity: 1;
+        opacity: 1;
 
-    visibility: visible;
+        visibility: visible;
 
-    transform: translateY(0);
+        transform: translateY(0);
 
-}
+    }
 
+
+    /* LINKS */
 
     .nav-menu li {
 
@@ -526,9 +528,20 @@ header.scrolled .header-button:hover {
 
     }
 
+
+    /* =====================================================
+       MENU MOBILE APÓS ROLAR
+    ===================================================== */
+
+    header.scrolled .nav-menu {
+
+        background: rgba(255, 255, 255, .98);
+
+    }
+
     header.scrolled .nav-menu a {
 
-        color: #ffffff;
+        color: #111111;
 
     }
 
@@ -570,9 +583,11 @@ header.scrolled .header-button:hover {
 
     .header-button {
 
-        padding: 9px 11px;
+        padding: 8px 10px;
 
         font-size: 8px;
+
+        letter-spacing: .4px;
 
     }
 

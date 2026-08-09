@@ -1,15 +1,18 @@
 
-/* ===========================
+/* =========================================================
+   SAULO NASCIMENTO | SAXOFONISTA
    RESPONSIVE
    TABLETS E CELULARES
-=========================== */
+========================================================= */
 
 
-/* ===========================
+/* =========================================================
    TABLETS
-=========================== */
+========================================================= */
 
 @media (max-width: 992px){
+
+    /* CONTAINER */
 
     .container{
         padding:0 30px;
@@ -35,6 +38,7 @@
     .about-container{
         grid-template-columns:1fr;
     }
+
 
     .about-image{
         max-width:600px;
@@ -79,53 +83,61 @@
 }
 
 
-/* ===========================
+/* =========================================================
    CELULARES
-=========================== */
+========================================================= */
 
 @media (max-width: 768px){
 
-    /* =========================
+    /* =====================================================
        CONTAINER
-    ========================= */
+    ===================================================== */
 
     .container{
         padding:0 20px;
     }
 
 
-    /* =========================
+    /* =====================================================
        HEADER
-    ========================= */
+    ===================================================== */
 
     header{
+
         position:fixed;
+
         top:0;
         left:0;
+
         width:100%;
+
         z-index:9999;
     }
 
 
-    /* =========================
+    /* =====================================================
        HEADER AO ROLAR
-    ========================= */
+    ===================================================== */
 
     header.scrolled{
+
         background:rgba(255,255,255,.96);
 
         backdrop-filter:blur(15px);
+
+        -webkit-backdrop-filter:blur(15px);
 
         box-shadow:
             0 8px 30px rgba(0,0,0,.12);
     }
 
 
-    /* =========================
+    /* =====================================================
        NAVBAR
-    ========================= */
+    ===================================================== */
 
     .navbar{
+
         display:flex;
 
         align-items:center;
@@ -138,11 +150,12 @@
     }
 
 
-    /* =========================
+    /* =====================================================
        LOGO
-    ========================= */
+    ===================================================== */
 
     .logo{
+
         display:flex;
 
         align-items:center;
@@ -154,6 +167,7 @@
 
 
     .logo img{
+
         width:120px;
 
         height:auto;
@@ -167,16 +181,25 @@
     /* LOGO AO ROLAR */
 
     header.scrolled .logo img{
+
         width:110px;
     }
 
 
-    /* =========================
-       BOTÃO HAMBÚRGUER
-    ========================= */
+    /* =====================================================
+       HAMBÚRGUER
+    ===================================================== */
 
-    .menu-toggle{
-        display:flex;
+    /*
+       !important é intencional.
+       O header.css possui .menu-toggle { display:none; }
+       para desktop. Aqui garantimos que o botão apareça
+       no mobile.
+    */
+
+    header .menu-toggle{
+
+        display:flex !important;
 
         flex-direction:column;
 
@@ -202,279 +225,72 @@
 
         cursor:pointer;
 
-        z-index:1001;
+        visibility:visible !important;
+
+        opacity:1 !important;
+
+        position:relative;
+
+        z-index:10001;
     }
 
 
-    .menu-toggle span{
-        display:block;
+    /* LINHAS DO HAMBÚRGUER */
+
+    header .menu-toggle span{
+
+        display:block !important;
 
         width:23px;
 
         height:2px;
 
-        background:#fff;
+        background:#ffffff;
 
         transition:.3s ease;
     }
 
 
-    /* HAMBÚRGUER AO ROLAR */
+    /* HAMBÚRGUER PRETO AO ROLAR */
 
     header.scrolled .menu-toggle span{
+
         background:#111111;
     }
 
 
-    /* =========================
-       ANIMAÇÃO HAMBÚRGUER
-    ========================= */
+    /* =====================================================
+       ANIMAÇÃO HAMBÚRGUER → X
+    ===================================================== */
 
     .menu-toggle.active span:nth-child(1){
-        transform:translateY(7px) rotate(45deg);
+
+        transform:
+            translateY(7px)
+            rotate(45deg);
     }
 
 
     .menu-toggle.active span:nth-child(2){
-        opacity:0;
+
+        opacity:0 !important;
     }
 
 
     .menu-toggle.active span:nth-child(3){
-        transform:translateY(-7px) rotate(-45deg);
+
+        transform:
+            translateY(-7px)
+            rotate(-45deg);
     }
 
 
-    /* =========================
-       MENU MOBILE
-    ========================= */
-
-    .nav-menu{
-        position:absolute;
-
-        top:80px;
-
-        left:0;
-
-        width:100%;
-
-        display:flex;
-
-        flex-direction:column;
-
-        align-items:center;
-
-        gap:20px;
-
-        padding:30px 20px;
-
-        background:var(--white);
-
-        opacity:0;
-
-        visibility:hidden;
-
-        transform:translateY(-20px);
-
-        transition:
-            opacity .3s ease,
-            visibility .3s ease,
-            transform .3s ease;
-
-        box-shadow:
-            0 10px 25px rgba(0,0,0,.08);
-
-        z-index:1000;
-    }
-
-
-    /* MENU ABERTO */
-
-    .nav-menu.active{
-        opacity:1;
-
-        visibility:visible;
-
-        transform:translateY(0);
-    }
-
-
-    /* MENU AO ROLAR */
-
-    header.scrolled .nav-menu{
-        background:#fff;
-    }
-
-
-    /* =========================
-       ITENS DO MENU
-    ========================= */
-
-    .nav-menu li{
-        width:100%;
-
-        text-align:center;
-    }
-
-
-    .nav-menu a{
-        display:block;
-
-        width:100%;
-
-        padding:8px 0;
-
-        color:var(--black);
-
-        text-decoration:none;
-    }
-
-
-    /* =========================
-       HERO
-    ========================= */
-
-    .hero-content{
-        text-align:center;
-
-        margin:auto;
-    }
-
-
-    .hero-content h1{
-        font-size:2.2rem;
-    }
-
-
-    .hero-description{
-        font-size:1rem;
-    }
-
-
-    .hero-buttons{
-        flex-direction:column;
-
-        align-items:center;
-    }
-
-
-    .btn-primary,
-    .btn-secondary{
-        width:100%;
-
-        text-align:center;
-    }
-
-
-    .hero-info{
-        justify-content:center;
-    }
-
-
-    /* =========================
-       SERVIÇOS
-    ========================= */
-
-    .services-grid{
-        grid-template-columns:1fr;
-    }
-
-
-    /* =========================
-       TÍTULOS
-    ========================= */
-
-    .section-title h2{
-        font-size:2rem;
-    }
-
-
-    /* =========================
-       GALERIA
-    ========================= */
-
-    .gallery-grid{
-        grid-template-columns:1fr;
-    }
-
-
-    .gallery-item:nth-child(1),
-    .gallery-item:nth-child(4){
-        grid-column:auto;
-
-        grid-row:auto;
-    }
-
-
-    /* =========================
-       VÍDEOS
-    ========================= */
-
-    .videos-grid{
-        grid-template-columns:1fr;
-    }
-
-
-    /* =========================
-       DEPOIMENTOS
-    ========================= */
-
-    .testimonials-grid{
-        grid-template-columns:1fr;
-    }
-
-
-    /* =========================
-       SOBRE
-    ========================= */
-
-    .about-content h2{
-        font-size:2rem;
-    }
-
-
-    .about-numbers{
-        flex-direction:column;
-
-        gap:25px;
-    }
-
-
-    /* =========================
-       CONTATO
-    ========================= */
-
-    .contato-container{
-        grid-template-columns:1fr;
-    }
-
-
-    /* =========================
-       FOOTER
-    ========================= */
-
-    .footer-container{
-        grid-template-columns:1fr;
-
-        text-align:center;
-    }
-
-
-    .footer-social{
-        align-items:center;
-    }
-
-
-    .footer-menu ul{
-        padding:0;
-    }
-
-
-    /* =========================
-       BOTÃO ORÇAMENTO
-    ========================= */
+    /* =====================================================
+       BOTÃO SOLICITAR ORÇAMENTO
+    ===================================================== */
 
     .header-button{
+
         display:flex;
 
         align-items:center;
@@ -498,6 +314,7 @@
     /* BOTÃO AO ROLAR */
 
     header.scrolled .header-button{
+
         background:#c9a45b;
 
         color:#111111;
@@ -505,67 +322,351 @@
 
 
     header.scrolled .header-button:hover{
+
         background:#111111;
 
-        color:#fff;
+        color:#ffffff;
     }
 
-}
+
+    /* =====================================================
+       MENU MOBILE
+    ===================================================== */
+
+    .nav-menu{
+
+        position:absolute;
+
+        top:80px;
+
+        left:0;
+
+        width:100%;
+
+        display:flex;
+
+        flex-direction:column;
+
+        align-items:center;
+
+        gap:20px;
+
+        padding:30px 20px;
+
+        background:#ffffff;
+
+        opacity:0;
+
+        visibility:hidden;
+
+        transform:translateY(-20px);
+
+        transition:
+            opacity .3s ease,
+            visibility .3s ease,
+            transform .3s ease;
+
+        box-shadow:
+            0 10px 25px rgba(0,0,0,.08);
+
+        z-index:10000;
+    }
 
 
-/* ===========================
-   TELAS MUITO PEQUENAS
-=========================== */
+    /* MENU ABERTO */
 
-@media (max-width: 480px){
+    .nav-menu.active{
 
-    .container{
-        padding:0 16px;
+        opacity:1;
+
+        visibility:visible;
+
+        transform:translateY(0);
+    }
+
+
+    /* MENU ABERTO SOBRE HEADER SCROLLED */
+
+    header.scrolled .nav-menu{
+
+        background:#ffffff;
+    }
+
+
+    /* =====================================================
+       ITENS DO MENU
+    ===================================================== */
+
+    .nav-menu li{
+
+        width:100%;
+
+        text-align:center;
+    }
+
+
+    .nav-menu a{
+
+        display:block;
+
+        width:100%;
+
+        padding:8px 0;
+
+        color:var(--black);
+
+        text-decoration:none;
+    }
+
+
+    /* =====================================================
+       HERO
+    ===================================================== */
+
+    .hero-content{
+
+        text-align:center;
+
+        margin:auto;
     }
 
 
     .hero-content h1{
-        font-size:1.9rem;
+
+        font-size:2.2rem;
     }
 
 
-    .section-title h2{
-        font-size:1.8rem;
+    .hero-description{
+
+        font-size:1rem;
+    }
+
+
+    .hero-buttons{
+
+        flex-direction:column;
+
+        align-items:center;
     }
 
 
     .btn-primary,
     .btn-secondary{
+
+        width:100%;
+
+        text-align:center;
+    }
+
+
+    .hero-info{
+
+        justify-content:center;
+    }
+
+
+    /* =====================================================
+       SERVIÇOS
+    ===================================================== */
+
+    .services-grid{
+
+        grid-template-columns:1fr;
+    }
+
+
+    /* =====================================================
+       TÍTULOS
+    ===================================================== */
+
+    .section-title h2{
+
+        font-size:2rem;
+    }
+
+
+    /* =====================================================
+       GALERIA
+    ===================================================== */
+
+    .gallery-grid{
+
+        grid-template-columns:1fr;
+    }
+
+
+    .gallery-item:nth-child(1),
+    .gallery-item:nth-child(4){
+
+        grid-column:auto;
+
+        grid-row:auto;
+    }
+
+
+    /* =====================================================
+       VÍDEOS
+    ===================================================== */
+
+    .videos-grid{
+
+        grid-template-columns:1fr;
+    }
+
+
+    /* =====================================================
+       DEPOIMENTOS
+    ===================================================== */
+
+    .testimonials-grid{
+
+        grid-template-columns:1fr;
+    }
+
+
+    /* =====================================================
+       SOBRE
+    ===================================================== */
+
+    .about-content h2{
+
+        font-size:2rem;
+    }
+
+
+    .about-numbers{
+
+        flex-direction:column;
+
+        gap:25px;
+    }
+
+
+    /* =====================================================
+       CONTATO
+    ===================================================== */
+
+    .contato-container{
+
+        grid-template-columns:1fr;
+    }
+
+
+    /* =====================================================
+       FOOTER
+    ===================================================== */
+
+    .footer-container{
+
+        grid-template-columns:1fr;
+
+        text-align:center;
+    }
+
+
+    .footer-social{
+
+        align-items:center;
+    }
+
+
+    .footer-menu ul{
+
+        padding:0;
+    }
+
+}
+
+
+/* =========================================================
+   TELAS MUITO PEQUENAS
+========================================================= */
+
+@media (max-width: 480px){
+
+    /* CONTAINER */
+
+    .container{
+
+        padding:0 16px;
+    }
+
+
+    /* HERO */
+
+    .hero-content h1{
+
+        font-size:1.9rem;
+    }
+
+
+    /* TÍTULOS */
+
+    .section-title h2{
+
+        font-size:1.8rem;
+    }
+
+
+    /* BOTÕES */
+
+    .btn-primary,
+    .btn-secondary{
+
         width:100%;
     }
 
 
-    .header-button{
-        font-size:.8rem;
+    /* =====================================================
+       HEADER
+    ===================================================== */
 
-        padding:10px 14px;
+    .navbar{
+
+        padding:11px 12px;
+
+        gap:8px;
     }
 
 
-    .menu-toggle{
+    /* LOGO */
+
+    .logo img{
+
+        width:115px;
+    }
+
+
+    header.scrolled .logo img{
+
+        width:105px;
+    }
+
+
+    /* HAMBÚRGUER */
+
+    header .menu-toggle{
+
         width:38px;
 
         height:38px;
     }
 
 
-    .menu-toggle span{
+    header .menu-toggle span{
+
         width:22px;
     }
 
 
-    .logo img{
-        width:115px;
-    }
+    /* ORÇAMENTO */
 
+    .header-button{
 
-    header.scrolled .logo img{
-        width:105px;
+        font-size:.8rem;
+
+        padding:10px 14px;
     }
 
 }

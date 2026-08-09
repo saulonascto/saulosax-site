@@ -475,27 +475,27 @@ header.scrolled .header-button:hover {
 
     /* MENU ABERTO */
 
-    .nav-menu.active {
-
-        opacity: 1;
-
-        visibility: visible;
-
-        transform: translateY(0);
-
-    }
-
     .nav {
 
-        pointer-events: none;
+    pointer-events: none;
 
-    }
+}
 
-    .nav-menu.active {
+    .nav.active {
 
-        pointer-events: auto;
+    pointer-events: auto;
 
-    }
+}
+
+    .nav.active .nav-menu {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transform: translateY(0);
+
+}
 
 
     .nav-menu li {

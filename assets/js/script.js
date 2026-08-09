@@ -9,29 +9,43 @@
    MENU MOBILE
 ========================================================= */
 
-const menuToggle = document.querySelector(".menu-toggle");
-const nav = document.querySelector(".nav");
+const menuToggle =
+    document.querySelector(".menu-toggle");
+
+const nav =
+    document.querySelector(".nav");
 
 if (menuToggle && nav) {
 
-    menuToggle.addEventListener("click", () => {
+    menuToggle.addEventListener(
+        "click",
+        () => {
 
-        nav.classList.toggle("active");
-        menuToggle.classList.toggle("active");
+            nav.classList.toggle("active");
 
-    });
+            menuToggle.classList.toggle("active");
+
+        }
+    );
 
 
-    const navLinks = nav.querySelectorAll("a");
+    /* Fechar menu ao clicar em um link */
+
+    const navLinks =
+        nav.querySelectorAll("a");
 
     navLinks.forEach(link => {
 
-        link.addEventListener("click", () => {
+        link.addEventListener(
+            "click",
+            () => {
 
-            nav.classList.remove("active");
-            menuToggle.classList.remove("active");
+                nav.classList.remove("active");
 
-        });
+                menuToggle.classList.remove("active");
+
+            }
+        );
 
     });
 
@@ -42,23 +56,25 @@ if (menuToggle && nav) {
    HEADER AO ROLAR
 ========================================================= */
 
-const header = document.querySelector("header");
+const header =
+    document.querySelector("header");
 
 if (header) {
 
-    const updateHeader = () => {
+    const updateHeader =
+        () => {
 
-        if (window.scrollY > 50) {
+            if (window.scrollY > 50) {
 
-            header.classList.add("scrolled");
+                header.classList.add("scrolled");
 
-        } else {
+            } else {
 
-            header.classList.remove("scrolled");
+                header.classList.remove("scrolled");
 
-        }
+            }
 
-    };
+        };
 
 
     window.addEventListener(
@@ -79,25 +95,29 @@ if (header) {
    BOTÃO VOLTAR AO TOPO
 ========================================================= */
 
-const backTop = document.querySelector(".back-top");
+const backTop =
+    document.querySelector(".back-top");
 
 if (backTop) {
 
-    const updateBackTop = () => {
+    const updateBackTop =
+        () => {
 
-        if (window.scrollY > 500) {
+            if (window.scrollY > 500) {
 
-            backTop.style.opacity = "1";
-            backTop.style.visibility = "visible";
+                backTop.style.opacity = "1";
 
-        } else {
+                backTop.style.visibility = "visible";
 
-            backTop.style.opacity = "0";
-            backTop.style.visibility = "hidden";
+            } else {
 
-        }
+                backTop.style.opacity = "0";
 
-    };
+                backTop.style.visibility = "hidden";
+
+            }
+
+        };
 
 
     window.addEventListener(
@@ -118,47 +138,61 @@ if (backTop) {
    ANIMAÇÃO AO ROLAR
 ========================================================= */
 
-const animatedElements = document.querySelectorAll(
-    ".service-card, .about-content, .gallery-item, .testimonial-card, .video-card"
-);
+const elements =
+    document.querySelectorAll(
+        ".service-card, .about-content, .gallery-item, .testimonial-card, .video-card"
+    );
+
 
 if ("IntersectionObserver" in window) {
 
-    const observer = new IntersectionObserver(
-        (entries) => {
+    const observer =
+        new IntersectionObserver(
+            (entries) => {
 
-            entries.forEach(entry => {
+                entries.forEach(
+                    entry => {
 
-                if (entry.isIntersecting) {
+                        if (
+                            entry.isIntersecting
+                        ) {
 
-                    entry.target.classList.add("show");
+                            entry.target.classList.add("show");
 
-                    observer.unobserve(entry.target);
+                            observer.unobserve(
+                                entry.target
+                            );
 
-                }
+                        }
 
-            });
+                    }
+                );
 
-        },
-        {
-            threshold: 0.15
+            },
+            {
+                threshold: 0.15
+            }
+        );
+
+
+    elements.forEach(
+        element => {
+
+            observer.observe(element);
+
         }
     );
 
 
-    animatedElements.forEach(element => {
-
-        observer.observe(element);
-
-    });
-
 } else {
 
-    animatedElements.forEach(element => {
+    elements.forEach(
+        element => {
 
-        element.classList.add("show");
+            element.classList.add("show");
 
-    });
+        }
+    );
 
 }
 
@@ -166,66 +200,77 @@ if ("IntersectionObserver" in window) {
 /* =========================================================
    HERO VIDEO
    DESKTOP / MOBILE
+   SAFARI / CHROME / EDGE
 ========================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-    const heroVideo = document.querySelector("#hero-video");
-
-    if (!heroVideo) return;
-
-
-    /* -----------------------------------------------------
-       DETECTAR DISPOSITIVO
-    ----------------------------------------------------- */
-
-    const mobileQuery = window.matchMedia(
-        "(max-width: 768px)"
-    );
+        const heroVideo =
+            document.querySelector("#hero-video");
 
 
-    /* -----------------------------------------------------
-       DEFINIR VÍDEO
-    ----------------------------------------------------- */
-
-    const setHeroVideo = () => {
-
-        const isMobile = mobileQuery.matches;
-
-        const videoSource = isMobile
-            ? "assets/videos/hero-video-mobile.mp4"
-            : "assets/videos/hero-video.mp4";
-
-
-        /* Evitar recarregar o mesmo arquivo */
-
-        if (
-            heroVideo.getAttribute("src") ===
-            videoSource
-        ) {
-
-            return;
-
-        }
-
-
-        heroVideo.src = videoSource;
+        if (!heroVideo) return;
 
 
         /* -------------------------------------------------
-           CONFIGURAÇÕES DE AUTOPLAY
+           DETECTAR MOBILE
+        ------------------------------------------------- */
+
+        const isMobile =
+            window.matchMedia(
+                "(max-width: 768px)"
+            ).matches;
+
+
+        /* -------------------------------------------------
+           DEFINIR ARQUIVO
+        ------------------------------------------------- */
+
+        const videoSource =
+            isMobile
+                ? "assets/videos/hero-video-mobile.mp4"
+                : "assets/videos/hero-video.mp4";
+
+
+        /* -------------------------------------------------
+           CONFIGURAÇÕES
         ------------------------------------------------- */
 
         heroVideo.muted = true;
+
         heroVideo.defaultMuted = true;
+
         heroVideo.autoplay = true;
+
         heroVideo.loop = true;
+
         heroVideo.playsInline = true;
 
-        heroVideo.setAttribute("muted", "");
-        heroVideo.setAttribute("autoplay", "");
-        heroVideo.setAttribute("loop", "");
-        heroVideo.setAttribute("playsinline", "");
+
+        /* Compatibilidade Safari */
+
+        heroVideo.setAttribute(
+            "muted",
+            ""
+        );
+
+        heroVideo.setAttribute(
+            "autoplay",
+            ""
+        );
+
+        heroVideo.setAttribute(
+            "loop",
+            ""
+        );
+
+        heroVideo.setAttribute(
+            "playsinline",
+            ""
+        );
+
         heroVideo.setAttribute(
             "webkit-playsinline",
             ""
@@ -233,55 +278,56 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /* -------------------------------------------------
-           CARREGAR VÍDEO
+           DEFINIR VÍDEO
         ------------------------------------------------- */
 
-        heroVideo.load();
+        heroVideo.src =
+            videoSource;
 
 
         /* -------------------------------------------------
-           TENTAR REPRODUZIR
+           CONTROLE DE REPRODUÇÃO
         ------------------------------------------------- */
 
-        const playVideo = () => {
+        let isPlaying = false;
 
-            heroVideo.muted = true;
 
-            const promise = heroVideo.play();
+        const playHeroVideo =
+            async () => {
 
-            if (promise !== undefined) {
+                if (isPlaying) return;
 
-                promise.catch(() => {
 
-                    /*
-                       Alguns navegadores podem bloquear
-                       autoplay. Nesse caso o vídeo será
-                       iniciado na primeira interação.
-                    */
+                try {
 
-                });
+                    heroVideo.muted = true;
 
-            }
+                    await heroVideo.play();
 
-        };
+                    isPlaying = true;
+
+
+                } catch (error) {
+
+                    isPlaying = false;
+
+                    console.log(
+                        "Hero video aguardando reprodução:",
+                        error
+                    );
+
+                }
+
+            };
 
 
         /* -------------------------------------------------
-           VÍDEO PRONTO
+           QUANDO ESTIVER PRONTO
         ------------------------------------------------- */
-
-        heroVideo.addEventListener(
-            "loadeddata",
-            playVideo,
-            {
-                once: true
-            }
-        );
-
 
         heroVideo.addEventListener(
             "canplay",
-            playVideo,
+            playHeroVideo,
             {
                 once: true
             }
@@ -289,44 +335,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         /* -------------------------------------------------
-           TENTAR NOVAMENTE APÓS O CARREGAMENTO DA PÁGINA
-        ------------------------------------------------- */
-
-        if (document.readyState === "complete") {
-
-            playVideo();
-
-        } else {
-
-            window.addEventListener(
-                "load",
-                playVideo,
-                {
-                    once: true
-                }
-            );
-
-        }
-
-
-        /* -------------------------------------------------
+           FALLBACK
            INTERAÇÃO DO USUÁRIO
         ------------------------------------------------- */
 
-        const resumeVideo = () => {
+        const resumeHeroVideo =
+            () => {
 
-            if (heroVideo.paused) {
+                if (
+                    heroVideo.paused
+                ) {
 
-                playVideo();
+                    playHeroVideo();
 
-            }
+                }
 
-        };
+            };
 
 
         document.addEventListener(
             "click",
-            resumeVideo,
+            resumeHeroVideo,
             {
                 once: true
             }
@@ -335,52 +364,64 @@ document.addEventListener("DOMContentLoaded", () => {
 
         document.addEventListener(
             "touchstart",
-            resumeVideo,
+            resumeHeroVideo,
             {
                 once: true,
                 passive: true
             }
         );
 
-    };
 
+        /* -------------------------------------------------
+           QUANDO VOLTAR PARA A ABA
+        ------------------------------------------------- */
 
-    /* -----------------------------------------------------
-       INICIAR
-    ----------------------------------------------------- */
+        document.addEventListener(
+            "visibilitychange",
+            () => {
 
-    setHeroVideo();
+                if (
+                    document.visibilityState ===
+                    "visible"
+                ) {
 
+                    if (
+                        heroVideo.paused
+                    ) {
 
-    /* -----------------------------------------------------
-       TROCAR VÍDEO SE MUDAR ENTRE DESKTOP/MOBILE
-    ----------------------------------------------------- */
+                        isPlaying = false;
 
-    if (mobileQuery.addEventListener) {
+                        playHeroVideo();
 
-        mobileQuery.addEventListener(
-            "change",
-            setHeroVideo
+                    }
+
+                }
+
+            }
         );
 
     }
-
-});
+);
 
 
 /* =========================================================
    LIGHTBOX GALERIA
 ========================================================= */
 
-const galleryItems = document.querySelectorAll(
-    ".gallery-item"
-);
+const galleryItems =
+    document.querySelectorAll(
+        ".gallery-item"
+    );
+
 
 if (galleryItems.length > 0) {
 
-    const lightbox = document.createElement("div");
+    const lightbox =
+        document.createElement("div");
 
-    lightbox.className = "lightbox";
+
+    lightbox.className =
+        "lightbox";
 
 
     lightbox.innerHTML = `
@@ -423,31 +464,40 @@ if (galleryItems.length > 0) {
     `;
 
 
-    document.body.appendChild(lightbox);
+    document.body.appendChild(
+        lightbox
+    );
 
 
     const lightboxImage =
-        lightbox.querySelector(".lightbox-image");
+        lightbox.querySelector(
+            ".lightbox-image"
+        );
+
 
     const lightboxTitle =
         lightbox.querySelector(
             ".lightbox-caption h3"
         );
 
+
     const lightboxDescription =
         lightbox.querySelector(
             ".lightbox-caption p"
         );
+
 
     const closeLightbox =
         lightbox.querySelector(
             ".lightbox-close"
         );
 
+
     const prevButton =
         lightbox.querySelector(
             ".lightbox-prev"
         );
+
 
     const nextButton =
         lightbox.querySelector(
@@ -461,55 +511,65 @@ if (galleryItems.length > 0) {
 
 
     /* -----------------------------------------------------
-       CAPTURAR IMAGENS
+       CAPTURAR FOTOS
     ----------------------------------------------------- */
 
-    galleryItems.forEach((item, index) => {
+    galleryItems.forEach(
+        (item, index) => {
 
-        const img = item.querySelector("img");
+            const img =
+                item.querySelector("img");
 
-        if (!img) return;
+
+            if (!img) return;
 
 
-        const title =
-            item.querySelector(
-                ".gallery-caption h3"
+            const title =
+                item.querySelector(
+                    ".gallery-caption h3"
+                );
+
+
+            const description =
+                item.querySelector(
+                    ".gallery-caption p"
+                );
+
+
+            images.push({
+
+                src: img.src,
+
+                alt: img.alt,
+
+                title:
+                    title
+                        ? title.textContent.trim()
+                        : "",
+
+                description:
+                    description
+                        ? description.textContent.trim()
+                        : ""
+
+            });
+
+
+            item.addEventListener(
+                "click",
+                event => {
+
+                    event.preventDefault();
+
+                    currentImage = index;
+
+                    openLightbox();
+
+                }
             );
 
-        const description =
-            item.querySelector(
-                ".gallery-caption p"
-            );
-
-
-        images.push({
-
-            src: img.currentSrc || img.src,
-
-            alt: img.alt || "Imagem da galeria",
-
-            title: title
-                ? title.textContent.trim()
-                : "",
-
-            description: description
-                ? description.textContent.trim()
-                : ""
-
-        });
-
-
-        item.addEventListener("click", event => {
-
-            event.preventDefault();
-
-            currentImage = index;
-
-            openLightbox();
-
-        });
-
-    });
+        }
+    );
 
 
     /* -----------------------------------------------------
@@ -521,14 +581,21 @@ if (galleryItems.length > 0) {
         if (!images.length) return;
 
 
-        const image = images[currentImage];
+        const image =
+            images[currentImage];
 
 
-        lightboxImage.src = image.src;
+        lightboxImage.src =
+            image.src;
 
-        lightboxImage.alt = image.alt;
 
-        lightboxTitle.textContent = image.title;
+        lightboxImage.alt =
+            image.alt;
+
+
+        lightboxTitle.textContent =
+            image.title;
+
 
         lightboxDescription.textContent =
             image.description;
@@ -537,7 +604,7 @@ if (galleryItems.length > 0) {
 
 
     /* -----------------------------------------------------
-       ABRIR
+       ABRIR LIGHTBOX
     ----------------------------------------------------- */
 
     function openLightbox() {
@@ -551,26 +618,29 @@ if (galleryItems.length > 0) {
         lightbox.classList.add("active");
 
 
-        document.body.style.overflow = "hidden";
+        document.body.style.overflow =
+            "hidden";
 
     }
 
 
     /* -----------------------------------------------------
-       FECHAR
+       FECHAR LIGHTBOX
     ----------------------------------------------------- */
 
     function closeLightboxFunction() {
 
         lightbox.classList.remove("active");
 
-        document.body.style.overflow = "";
+
+        document.body.style.overflow =
+            "";
 
     }
 
 
     /* -----------------------------------------------------
-       PRÓXIMA
+       PRÓXIMA IMAGEM
     ----------------------------------------------------- */
 
     function showNextImage() {
@@ -594,7 +664,7 @@ if (galleryItems.length > 0) {
 
 
     /* -----------------------------------------------------
-       ANTERIOR
+       IMAGEM ANTERIOR
     ----------------------------------------------------- */
 
     function showPreviousImage() {
@@ -602,7 +672,9 @@ if (galleryItems.length > 0) {
         currentImage--;
 
 
-        if (currentImage < 0) {
+        if (
+            currentImage < 0
+        ) {
 
             currentImage =
                 images.length - 1;
@@ -645,7 +717,9 @@ if (galleryItems.length > 0) {
         "click",
         event => {
 
-            if (event.target === lightbox) {
+            if (
+                event.target === lightbox
+            ) {
 
                 closeLightboxFunction();
 
@@ -674,21 +748,27 @@ if (galleryItems.length > 0) {
             }
 
 
-            if (event.key === "Escape") {
+            if (
+                event.key === "Escape"
+            ) {
 
                 closeLightboxFunction();
 
             }
 
 
-            if (event.key === "ArrowRight") {
+            if (
+                event.key === "ArrowRight"
+            ) {
 
                 showNextImage();
 
             }
 
 
-            if (event.key === "ArrowLeft") {
+            if (
+                event.key === "ArrowLeft"
+            ) {
 
                 showPreviousImage();
 
@@ -709,20 +789,24 @@ const testimonialTrack =
         ".testimonials-track"
     );
 
+
 const testimonialCards =
     document.querySelectorAll(
         ".testimonial-card"
     );
+
 
 const testimonialNext =
     document.querySelector(
         ".testimonial-next"
     );
 
+
 const testimonialPrev =
     document.querySelector(
         ".testimonial-prev"
     );
+
 
 const testimonialDots =
     document.querySelectorAll(
@@ -740,14 +824,14 @@ if (
     let testimonialAutoplay;
 
 
-    /* -----------------------------------------------------
-       ATUALIZAR
-    ----------------------------------------------------- */
-
     function updateTestimonials() {
 
         testimonialTrack.style.transform =
-            `translateX(-${testimonialIndex * 100}%)`;
+            "translateX(-" +
+            (
+                testimonialIndex * 100
+            ) +
+            "%)";
 
 
         testimonialDots.forEach(
@@ -763,10 +847,6 @@ if (
 
     }
 
-
-    /* -----------------------------------------------------
-       PRÓXIMO
-    ----------------------------------------------------- */
 
     function nextTestimonial() {
 
@@ -788,16 +868,14 @@ if (
     }
 
 
-    /* -----------------------------------------------------
-       ANTERIOR
-    ----------------------------------------------------- */
-
     function previousTestimonial() {
 
         testimonialIndex--;
 
 
-        if (testimonialIndex < 0) {
+        if (
+            testimonialIndex < 0
+        ) {
 
             testimonialIndex =
                 testimonialCards.length - 1;
@@ -809,10 +887,6 @@ if (
 
     }
 
-
-    /* -----------------------------------------------------
-       AUTOPLAY
-    ----------------------------------------------------- */
 
     function startTestimonialAutoplay() {
 
@@ -830,10 +904,6 @@ if (
     }
 
 
-    /* -----------------------------------------------------
-       BOTÃO PRÓXIMO
-    ----------------------------------------------------- */
-
     if (testimonialNext) {
 
         testimonialNext.addEventListener(
@@ -849,10 +919,6 @@ if (
 
     }
 
-
-    /* -----------------------------------------------------
-       BOTÃO ANTERIOR
-    ----------------------------------------------------- */
 
     if (testimonialPrev) {
 
@@ -870,10 +936,6 @@ if (
     }
 
 
-    /* -----------------------------------------------------
-       DOTS
-    ----------------------------------------------------- */
-
     testimonialDots.forEach(
         (dot, index) => {
 
@@ -881,7 +943,8 @@ if (
                 "click",
                 () => {
 
-                    testimonialIndex = index;
+                    testimonialIndex =
+                        index;
 
                     updateTestimonials();
 
@@ -893,10 +956,6 @@ if (
         }
     );
 
-
-    /* -----------------------------------------------------
-       PAUSAR AO PASSAR O MOUSE
-    ----------------------------------------------------- */
 
     const testimonialCarousel =
         document.querySelector(
@@ -938,9 +997,117 @@ if (
 
 
 /* =========================================================
-   FINALIZAÇÃO
+   FORMULÁRIO DE CONTATO
 ========================================================= */
 
-console.log(
-    "Saulo Sax — JavaScript carregado com sucesso."
-);
+const contactForm =
+    document.querySelector(
+        "#contact-form"
+    );
+
+
+if (contactForm) {
+
+    contactForm.addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const button =
+                contactForm.querySelector(
+                    "button"
+                );
+
+
+            if (!button) return;
+
+
+            const originalText =
+                button.textContent;
+
+
+            button.disabled = true;
+
+            button.textContent =
+                "Enviando...";
+
+
+            try {
+
+                const formData =
+                    new FormData(
+                        contactForm
+                    );
+
+
+                const response =
+                    await fetch(
+                        contactForm.action,
+                        {
+                            method: "POST",
+                            body: formData
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Erro ao enviar formulário."
+                    );
+
+                }
+
+
+                contactForm.reset();
+
+
+                button.textContent =
+                    "Mensagem enviada!";
+
+
+                setTimeout(
+                    () => {
+
+                        button.disabled =
+                            false;
+
+                        button.textContent =
+                            originalText;
+
+                    },
+                    4000
+                );
+
+
+            } catch (error) {
+
+                console.error(error);
+
+
+                button.disabled =
+                    false;
+
+
+                button.textContent =
+                    "Erro. Tente novamente.";
+
+
+                setTimeout(
+                    () => {
+
+                        button.textContent =
+                            originalText;
+
+                    },
+                    4000
+                );
+
+            }
+
+        }
+    );
+
+}

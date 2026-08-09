@@ -45,7 +45,7 @@ const header = document.querySelector("header");
 
 if (header) {
 
-    function updateHeader() {
+    const updateHeader = () => {
 
         if (window.scrollY > 50) {
 
@@ -57,13 +57,15 @@ if (header) {
 
         }
 
-    }
+    };
+
 
     window.addEventListener(
         "scroll",
         updateHeader,
         { passive: true }
     );
+
 
     updateHeader();
 
@@ -78,7 +80,7 @@ const backTop = document.querySelector(".back-top");
 
 if (backTop) {
 
-    function updateBackTop() {
+    const updateBackTop = () => {
 
         if (window.scrollY > 500) {
 
@@ -92,13 +94,15 @@ if (backTop) {
 
         }
 
-    }
+    };
+
 
     window.addEventListener(
         "scroll",
         updateBackTop,
         { passive: true }
     );
+
 
     updateBackTop();
 
@@ -156,33 +160,24 @@ if ("IntersectionObserver" in window) {
 
 /* =========================================================
    HERO VIDEO
-   VERSÃO ROBUSTA
+   DESKTOP / MOBILE
 ========================================================= */
 
-function initHeroVideo() {
+const heroVideo = document.querySelector("#hero-video");
 
-    const heroVideo = document.querySelector("#hero-video");
-
-    if (!heroVideo) {
-
-        console.warn("Hero video não encontrado.");
-
-        return;
-
-    }
-
+if (heroVideo) {
 
     /*
      * IMPORTANTE:
-     * O caminho começa com "/" para funcionar
-     * corretamente no site publicado.
+     * O caminho começa com / para funcionar corretamente
+     * no domínio publicado.
      */
-
-    const desktopVideo =
-        "/assets/videos/hero-video.mp4";
 
     const mobileVideo =
         "/assets/videos/hero-video-mobile.mp4";
+
+    const desktopVideo =
+        "/assets/videos/hero-video.mp4";
 
 
     const isMobile =
@@ -195,104 +190,67 @@ function initHeroVideo() {
             : desktopVideo;
 
 
-    console.log(
-        "Hero Video:",
-        videoSource
-    );
-
-
     /* -----------------------------------------------------
        CONFIGURAÇÕES
     ----------------------------------------------------- */
 
     heroVideo.muted = true;
-
     heroVideo.defaultMuted = true;
-
     heroVideo.autoplay = true;
-
     heroVideo.loop = true;
-
     heroVideo.playsInline = true;
 
 
-    heroVideo.setAttribute(
-        "muted",
-        ""
-    );
-
-    heroVideo.setAttribute(
-        "autoplay",
-        ""
-    );
-
-    heroVideo.setAttribute(
-        "loop",
-        ""
-    );
-
-    heroVideo.setAttribute(
-        "playsinline",
-        ""
-    );
+    heroVideo.setAttribute("muted", "");
+    heroVideo.setAttribute("autoplay", "");
+    heroVideo.setAttribute("loop", "");
+    heroVideo.setAttribute("playsinline", "");
+    heroVideo.setAttribute("webkit-playsinline", "");
 
 
-    /* -----------------------------------------------------
-       DEFINIR SRC
-    ----------------------------------------------------- */
+    /*
+     * Define o SRC diretamente.
+     */
 
-    
+    heroVideo.src = videoSource;
+
+
+    /*
+     * Força o navegador a carregar o arquivo.
+     */
+
+    heroVideo.load();
 
 
     /* -----------------------------------------------------
-       CARREGAR VÍDEO
+       REPRODUÇÃO
     ----------------------------------------------------- */
 
-    
-
-
-    /* -----------------------------------------------------
-       TENTAR REPRODUZIR
-    ----------------------------------------------------- */
-
-    function playHeroVideo() {
-
-        if (!heroVideo) return;
+    const playHeroVideo = () => {
 
         heroVideo.muted = true;
+        heroVideo.defaultMuted = true;
 
         const promise = heroVideo.play();
 
         if (promise !== undefined) {
 
-            promise.catch(error => {
+            promise.catch(() => {
 
                 /*
-                 * AbortError pode acontecer quando
-                 * load() é chamado novamente.
-                 * Não é necessário interromper o site.
+                 * Alguns navegadores bloqueiam o autoplay.
+                 * Não geramos erro no console.
                  */
-
-                if (
-                    error.name !== "AbortError"
-                ) {
-
-                    console.warn(
-                        "Hero video não iniciou automaticamente:",
-                        error
-                    );
-
-                }
 
             });
 
         }
 
-    }
+    };
 
 
     /* -----------------------------------------------------
-       EVENTOS DO VÍDEO
+       QUANDO O VÍDEO ESTIVER PRONTO
     ----------------------------------------------------- */
 
     heroVideo.addEventListener(
@@ -311,42 +269,18 @@ function initHeroVideo() {
 
     heroVideo.addEventListener(
         "loadedmetadata",
-        () => {
-
-            console.log(
-                "Hero video carregado:",
-                heroVideo.currentSrc
-            );
-
-        },
+        playHeroVideo,
         { once: true }
     );
 
 
-    heroVideo.addEventListener(
-        "error",
-        () => {
-
-            console.error(
-                "Erro ao carregar Hero Video:",
-                heroVideo.error
-            );
-
-        }
-    );
-
-
     /* -----------------------------------------------------
-       QUANDO A PÁGINA TERMINAR DE CARREGAR
+       LOAD DA PÁGINA
     ----------------------------------------------------- */
 
     window.addEventListener(
         "load",
-        () => {
-
-            playHeroVideo();
-
-        },
+        playHeroVideo,
         { once: true }
     );
 
@@ -355,7 +289,7 @@ function initHeroVideo() {
        INTERAÇÃO DO USUÁRIO
     ----------------------------------------------------- */
 
-    function resumeHeroVideo() {
+    const resumeHeroVideo = () => {
 
         if (heroVideo.paused) {
 
@@ -363,7 +297,7 @@ function initHeroVideo() {
 
         }
 
-    }
+    };
 
 
     document.addEventListener(
@@ -404,27 +338,6 @@ function initHeroVideo() {
 
         }
     );
-
-}
-
-
-/* =========================================================
-   INICIAR HERO VIDEO
-========================================================= */
-
-if (
-    document.readyState === "loading"
-) {
-
-    document.addEventListener(
-        "DOMContentLoaded",
-        initHeroVideo,
-        { once: true }
-    );
-
-} else {
-
-    initHeroVideo();
 
 }
 
@@ -492,17 +405,22 @@ if (galleryItems.length > 0) {
     const lightboxImage =
         lightbox.querySelector(".lightbox-image");
 
+
     const lightboxTitle =
         lightbox.querySelector(".lightbox-caption h3");
+
 
     const lightboxDescription =
         lightbox.querySelector(".lightbox-caption p");
 
+
     const closeLightbox =
         lightbox.querySelector(".lightbox-close");
 
+
     const prevButton =
         lightbox.querySelector(".lightbox-prev");
+
 
     const nextButton =
         lightbox.querySelector(".lightbox-next");
@@ -510,13 +428,19 @@ if (galleryItems.length > 0) {
 
     let currentImage = 0;
 
+
     const images = [];
 
+
+    /* -----------------------------------------------------
+       CAPTURAR IMAGENS
+    ----------------------------------------------------- */
 
     galleryItems.forEach((item, index) => {
 
         const img =
             item.querySelector("img");
+
 
         if (!img) return;
 
@@ -525,6 +449,7 @@ if (galleryItems.length > 0) {
             item.querySelector(
                 ".gallery-caption h3"
             );
+
 
         const description =
             item.querySelector(
@@ -549,21 +474,22 @@ if (galleryItems.length > 0) {
         });
 
 
-        item.addEventListener(
-            "click",
-            event => {
+        item.addEventListener("click", event => {
 
-                event.preventDefault();
+            event.preventDefault();
 
-                currentImage = index;
+            currentImage = index;
 
-                openLightbox();
+            openLightbox();
 
-            }
-        );
+        });
 
     });
 
+
+    /* -----------------------------------------------------
+       ATUALIZAR LIGHTBOX
+    ----------------------------------------------------- */
 
     function updateLightbox() {
 
@@ -577,17 +503,24 @@ if (galleryItems.length > 0) {
         lightboxImage.src =
             image.src;
 
+
         lightboxImage.alt =
             image.alt;
 
+
         lightboxTitle.textContent =
             image.title;
+
 
         lightboxDescription.textContent =
             image.description;
 
     }
 
+
+    /* -----------------------------------------------------
+       ABRIR LIGHTBOX
+    ----------------------------------------------------- */
 
     function openLightbox() {
 
@@ -596,7 +529,9 @@ if (galleryItems.length > 0) {
 
         updateLightbox();
 
+
         lightbox.classList.add("active");
+
 
         document.body.style.overflow =
             "hidden";
@@ -604,37 +539,49 @@ if (galleryItems.length > 0) {
     }
 
 
+    /* -----------------------------------------------------
+       FECHAR LIGHTBOX
+    ----------------------------------------------------- */
+
     function closeLightboxFunction() {
 
         lightbox.classList.remove("active");
 
-        document.body.style.overflow =
-            "";
+
+        document.body.style.overflow = "";
 
     }
 
+
+    /* -----------------------------------------------------
+       PRÓXIMA IMAGEM
+    ----------------------------------------------------- */
 
     function showNextImage() {
 
         currentImage++;
 
-        if (
-            currentImage >=
-            images.length
-        ) {
+
+        if (currentImage >= images.length) {
 
             currentImage = 0;
 
         }
+
 
         updateLightbox();
 
     }
 
 
+    /* -----------------------------------------------------
+       IMAGEM ANTERIOR
+    ----------------------------------------------------- */
+
     function showPreviousImage() {
 
         currentImage--;
+
 
         if (currentImage < 0) {
 
@@ -643,10 +590,15 @@ if (galleryItems.length > 0) {
 
         }
 
+
         updateLightbox();
 
     }
 
+
+    /* -----------------------------------------------------
+       BOTÕES
+    ----------------------------------------------------- */
 
     closeLightbox.addEventListener(
         "click",
@@ -666,13 +618,15 @@ if (galleryItems.length > 0) {
     );
 
 
+    /* -----------------------------------------------------
+       CLICAR NO FUNDO
+    ----------------------------------------------------- */
+
     lightbox.addEventListener(
         "click",
         event => {
 
-            if (
-                event.target === lightbox
-            ) {
+            if (event.target === lightbox) {
 
                 closeLightboxFunction();
 
@@ -682,14 +636,16 @@ if (galleryItems.length > 0) {
     );
 
 
+    /* -----------------------------------------------------
+       TECLADO
+    ----------------------------------------------------- */
+
     document.addEventListener(
         "keydown",
         event => {
 
             if (
-                !lightbox.classList.contains(
-                    "active"
-                )
+                !lightbox.classList.contains("active")
             ) {
 
                 return;
@@ -730,14 +686,18 @@ if (galleryItems.length > 0) {
 const testimonialTrack =
     document.querySelector(".testimonials-track");
 
+
 const testimonialCards =
     document.querySelectorAll(".testimonial-card");
+
 
 const testimonialNext =
     document.querySelector(".testimonial-next");
 
+
 const testimonialPrev =
     document.querySelector(".testimonial-prev");
+
 
 const testimonialDots =
     document.querySelectorAll(".testimonial-dot");
@@ -777,6 +737,7 @@ if (
 
         testimonialIndex++;
 
+
         if (
             testimonialIndex >=
             testimonialCards.length
@@ -785,6 +746,7 @@ if (
             testimonialIndex = 0;
 
         }
+
 
         updateTestimonials();
 
@@ -795,12 +757,14 @@ if (
 
         testimonialIndex--;
 
+
         if (testimonialIndex < 0) {
 
             testimonialIndex =
                 testimonialCards.length - 1;
 
         }
+
 
         updateTestimonials();
 
@@ -809,9 +773,7 @@ if (
 
     function startTestimonialAutoplay() {
 
-        clearInterval(
-            testimonialAutoplay
-        );
+        clearInterval(testimonialAutoplay);
 
 
         testimonialAutoplay =
@@ -976,44 +938,38 @@ if (contactForm) {
 
                 contactForm.reset();
 
+
                 button.textContent =
                     "Mensagem enviada!";
 
 
-                setTimeout(
-                    () => {
+                setTimeout(() => {
 
-                        button.disabled =
-                            false;
+                    button.disabled = false;
 
-                        button.textContent =
-                            originalText;
+                    button.textContent =
+                        originalText;
 
-                    },
-                    4000
-                );
+                }, 4000);
 
 
             } catch (error) {
 
                 console.error(error);
 
-                button.disabled =
-                    false;
+
+                button.disabled = false;
 
                 button.textContent =
                     "Erro. Tente novamente.";
 
 
-                setTimeout(
-                    () => {
+                setTimeout(() => {
 
-                        button.textContent =
-                            originalText;
+                    button.textContent =
+                        originalText;
 
-                    },
-                    4000
-                );
+                }, 4000);
 
             }
 

@@ -1,229 +1,587 @@
-/* ===========================
+/* =========================================================
    HEADER PREMIUM
-=========================== */
+========================================================= */
 
-header{
+header {
 
-    position:fixed;
+    position: fixed;
 
-    top:0;
-    left:0;
+    top: 0;
+    left: 0;
 
-    width:100%;
+    width: 100%;
 
-    z-index:9999;
+    z-index: 9999;
 
-    background:transparent;
+    background: transparent;
 
-    transition:.4s ease;
+    transition:
+        background-color .35s ease,
+        box-shadow .35s ease,
+        backdrop-filter .35s ease;
 
 }
 
 
-/* ===========================
+/* =========================================================
    HEADER AO ROLAR
-=========================== */
+========================================================= */
 
-header.scrolled{
+header.scrolled {
 
-    background:rgba(255,255,255,.96);
+    background: rgba(255, 255, 255, .96);
 
-    backdrop-filter:blur(15px);
+    backdrop-filter: blur(15px);
 
     box-shadow:
-    0 8px 30px rgba(0,0,0,.12);
+        0 8px 30px rgba(0, 0, 0, .12);
 
 }
 
 
-/* ===========================
+/* =========================================================
    NAVBAR
-=========================== */
+========================================================= */
 
-.navbar{
+.navbar {
 
-    max-width:1200px;
+    width: 100%;
 
-    height:95px;
+    max-width: 1200px;
 
-    margin:auto;
+    height: 95px;
 
-    padding:0 25px;
+    margin: 0 auto;
 
-    display:flex;
+    padding: 0 25px;
 
-    align-items:center;
+    display: flex;
 
-    justify-content:space-between;
+    align-items: center;
+
+    justify-content: space-between;
 
 }
 
 
-/* ===========================
+/* =========================================================
    LOGO
-=========================== */
+========================================================= */
 
-.logo img{
+.logo {
 
-    width:150px;
+    display: flex;
 
-    height:auto;
+    align-items: center;
 
-    display:block;
+    flex-shrink: 0;
 
-    transition:.4s ease;
+}
+
+.logo img {
+
+    width: 150px;
+
+    height: auto;
+
+    display: block;
 
 }
 
 
-header.scrolled .logo img{
-
-    width:135px;
-
-}
-
-
-/* ===========================
+/* =========================================================
    MENU
-=========================== */
+========================================================= */
 
-.nav-menu{
+.nav {
 
-    display:flex;
+    display: flex;
 
-    align-items:center;
+    align-items: center;
 
-    gap:42px;
+}
 
-    list-style:none;
+.nav-menu {
 
-    margin:0;
+    display: flex;
 
-    padding:0;
+    align-items: center;
+
+    gap: 42px;
+
+    list-style: none;
+
+    margin: 0;
+
+    padding: 0;
+
+}
+
+.nav-menu li {
+
+    margin: 0;
+
+    padding: 0;
+
+}
+
+.nav-menu a {
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-family: 'Montserrat', sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1.5px;
+
+    transition: color .3s ease;
+
+}
+
+.nav-menu a:hover {
+
+    color: #c9a45b;
 
 }
 
 
-.nav-menu a{
-
-    color:#fff;
-
-    text-decoration:none;
-
-    font-family:'Montserrat',sans-serif;
-
-    font-size:13px;
-
-    font-weight:500;
-
-    text-transform:uppercase;
-
-    letter-spacing:1.5px;
-
-    transition:.3s ease;
-
-}
-
-
-.nav-menu a:hover{
-
-    color:#c9a45b;
-
-}
-
-
-/* ===========================
+/* =========================================================
    MENU AO ROLAR
-=========================== */
+========================================================= */
 
-header.scrolled .nav-menu a{
+header.scrolled .nav-menu a {
 
-    color:#111111;
+    color: #111111;
+
+}
+
+header.scrolled .nav-menu a:hover {
+
+    color: #c9a45b;
 
 }
 
 
-header.scrolled .nav-menu a:hover{
+/* =========================================================
+   FINESSE
+========================================================= */
 
-    color:#c9a45b;
+.nav-menu .nav-finesse {
+
+    color: #c9a45b;
+
+}
+
+.nav-menu .nav-finesse:hover {
+
+    color: #ffffff;
+
+}
+
+header.scrolled .nav-menu .nav-finesse {
+
+    color: #c9a45b;
+
+}
+
+header.scrolled .nav-menu .nav-finesse:hover {
+
+    color: #111111;
 
 }
 
 
-/* ===========================
+/* =========================================================
    BOTÃO HEADER
-=========================== */
+========================================================= */
 
-.header-button{
+.header-button {
 
-    display:flex;
+    display: flex;
 
-    align-items:center;
+    align-items: center;
 
-    justify-content:center;
+    justify-content: center;
 
-    padding:14px 32px;
+    flex-shrink: 0;
 
-    border-radius:50px;
+    padding: 14px 32px;
 
-    background:#c9a45b;
+    border-radius: 50px;
 
-    color:#111111;
+    background: #c9a45b;
 
-    text-decoration:none;
+    color: #111111;
 
-    font-family:'Montserrat',sans-serif;
+    text-decoration: none;
 
-    font-size:13px;
+    font-family: 'Montserrat', sans-serif;
 
-    font-weight:700;
+    font-size: 13px;
 
-    text-transform:uppercase;
+    font-weight: 700;
 
-    letter-spacing:1px;
+    text-transform: uppercase;
 
-    transition:.35s ease;
+    letter-spacing: 1px;
+
+    white-space: nowrap;
+
+    transition:
+        background-color .3s ease,
+        color .3s ease,
+        transform .3s ease;
+
+}
+
+.header-button:hover {
+
+    background: #ffffff;
+
+    color: #111111;
+
+    transform: translateY(-3px);
 
 }
 
 
-.header-button:hover{
-
-    background:#fff;
-
-    transform:translateY(-3px);
-
-}
-
-
-/* ===========================
+/* =========================================================
    BOTÃO AO ROLAR
-=========================== */
+========================================================= */
 
-header.scrolled .header-button{
+header.scrolled .header-button {
 
-    background:#c9a45b;
+    background: #c9a45b;
 
-    color:#111111;
+    color: #111111;
+
+}
+
+header.scrolled .header-button:hover {
+
+    background: #111111;
+
+    color: #ffffff;
 
 }
 
 
-header.scrolled .header-button:hover{
-
-    background:#111111;
-
-    color:#fff;
-
-}
-
-
-/* ===========================
+/* =========================================================
    MOBILE BUTTON
-=========================== */
+========================================================= */
 
-.menu-toggle{
+.menu-toggle {
 
-    display:none;
+    display: none;
+
+    border: 0;
+
+    background: transparent;
+
+    padding: 0;
+
+    margin: 0;
+
+    cursor: pointer;
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .navbar {
+
+        height: 80px;
+
+        padding: 0 18px;
+
+        position: relative;
+
+    }
+
+
+    /* LOGO À ESQUERDA */
+
+    .logo {
+
+        order: 1;
+
+        z-index: 10001;
+
+    }
+
+    .logo img {
+
+        width: 125px;
+
+    }
+
+
+    /* HAMBURGER NO CENTRO */
+
+    .menu-toggle {
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 5px;
+
+        width: 42px;
+
+        height: 42px;
+
+        position: absolute;
+
+        left: 50%;
+
+        top: 50%;
+
+        transform: translate(-50%, -50%);
+
+        z-index: 10001;
+
+    }
+
+    .menu-toggle span {
+
+        display: block;
+
+        width: 24px;
+
+        height: 2px;
+
+        background: #ffffff;
+
+        transition:
+            transform .3s ease,
+            opacity .3s ease,
+            background-color .3s ease;
+
+    }
+
+
+    /* HAMBURGER AO ROLAR */
+
+    header.scrolled .menu-toggle span {
+
+        background: #111111;
+
+    }
+
+
+    /* HAMBURGER ABERTO */
+
+    .menu-toggle.active span:nth-child(1) {
+
+        transform: translateY(7px) rotate(45deg);
+
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+
+        opacity: 0;
+
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+
+        transform: translateY(-7px) rotate(-45deg);
+
+    }
+
+
+    /* BOTÃO À DIREITA */
+
+    .header-button {
+
+        order: 3;
+
+        padding: 10px 14px;
+
+        font-size: 9px;
+
+        letter-spacing: .5px;
+
+        z-index: 10001;
+
+    }
+
+
+    /* MENU MOBILE */
+
+    .nav {
+
+        position: absolute;
+
+        top: 80px;
+
+        left: 0;
+
+        width: 100%;
+
+        display: block;
+
+        pointer-events: none;
+
+    }
+
+    .nav-menu {
+
+        width: 100%;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        gap: 0;
+
+        padding: 20px 0;
+
+        background: rgba(17, 17, 17, .98);
+
+        backdrop-filter: blur(15px);
+
+        opacity: 0;
+
+        visibility: hidden;
+
+        transform: translateY(-15px);
+
+        transition:
+            opacity .3s ease,
+            visibility .3s ease,
+            transform .3s ease;
+
+    }
+
+
+    /* MENU ABERTO */
+
+    .nav-menu.active {
+
+        opacity: 1;
+
+        visibility: visible;
+
+        transform: translateY(0);
+
+    }
+
+    .nav {
+
+        pointer-events: none;
+
+    }
+
+    .nav-menu.active {
+
+        pointer-events: auto;
+
+    }
+
+
+    .nav-menu li {
+
+        width: 100%;
+
+        text-align: center;
+
+    }
+
+    .nav-menu a {
+
+        display: block;
+
+        width: 100%;
+
+        padding: 14px 20px;
+
+        color: #ffffff;
+
+        font-size: 12px;
+
+    }
+
+    .nav-menu a:hover {
+
+        color: #c9a45b;
+
+    }
+
+    header.scrolled .nav-menu a {
+
+        color: #ffffff;
+
+    }
+
+    header.scrolled .nav-menu a:hover {
+
+        color: #c9a45b;
+
+    }
+
+
+    /* FINESSE NO MOBILE */
+
+    .nav-menu .nav-finesse {
+
+        color: #c9a45b;
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE PEQUENO
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .navbar {
+
+        padding: 0 12px;
+
+    }
+
+    .logo img {
+
+        width: 115px;
+
+    }
+
+    .header-button {
+
+        padding: 9px 11px;
+
+        font-size: 8px;
+
+    }
+
+    .menu-toggle {
+
+        width: 38px;
+
+        height: 38px;
+
+    }
 
 }

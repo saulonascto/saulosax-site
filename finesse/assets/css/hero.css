@@ -3,12 +3,11 @@
    HERO
 ========================================================= */
 
-
-/* =========================================================
+/* ===========================
    HERO
-========================================================= */
+=========================== */
 
-.hero {
+#hero {
 
     position: relative;
 
@@ -20,304 +19,350 @@
 
     overflow: hidden;
 
-    background-color: var(--cream);
-
-    background-image:
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.96) 0%,
-            rgba(255,255,255,.88) 38%,
-            rgba(255,255,255,.30) 72%,
-            rgba(255,255,255,.08) 100%
-        ),
-
-        url("../images/hero-finesse.jpg");
-
-    background-size: cover;
-
-    background-position: center;
-
+    background:
+        var(--cream);
 }
 
 
-/* =========================================================
-   CAMADA DE IDENTIDADE
-========================================================= */
+/* ===========================
+   IMAGEM DE FUNDO
+=========================== */
 
-.hero::before {
-
-    content: "";
+.hero-background {
 
     position: absolute;
 
     inset: 0;
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(247,232,209,.20),
-            transparent 45%
-        );
+    z-index: 0;
 
-    pointer-events: none;
+    background-image:
+        url("../images/hero/hero-finesse.jpg");
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
+
+    transform:
+        scale(1.01);
 }
 
 
-/* =========================================================
-   CONTEÚDO
-========================================================= */
+/* ===========================
+   OVERLAY
+=========================== */
 
-.hero-content {
+.hero-overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 1;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0, 0, 0, .82) 0%,
+            rgba(0, 0, 0, .65) 38%,
+            rgba(0, 0, 0, .30) 68%,
+            rgba(0, 0, 0, .10) 100%
+        );
+}
+
+
+/* ===========================
+   CONTEÚDO
+=========================== */
+
+#hero .container {
 
     position: relative;
 
     z-index: 2;
-
-    width: min(620px, 90%);
-
-    margin-left: max(
-        5%,
-        calc((100vw - 1180px) / 2)
-    );
-
-    padding-top: 60px;
 }
 
 
-/* =========================================================
-   EYEBROW
-========================================================= */
+.hero-content {
 
-.hero .eyebrow {
+    width:
+        min(
+            720px,
+            90%
+        );
 
-    margin-bottom: 22px;
+    padding:
+        150px 0 110px;
 
-    color: var(--wine);
+    color:
+        var(--white);
+}
 
-    font-size: 11px;
+
+/* ===========================
+   SUBTÍTULO
+=========================== */
+
+.hero-subtitle {
+
+    display: inline-block;
+
+    margin-bottom: 20px;
+
+    color:
+        var(--cream);
+
+    font-size: 12px;
 
     font-weight: 600;
 
-    letter-spacing: 4px;
+    letter-spacing: 3px;
 
     text-transform: uppercase;
 }
 
 
-/* =========================================================
+/* ===========================
    TÍTULO
-========================================================= */
+=========================== */
 
-.hero h1 {
+.hero-content h1 {
 
-    max-width: 650px;
+    max-width:
+        760px;
 
-    margin-bottom: 28px;
-
-    color: var(--black);
+    margin-bottom:
+        25px;
 
     font-family:
         "Playfair Display",
         Georgia,
-        "Times New Roman",
         serif;
 
     font-size:
         clamp(
-            48px,
-            6vw,
-            76px
+            42px,
+            5vw,
+            70px
         );
 
-    font-weight: 400;
+    font-weight:
+        500;
 
-    line-height: 1.08;
+    line-height:
+        1.08;
 
-    letter-spacing: -1.5px;
+    letter-spacing:
+        -.8px;
+
+    color:
+        var(--white);
 }
 
 
-/* =========================================================
+/* ===========================
    TEXTO
-========================================================= */
+=========================== */
 
-.hero p {
+.hero-content p {
 
-    max-width: 520px;
+    max-width:
+        650px;
 
-    margin-bottom: 36px;
+    margin-bottom:
+        35px;
 
-    color: #444444;
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .88
+        );
 
-    font-size: 17px;
+    font-size:
+        16px;
 
-    line-height: 1.8;
+    line-height:
+        1.8;
 }
 
 
-/* =========================================================
-   BOTÃO
-========================================================= */
+/* ===========================
+   BOTÕES
+=========================== */
 
-.hero .btn {
+.hero-buttons {
 
-    background: var(--wine);
+    display:
+        flex;
 
-    border-color: var(--wine);
+    align-items:
+        center;
 
-    color: var(--white);
+    flex-wrap:
+        wrap;
+
+    gap:
+        14px;
 }
 
 
-.hero .btn:hover {
+.hero-buttons .btn-primary {
 
-    background: var(--wine-dark);
+    background:
+        var(--wine);
 
-    border-color: var(--wine-dark);
+    border-color:
+        var(--wine);
+
+    color:
+        var(--white);
 }
 
 
-/* =========================================================
-   DETALHE DECORATIVO
-========================================================= */
+.hero-buttons .btn-secondary {
 
-.hero-content::after {
+    background:
+        transparent;
 
-    content: "";
+    border-color:
+        var(--cream);
 
-    display: block;
-
-    width: 70px;
-
-    height: 2px;
-
-    margin-top: 42px;
-
-    background: var(--wine);
+    color:
+        var(--cream);
 }
 
 
-/* =========================================================
-   TABLET
-========================================================= */
+.hero-buttons .btn-secondary:hover {
 
-@media (max-width: 900px) {
+    background:
+        var(--cream);
 
-    .hero {
+    border-color:
+        var(--cream);
 
-        min-height: 700px;
-
-        background-position:
-            65% center;
-
-        background-image:
-            linear-gradient(
-                90deg,
-                rgba(255,255,255,.96) 0%,
-                rgba(255,255,255,.82) 50%,
-                rgba(255,255,255,.25) 100%
-            ),
-
-            url("../images/hero-finesse.jpg");
-    }
-
-
-    .hero-content {
-
-        margin-left: 5%;
-    }
-
+    color:
+        var(--black);
 }
 
 
-/* =========================================================
-   MOBILE
-========================================================= */
+/* ===========================
+   SCROLL DOWN
+=========================== */
 
-@media (max-width: 700px) {
+.scroll-down {
 
-    .hero {
+    position:
+        absolute;
 
-        min-height: 720px;
+    left:
+        50%;
 
-        align-items: flex-end;
+    bottom:
+        28px;
 
-        padding-bottom: 75px;
+    z-index:
+        3;
 
-        background-position:
-            65% center;
+    width:
+        28px;
 
-        background-image:
-            linear-gradient(
-                180deg,
-                rgba(255,255,255,.25) 0%,
-                rgba(255,255,255,.75) 45%,
-                rgba(255,255,255,.97) 72%
-            ),
+    height:
+        45px;
 
-            url("../images/hero-finesse.jpg");
-    }
+    transform:
+        translateX(-50%);
 
+    display:
+        flex;
 
-    .hero-content {
+    align-items:
+        flex-start;
 
-        width: 90%;
-
-        margin-left: 5%;
-
-        padding-top: 0;
-    }
-
-
-    .hero h1 {
-
-        font-size: 46px;
-
-        letter-spacing: -.8px;
-    }
-
-
-    .hero p {
-
-        font-size: 15px;
-
-        line-height: 1.7;
-    }
-
-
-    .hero-content::after {
-
-        margin-top: 32px;
-    }
-
+    justify-content:
+        center;
 }
 
 
-/* =========================================================
-   MOBILE PEQUENO
-========================================================= */
+.scroll-down span {
 
-@media (max-width: 480px) {
+    display:
+        block;
 
-    .hero {
+    width:
+        1px;
 
-        min-height: 680px;
+    height:
+        30px;
 
-        padding-bottom: 60px;
+    background:
+        var(--cream);
+
+    position:
+        relative;
+
+    animation:
+        scrollDown 1.8s ease-in-out infinite;
+}
+
+
+.scroll-down span::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    left:
+        50%;
+
+    bottom:
+        0;
+
+    width:
+        7px;
+
+    height:
+        7px;
+
+    border-right:
+        1px solid var(--cream);
+
+    border-bottom:
+        1px solid var(--cream);
+
+    transform:
+        translateX(-50%)
+        rotate(45deg);
+}
+
+
+/* ===========================
+   ANIMAÇÃO
+=========================== */
+
+@keyframes scrollDown {
+
+    0%,
+    100% {
+
+        transform:
+            translateY(0);
+
+        opacity:
+            .55;
     }
 
+    50% {
 
-    .hero h1 {
+        transform:
+            translateY(10px);
 
-        font-size: 40px;
+        opacity:
+            1;
     }
-
-
-    .hero .eyebrow {
-
-        font-size: 9px;
-
-        letter-spacing: 3px;
-    }
-
 }

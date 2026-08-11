@@ -1,228 +1,301 @@
 /* =========================================================
-FINESSE AGÊNCIA MUSICAL
-SOBRE
+   FINESSE AGÊNCIA MUSICAL
+   SOBRE
 ========================================================= */
 
-/* =========================================================
-SEÇÃO SOBRE
-========================================================= */
+/* ===========================
+   SEÇÃO
+=========================== */
 
 #sobre {
 
+    padding:
+        110px 0;
 
-position: relative;
-
-overflow: hidden;
-
-background: var(--white);
-
-
+    background:
+        var(--white);
 }
 
-/* =========================================================
-CONTAINER
-========================================================= */
 
-#sobre .container {
+/* ===========================
+   CONTAINER
+=========================== */
 
+.about-container {
 
-position: relative;
+    display:
+        grid;
 
+    grid-template-columns:
+        minmax(0, 0.9fr)
+        minmax(0, 1.1fr);
 
+    align-items:
+        center;
+
+    gap:
+        80px;
 }
 
-/* =========================================================
-TÍTULO
-========================================================= */
 
-#sobre h2 {
+/* ===========================
+   IMAGEM
+=========================== */
 
+.about-image {
 
-max-width: 850px;
+    position:
+        relative;
 
-margin-bottom: 35px;
-
-
+    overflow:
+        hidden;
 }
 
-/* =========================================================
-TEXTOS
-========================================================= */
 
-#sobre p {
+.about-image::after {
 
+    content:
+        "";
 
-max-width: 850px;
+    position:
+        absolute;
 
-margin-bottom: 22px;
+    inset:
+        18px;
 
-color: var(--text);
+    border:
+        1px solid
+        rgba(
+            157,
+            56,
+            53,
+            .45
+        );
 
-font-size: 16px;
-
-line-height: 1.9;
-
-
+    pointer-events:
+        none;
 }
 
-/* =========================================================
-ÚLTIMO PARÁGRAFO / DESTAQUE
-========================================================= */
 
-#sobre p:last-child {
+.about-image img {
 
+    width:
+        100%;
 
-position: relative;
+    height:
+        650px;
 
-margin-top: 38px;
+    object-fit:
+        cover;
 
-padding-left: 28px;
+    object-position:
+        center;
 
-color: var(--black);
-
-font-size: 17px;
-
-font-weight: 500;
-
-
+    transition:
+        transform .6s ease;
 }
 
-#sobre p:last-child::before {
 
+.about-image:hover img {
 
-content: "";
-
-position: absolute;
-
-top: 5px;
-
-bottom: 5px;
-
-left: 0;
-
-width: 2px;
-
-background: var(--wine);
-
-
+    transform:
+        scale(1.03);
 }
 
-/* =========================================================
-DETALHE DECORATIVO
-========================================================= */
 
-#sobre .container::after {
+/* ===========================
+   CONTEÚDO
+=========================== */
 
+.about-content {
 
-content: "";
+    max-width:
+        650px;
 
-position: absolute;
+    opacity:
+        0;
 
-right: 0;
+    transform:
+        translateY(30px);
 
-bottom: -60px;
-
-width: 180px;
-
-height: 180px;
-
-border:
-    1px solid
-    rgba(
-        157,
-        56,
-        53,
-        .15
-    );
-
-border-radius: 50%;
-
-pointer-events: none;
-
-
+    transition:
+        opacity .7s ease,
+        transform .7s ease;
 }
 
-/* =========================================================
-TABLET
-========================================================= */
+
+
+/* ===========================
+   ESTADO VISÍVEL
+=========================== */
+
+.about-content.visible {
+
+    opacity:
+        1;
+
+    transform:
+        translateY(0);
+}
+
+.about-content .section-tag {
+
+    margin-bottom:
+        18px;
+}
+
+
+.about-content h2 {
+
+    margin-bottom:
+        25px;
+
+    font-family:
+        "Playfair Display",
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(
+            34px,
+            4vw,
+            52px
+        );
+
+    font-weight:
+        400;
+
+    line-height:
+        1.15;
+
+    color:
+        var(--black);
+
+    letter-spacing:
+        -.5px;
+}
+
+
+.about-content p {
+
+    margin-bottom:
+        18px;
+
+    color:
+        var(--text);
+
+    font-size:
+        16px;
+
+    line-height:
+        1.85;
+}
+
+
+/* ===========================
+   DESTAQUE
+=========================== */
+
+.about-content p:last-child {
+
+    margin-bottom:
+        0;
+}
+
+
+/* ===========================
+   RESPONSIVO
+=========================== */
 
 @media (max-width: 900px) {
 
+    #sobre {
 
-#sobre p {
-
-    max-width: 100%;
-}
-
-
-#sobre .container::after {
-
-    right: -80px;
-
-    bottom: -80px;
-}
+        padding:
+            80px 0;
+    }
 
 
-}
+    .about-container {
 
-/* =========================================================
-MOBILE
-========================================================= */
+        grid-template-columns:
+            1fr;
 
-@media (max-width: 700px) {
-
-
-#sobre {
-
-    padding-top: 80px;
-
-    padding-bottom: 80px;
-}
+        gap:
+            50px;
+    }
 
 
-#sobre h2 {
+    .about-image {
 
-    font-size: 40px;
-}
+        max-width:
+            650px;
 
-
-#sobre p {
-
-    font-size: 15px;
-
-    line-height: 1.8;
-}
+        margin:
+            0 auto;
+    }
 
 
-#sobre p:last-child {
+    .about-image img {
 
-    margin-top: 30px;
-
-    padding-left: 20px;
-
-    font-size: 15px;
-}
+        height:
+            520px;
+    }
 
 
-#sobre .container::after {
+    .about-content {
 
-    display: none;
-}
-
+        max-width:
+            100%;
+    }
 
 }
 
-/* =========================================================
-MOBILE PEQUENO
-========================================================= */
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
+
+    #sobre {
+
+        padding:
+            70px 0;
+    }
 
 
-#sobre h2 {
+    .about-container {
 
-    font-size: 34px;
-}
+        gap:
+            35px;
+    }
 
+
+    .about-image img {
+
+        height:
+            420px;
+    }
+
+
+    .about-image::after {
+
+        inset:
+            12px;
+    }
+
+
+    .about-content h2 {
+
+        font-size:
+            34px;
+    }
+
+
+    .about-content p {
+
+        font-size:
+            15px;
+
+        line-height:
+            1.75;
+    }
 
 }
